@@ -2519,7 +2519,7 @@ input, select, textarea {
 	#banner {
 		background-attachment: fixed;
 		background-color: #0e3810;
-		background-image:  url("../../images/./封面.jpg");
+		background-image:  url("../../images/./Banner/封面.jpg");
 		background-position:  top center;
 		background-repeat: no-repeat;
 		background-size: cover;
@@ -2589,7 +2589,7 @@ input, select, textarea {
 #banner2 {
 	background-attachment: fixed;
 	background-color: #0e3810;
-	background-image:  url("../../images/./經歷.jpg");
+	background-image:  url("../../images/./Banner/經歷.jpg");
 	background-position:  top center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -2658,7 +2658,7 @@ input, select, textarea {
 #banner3 {
 	background-attachment: fixed;
 	background-color: #0e3810;
-	background-image:  url("../../images/./商業委託.png");
+	background-image:  url("../../images/./Banner/商業委託.png");
 	background-position:  top center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -2723,12 +2723,12 @@ input, select, textarea {
 		}	
 
 
-/* Banner4 專案 */
+/* Banner4 平面設計 */
 
 #banner4 {
 	background-attachment: fixed;
 	background-color: #0e3810;
-	background-image:  url("../../images/./專案.jpg");
+	background-image:  url("../../images/./Banner/平面設計.png");
 	background-position:  top center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -2792,12 +2792,150 @@ input, select, textarea {
 			margin: 2em 0 0 0;
 		}	
 
-/* Banner5 影音作品 */
+/* Banner5 社群相關 */
 
 #banner5 {
 	background-attachment: fixed;
 	background-color: #0e3810;
-	background-image:  url("../../images/./影音作品.jpg");
+	background-image:  url("../../images/./Banner/社群相關.jpg");
+	background-position:  top center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #fff;
+	cursor: default;
+	padding: 14em 0;
+	text-align: center;
+}
+
+
+	#banner .inner {
+		-moz-animation: reveal-banner 1s 0.25s ease-in-out;
+		-webkit-animation: reveal-banner 1s 0.25s ease-in-out;
+		-ms-animation: reveal-banner 1s 0.25s ease-in-out;
+		animation: reveal-banner 1s 0.25s ease-in-out;
+		-moz-animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		-ms-animation-fill-mode: forwards;
+		animation-fill-mode: forwards;
+		background: #0e3810;
+		color: #fff;
+		display: inline-block;
+		opacity: 0;
+		padding: 3em;
+		text-align: center;
+	}
+
+		#banner .inner header {
+			display: inline-block;
+			border-bottom: solid 2px;
+			border-top: solid 2px;
+			margin: 0 0 2em 0;
+			padding: 3px 0 3px 0;
+		}
+
+			#banner .inner header h2 {
+				border-bottom: solid 2px;
+				border-top: solid 2px;
+				font-size: 2.5em;
+				font-weight: 900;
+				letter-spacing: 0.2em;
+				margin: 0;
+				padding-left: 0.05em;
+				position: relative;
+				text-transform: uppercase;
+			}
+
+		#banner .inner p {
+			letter-spacing: 0.1em;
+			margin: 0;
+			text-transform: uppercase;
+		}
+
+			#banner .inner p a {
+				color: inherit;
+				font-weight: 400;
+				text-decoration: none;
+			}
+
+		#banner .inner footer {
+			margin: 2em 0 0 0;
+		}	
+
+/* Banner6 活動規劃 */
+
+#banner6 {
+	background-attachment: fixed;
+	background-color: #0e3810;
+	background-image:  url("../../images/./Banner/活動規劃.jpg");
+	background-position:  top center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	color: #fff;
+	cursor: default;
+	padding: 14em 0;
+	text-align: center;
+}
+
+
+	#banner .inner {
+		-moz-animation: reveal-banner 1s 0.25s ease-in-out;
+		-webkit-animation: reveal-banner 1s 0.25s ease-in-out;
+		-ms-animation: reveal-banner 1s 0.25s ease-in-out;
+		animation: reveal-banner 1s 0.25s ease-in-out;
+		-moz-animation-fill-mode: forwards;
+		-webkit-animation-fill-mode: forwards;
+		-ms-animation-fill-mode: forwards;
+		animation-fill-mode: forwards;
+		background: #0e3810;
+		color: #fff;
+		display: inline-block;
+		opacity: 0;
+		padding: 3em;
+		text-align: center;
+	}
+
+		#banner .inner header {
+			display: inline-block;
+			border-bottom: solid 2px;
+			border-top: solid 2px;
+			margin: 0 0 2em 0;
+			padding: 3px 0 3px 0;
+		}
+
+			#banner .inner header h2 {
+				border-bottom: solid 2px;
+				border-top: solid 2px;
+				font-size: 2.5em;
+				font-weight: 900;
+				letter-spacing: 0.2em;
+				margin: 0;
+				padding-left: 0.05em;
+				position: relative;
+				text-transform: uppercase;
+			}
+
+		#banner .inner p {
+			letter-spacing: 0.1em;
+			margin: 0;
+			text-transform: uppercase;
+		}
+
+			#banner .inner p a {
+				color: inherit;
+				font-weight: 400;
+				text-decoration: none;
+			}
+
+		#banner .inner footer {
+			margin: 2em 0 0 0;
+		}	
+
+/* Banner7 影音作品 */
+
+#banner7 {
+	background-attachment: fixed;
+	background-color: #0e3810;
+	background-image:  url("../../images/./Banner/影音作品.jpg");
 	background-position:  top center;
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -2898,13 +3036,19 @@ header.special p strong {
 	}
 
 
-
-img {
+.baoimg .item img{
 	max-width: 100%;
 	width: 100%;
 	border: 1px solid #fff; /* 白色實線邊框 */
 	border-radius: 10px; /* 圓角設定 */
-	}
+}
+
+.LAimg .item a img{
+	max-width: 100%;
+	width: 100%;
+	border: 1px solid #fff; /* 白色實線邊框 */
+	border-radius: 10px; /* 圓角設定 */
+}
 
 /* 經歷文字對齊 */
   
@@ -3627,4 +3771,3 @@ img {
 			}
 
 	}
-
