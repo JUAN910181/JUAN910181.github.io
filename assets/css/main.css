@@ -2687,7 +2687,7 @@ header.special p strong {
 		background-repeat: no-repeat;
 		background-size: cover;
 		font-size:20px;
-		line-height:2em;
+		line-height:1.8em;
 		color: rgb(183, 183, 183);
 		
 	}
@@ -3437,3 +3437,17 @@ header.special p strong {
 	.right {
 		padding-right: 51%;
 	  }
+
+	  
+	.katy {
+		position: absolute;
+		padding-left: 50%;
+		
+		height: 1600px;
+	}
+	.whiteLine {
+		position: absolute;
+		height: 1480px;
+		width: 50%;
+		border-right: rgb(163, 163, 163) 1px solid;
+	}
