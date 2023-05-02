@@ -2670,6 +2670,7 @@ header.special p strong {
 		background-size: cover;
 		font-size:25px;
 		line-height:2em;
+		letter-spacing: 0.08em;
 		color: rgb(183, 183, 183);
 	}
 
@@ -2688,6 +2689,7 @@ header.special p strong {
 		background-size: cover;
 		font-size:20px;
 		line-height:1.8em;
+		letter-spacing: 0.1em;
 		color: rgb(183, 183, 183);
 		
 	}
@@ -3442,12 +3444,13 @@ header.special p strong {
 	.katy {
 		position: absolute;
 		padding-left: 50%;
-		
 		height: 1600px;
 	}
 	.whiteLine {
 		position: absolute;
-		height: 1480px;
+		height: 1540px;
 		width: 50%;
 		border-right: rgb(163, 163, 163) 1px solid;
 	}
+
+	
