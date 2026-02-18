@@ -155,9 +155,7 @@
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: rgba(1,20,15,0.92);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(0,0,0,0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -170,13 +168,13 @@
   pointer-events: all;
 }
 
-/* Body: left + right split */
+/* Body: left + right equal width split */
 .lightbox-body {
   display: flex;
-  align-items: center;
-  gap: 48px;
-  max-width: 90vw;
-  max-height: 85vh;
+  align-items: stretch;
+  width: 85vw;
+  max-width: 1200px;
+  height: 80vh;
   transform: scale(0.92);
   transition: transform .4s cubic-bezier(0.2,1,0.2,1);
 }
@@ -184,7 +182,7 @@
   transform: scale(1);
 }
 
-/* Left: image area */
+/* Left: image area — black bg, fills remaining space */
 .lightbox-left {
   position: relative;
   flex: 1;
@@ -192,12 +190,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #000;
+  border-radius: 12px 0 0 12px;
+  overflow: hidden;
 }
 .lightbox-left .lightbox-img {
   max-width: 100%;
-  max-height: 80vh;
-  border-radius: 8px;
-  box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+  max-height: 100%;
   object-fit: contain;
 }
 
@@ -209,7 +208,7 @@
   width: 44px; height: 44px;
   border-radius: 50%;
   border: 1px solid rgba(224,255,240,0.2);
-  background: rgba(1,26,20,0.6);
+  background: rgba(0,0,0,0.5);
   color: rgba(224,255,240,0.7);
   display: flex;
   align-items: center;
@@ -226,14 +225,31 @@
 .lightbox-prev { left: 12px }
 .lightbox-next { right: 12px }
 
-/* Right: info panel */
+/* Dots — bottom of image area */
+.lightbox-dots {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  z-index: 2;
+}
+
+/* Right: info panel — dark box with rounded right corners */
 .lightbox-right {
-  width: 280px;
+  width: 340px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding-right: 16px;
+  justify-content: center;
+  gap: 20px;
+  padding: 48px 36px;
+  background: rgba(8,20,16,0.95);
+  border: 1px solid rgba(224,255,240,0.08);
+  border-left: none;
+  border-radius: 0 12px 12px 0;
 }
 .lightbox-title {
   font-size: 1.3rem;
@@ -286,16 +302,7 @@
   color: rgba(224,255,240,1);
 }
 
-/* Dot indicators */
-.lightbox-dots {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
+/* Dot indicators (positioned inside .lightbox-left via earlier rule) */
 .lightbox-dot {
   width: 8px; height: 8px;
   border-radius: 50%;
