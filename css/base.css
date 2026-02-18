@@ -50,19 +50,19 @@ a, button { cursor: none }
     linear-gradient(
       90deg,
       transparent 0%,
-      rgba(120,220,200,0.10) 15%,
-      rgba(140,180,240,0.12) 35%,
-      rgba(200,160,220,0.08) 55%,
-      rgba(180,200,160,0.06) 75%,
+      rgba(120,220,200,0.22) 15%,
+      rgba(140,180,240,0.25) 35%,
+      rgba(200,160,220,0.18) 55%,
+      rgba(180,200,160,0.12) 75%,
       transparent 100%
     ),
     /* 副光帶 — 偏移產生層次 */
     linear-gradient(
       90deg,
       transparent 10%,
-      rgba(160,220,200,0.06) 30%,
-      rgba(180,160,240,0.08) 50%,
-      rgba(220,180,180,0.05) 70%,
+      rgba(160,220,200,0.12) 30%,
+      rgba(180,160,240,0.16) 50%,
+      rgba(220,180,180,0.10) 70%,
       transparent 90%
     );
   filter: blur(60px);
@@ -75,9 +75,9 @@ a, button { cursor: none }
 .aurora-bg::after {
   content: ''; position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 55% 50% at 30% 35%, rgba(120,200,180,0.07) 0%, transparent 55%),
-    radial-gradient(ellipse 45% 55% at 75% 65%, rgba(180,160,220,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 55% 80%, rgba(200,180,140,0.04) 0%, transparent 45%),
+    radial-gradient(ellipse 55% 50% at 30% 35%, rgba(120,200,180,0.12) 0%, transparent 55%),
+    radial-gradient(ellipse 45% 55% at 75% 65%, rgba(180,160,220,0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 55% 80%, rgba(200,180,140,0.07) 0%, transparent 45%),
     radial-gradient(ellipse 65% 55% at 50% 50%, transparent 25%, rgba(1,26,20,0.7) 100%);
   background-size: 250% 250%;
   animation: bg-drift 30s ease-in-out infinite reverse;
@@ -122,25 +122,28 @@ a, button { cursor: none }
 }
 .particle {
   position: absolute;
-  width: 3px; height: 3px;
   border-radius: 50%;
-  background: rgba(224,255,240,0.5);
-  filter: blur(1px);
+  background: rgba(224,255,240,0.9);
+  box-shadow: 0 0 6px 2px rgba(224,255,240,0.4), 0 0 14px 4px rgba(224,255,240,0.15);
   animation: float-up linear infinite;
 }
-.p1 { left: 12%; bottom: -5%; width:2px; height:2px; animation-duration:22s; animation-delay:0s; opacity:0.4 }
-.p2 { left: 28%; bottom: -8%; width:3px; height:3px; animation-duration:28s; animation-delay:-5s; opacity:0.3 }
-.p3 { left: 45%; bottom: -3%; width:2px; height:2px; animation-duration:25s; animation-delay:-10s; opacity:0.5 }
-.p4 { left: 62%; bottom: -6%; width:4px; height:4px; animation-duration:30s; animation-delay:-3s; opacity:0.25 }
-.p5 { left: 78%; bottom: -4%; width:2px; height:2px; animation-duration:24s; animation-delay:-12s; opacity:0.35 }
-.p6 { left: 35%; bottom: -7%; width:3px; height:3px; animation-duration:26s; animation-delay:-8s; opacity:0.3 }
-.p7 { left: 55%; bottom: -5%; width:2px; height:2px; animation-duration:32s; animation-delay:-15s; opacity:0.4 }
-.p8 { left: 88%; bottom: -3%; width:3px; height:3px; animation-duration:20s; animation-delay:-6s; opacity:0.25 }
+.p1 { left: 12%; bottom: -5%; width:4px; height:4px; animation-duration:22s; animation-delay:0s; opacity:0.7 }
+.p2 { left: 28%; bottom: -8%; width:5px; height:5px; animation-duration:28s; animation-delay:-5s; opacity:0.6 }
+.p3 { left: 45%; bottom: -3%; width:3px; height:3px; animation-duration:25s; animation-delay:-10s; opacity:0.8 }
+.p4 { left: 62%; bottom: -6%; width:6px; height:6px; animation-duration:30s; animation-delay:-3s; opacity:0.5 }
+.p5 { left: 78%; bottom: -4%; width:4px; height:4px; animation-duration:24s; animation-delay:-12s; opacity:0.65 }
+.p6 { left: 35%; bottom: -7%; width:5px; height:5px; animation-duration:26s; animation-delay:-8s; opacity:0.55 }
+.p7 { left: 55%; bottom: -5%; width:3px; height:3px; animation-duration:32s; animation-delay:-15s; opacity:0.75 }
+.p8 { left: 88%; bottom: -3%; width:5px; height:5px; animation-duration:20s; animation-delay:-6s; opacity:0.5 }
+.p9 { left: 8%; bottom: -4%; width:3px; height:3px; animation-duration:27s; animation-delay:-2s; opacity:0.6 }
+.p10 { left: 50%; bottom: -6%; width:4px; height:4px; animation-duration:23s; animation-delay:-14s; opacity:0.55 }
+.p11 { left: 70%; bottom: -3%; width:5px; height:5px; animation-duration:29s; animation-delay:-9s; opacity:0.5 }
+.p12 { left: 20%; bottom: -5%; width:4px; height:4px; animation-duration:21s; animation-delay:-18s; opacity:0.65 }
 
 @keyframes float-up {
   0%   { transform: translateY(0) translateX(0); opacity: 0 }
-  10%  { opacity: 0.35 }
-  90%  { opacity: 0.35 }
+  8%   { opacity: 0.7 }
+  92%  { opacity: 0.7 }
   100% { transform: translateY(-105vh) translateX(30px); opacity: 0 }
 }
 
