@@ -3,243 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prismatic Light Test — 虹光背景測試</title>
+<title>Lens Flare Test — 鏡頭光斑測試</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --bg-deep: #011A14;
-  }
+  :root { --bg-deep: #011A14; }
 
   body {
     background: var(--bg-deep);
     min-height: 100vh;
     overflow: hidden;
-    font-family: 'Noto Sans TC', sans-serif;
-    color: rgba(224,255,240,0.8);
   }
 
-  /* ═══ Info overlay ═══ */
   .info {
     position: fixed;
     bottom: 24px; left: 24px;
     z-index: 100;
     font-size: 0.75rem;
-    color: rgba(224,255,240,0.4);
-    letter-spacing: 0.05em;
+    color: rgba(224,255,240,0.35);
+    font-family: sans-serif;
   }
 
-  /* ═══════════════════════════════════════════
-     PRISMATIC LIGHT — Refracted Rainbow Caustics
-     ═══════════════════════════════════════════ */
-
-  .prismatic-bg {
+  /* ═══ Container ═══ */
+  .flare-bg {
     position: fixed;
-    inset: 0;
-    z-index: 0;
+    inset: 0; z-index: 0;
     pointer-events: none;
-    background: var(--bg-deep);
     overflow: hidden;
   }
 
-  /* Individual light blobs — each is a soft elliptical glow
-     with warm/cool spectral colors, like light through a prism */
-  .prism-light {
+  /* ═══════════════════════════════════════════
+     LENS FLARE — SVG hexagonal starburst
+     ═══════════════════════════════════════════ */
+  .flare-wrap {
+    position: absolute;
+    width: 700px; height: 700px;
+    top: -8%; right: -5%;
+    animation: flare-drift 16s ease-in-out infinite;
+  }
+
+  /* Core glow — bright white/warm center */
+  .flare-core {
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(255,250,230,0.6) 0%,
+      rgba(255,230,180,0.3) 8%,
+      rgba(255,200,140,0.1) 20%,
+      transparent 45%
+    );
+    filter: blur(8px);
+    mix-blend-mode: screen;
+  }
+
+  /* SVG starburst — 6-pointed rays */
+  .flare-svg {
+    position: absolute;
+    width: 100%; height: 100%;
+    top: 0; left: 0;
+    mix-blend-mode: screen;
+    opacity: 0.85;
+    animation: flare-rotate 20s linear infinite;
+  }
+
+  /* ═══ Secondary smaller flare — bottom left ═══ */
+  .flare-wrap-2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    bottom: 5%; left: 10%;
+    animation: flare-drift-2 18s ease-in-out infinite;
+  }
+  .flare-wrap-2 .flare-core {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(200,230,255,0.35) 0%,
+      rgba(160,200,255,0.15) 10%,
+      rgba(140,180,240,0.06) 25%,
+      transparent 45%
+    );
+  }
+  .flare-wrap-2 .flare-svg { opacity: 0.5; animation-duration: 25s; animation-direction: reverse; }
+
+  /* ═══ Third flare — center, faint ═══ */
+  .flare-wrap-3 {
+    position: absolute;
+    width: 300px; height: 300px;
+    top: 35%; left: 40%;
+    animation: flare-drift-3 14s ease-in-out infinite;
+  }
+  .flare-wrap-3 .flare-core {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(255,200,240,0.25) 0%,
+      rgba(240,160,220,0.10) 12%,
+      rgba(220,140,200,0.04) 25%,
+      transparent 45%
+    );
+  }
+  .flare-wrap-3 .flare-svg { opacity: 0.35; animation-duration: 30s; }
+
+  /* ═══ Ghost orbs along flare axis ═══ */
+  .ghost-orb {
     position: absolute;
     border-radius: 50%;
-    filter: blur(60px);
     mix-blend-mode: screen;
-    will-change: transform;
+    filter: blur(6px);
+  }
+  .ghost-orb.g1 {
+    width: 80px; height: 80px;
+    top: 30%; right: 25%;
+    background: radial-gradient(circle, rgba(120,200,255,0.20) 0%, rgba(100,180,240,0.06) 50%, transparent 70%);
+    animation: ghost-float 12s ease-in-out infinite;
+  }
+  .ghost-orb.g2 {
+    width: 50px; height: 50px;
+    top: 45%; right: 35%;
+    background: radial-gradient(circle, rgba(255,180,220,0.18) 0%, rgba(240,140,200,0.05) 50%, transparent 70%);
+    animation: ghost-float 15s ease-in-out infinite reverse;
+  }
+  .ghost-orb.g3 {
+    width: 110px; height: 110px;
+    top: 55%; left: 30%;
+    background: radial-gradient(circle, rgba(200,255,200,0.12) 0%, rgba(160,240,180,0.04) 50%, transparent 70%);
+    animation: ghost-float 18s ease-in-out infinite;
+  }
+  .ghost-orb.g4 {
+    width: 65px; height: 65px;
+    top: 22%; left: 50%;
+    background: radial-gradient(circle, rgba(255,220,140,0.16) 0%, rgba(255,200,120,0.05) 50%, transparent 70%);
+    animation: ghost-float 10s ease-in-out infinite reverse;
   }
 
-  /* ── Light 1: Warm amber/gold — top right area ── */
-  .prism-light.l1 {
-    width: 45vw; height: 35vh;
-    top: -5%; right: -8%;
-    background: radial-gradient(
-      ellipse 70% 60% at 50% 50%,
-      rgba(255, 200, 100, 0.22) 0%,
-      rgba(255, 160, 60, 0.12) 35%,
-      transparent 70%
-    );
-    animation: drift-1 18s ease-in-out infinite;
-  }
-
-  /* ── Light 2: Cyan/teal refraction — center left ── */
-  .prism-light.l2 {
-    width: 40vw; height: 45vh;
-    top: 20%; left: -5%;
-    background: radial-gradient(
-      ellipse 65% 70% at 50% 50%,
-      rgba(100, 220, 240, 0.18) 0%,
-      rgba(60, 180, 220, 0.10) 40%,
-      transparent 70%
-    );
-    animation: drift-2 22s ease-in-out infinite;
-  }
-
-  /* ── Light 3: Rose/magenta — bottom center ── */
-  .prism-light.l3 {
-    width: 50vw; height: 40vh;
-    bottom: -10%; left: 25%;
-    background: radial-gradient(
-      ellipse 60% 55% at 50% 50%,
-      rgba(255, 140, 180, 0.16) 0%,
-      rgba(220, 100, 160, 0.08) 40%,
-      transparent 65%
-    );
-    animation: drift-3 20s ease-in-out infinite;
-  }
-
-  /* ── Light 4: Blue/violet — upper center ── */
-  .prism-light.l4 {
-    width: 35vw; height: 50vh;
-    top: 10%; left: 35%;
-    background: radial-gradient(
-      ellipse 55% 65% at 50% 50%,
-      rgba(120, 140, 255, 0.15) 0%,
-      rgba(100, 120, 240, 0.08) 40%,
-      transparent 65%
-    );
-    animation: drift-4 25s ease-in-out infinite;
-  }
-
-  /* ── Light 5: Orange/peach — mid right ── */
-  .prism-light.l5 {
-    width: 30vw; height: 35vh;
-    top: 40%; right: 5%;
-    background: radial-gradient(
-      ellipse 60% 50% at 50% 50%,
-      rgba(255, 180, 120, 0.20) 0%,
-      rgba(255, 150, 80, 0.10) 35%,
-      transparent 65%
-    );
-    animation: drift-5 19s ease-in-out infinite;
-  }
-
-  /* ── Light 6: Green/emerald — bottom left ── */
-  .prism-light.l6 {
-    width: 35vw; height: 30vh;
-    bottom: 5%; left: -3%;
-    background: radial-gradient(
-      ellipse 55% 60% at 50% 50%,
-      rgba(100, 240, 180, 0.14) 0%,
-      rgba(80, 200, 150, 0.07) 40%,
-      transparent 65%
-    );
-    animation: drift-6 23s ease-in-out infinite;
-  }
-
-  /* ── Light 7: Warm white/yellow highlight — creates the "sun streak" feel ── */
-  .prism-light.l7 {
-    width: 25vw; height: 60vh;
-    top: -10%; right: 15%;
-    background: radial-gradient(
-      ellipse 40% 80% at 50% 30%,
-      rgba(255, 240, 200, 0.25) 0%,
-      rgba(255, 220, 160, 0.12) 30%,
-      rgba(255, 180, 120, 0.06) 50%,
-      transparent 70%
-    );
-    transform: rotate(-15deg);
-    animation: drift-7 21s ease-in-out infinite;
-  }
-
-  /* ══ Caustic overlay — adds the "refracted edge" streaks ══ */
-  .caustic-layer {
-    position: absolute;
-    inset: -20%;
-    background:
-      /* Diagonal streak 1 */
-      linear-gradient(
-        135deg,
-        transparent 25%,
-        rgba(255, 200, 150, 0.06) 30%,
-        rgba(100, 200, 255, 0.04) 35%,
-        transparent 40%,
-        transparent 55%,
-        rgba(255, 150, 200, 0.05) 60%,
-        rgba(200, 255, 180, 0.03) 65%,
-        transparent 70%
-      ),
-      /* Diagonal streak 2 */
-      linear-gradient(
-        -45deg,
-        transparent 30%,
-        rgba(180, 160, 255, 0.05) 35%,
-        rgba(255, 220, 140, 0.04) 40%,
-        transparent 45%,
-        transparent 60%,
-        rgba(100, 255, 220, 0.04) 65%,
-        transparent 70%
-      );
-    filter: blur(40px);
-    mix-blend-mode: screen;
-    animation: caustic-shift 30s ease-in-out infinite;
-  }
-
-  /* ══ Animations — slow organic drifting ══ */
-  @keyframes drift-1 {
+  /* ═══ Animations ═══ */
+  @keyframes flare-drift {
     0%   { transform: translate(0, 0) scale(1) }
-    25%  { transform: translate(-6vw, 4vh) scale(1.08) }
-    50%  { transform: translate(-3vw, 8vh) scale(0.95) }
-    75%  { transform: translate(4vw, 3vh) scale(1.05) }
+    25%  { transform: translate(-30px, 20px) scale(1.04) }
+    50%  { transform: translate(-15px, 40px) scale(0.97) }
+    75%  { transform: translate(20px, 15px) scale(1.02) }
     100% { transform: translate(0, 0) scale(1) }
   }
-  @keyframes drift-2 {
+  @keyframes flare-drift-2 {
     0%   { transform: translate(0, 0) scale(1) }
-    25%  { transform: translate(5vw, -3vh) scale(1.06) }
-    50%  { transform: translate(8vw, 2vh) scale(0.92) }
-    75%  { transform: translate(3vw, 5vh) scale(1.04) }
+    25%  { transform: translate(25px, -15px) scale(1.05) }
+    50%  { transform: translate(10px, -30px) scale(0.96) }
+    75%  { transform: translate(-15px, -10px) scale(1.03) }
     100% { transform: translate(0, 0) scale(1) }
   }
-  @keyframes drift-3 {
+  @keyframes flare-drift-3 {
     0%   { transform: translate(0, 0) scale(1) }
-    25%  { transform: translate(4vw, -5vh) scale(1.1) }
-    50%  { transform: translate(-5vw, -3vh) scale(0.94) }
-    75%  { transform: translate(-2vw, 4vh) scale(1.03) }
+    25%  { transform: translate(-20px, 15px) scale(1.06) }
+    50%  { transform: translate(15px, 25px) scale(0.95) }
+    75%  { transform: translate(10px, -10px) scale(1.03) }
     100% { transform: translate(0, 0) scale(1) }
   }
-  @keyframes drift-4 {
-    0%   { transform: translate(0, 0) scale(1) rotate(0deg) }
-    25%  { transform: translate(-4vw, 5vh) scale(1.07) rotate(3deg) }
-    50%  { transform: translate(3vw, 8vh) scale(0.96) rotate(-2deg) }
-    75%  { transform: translate(5vw, 2vh) scale(1.04) rotate(1deg) }
-    100% { transform: translate(0, 0) scale(1) rotate(0deg) }
+  @keyframes flare-rotate {
+    0%   { transform: rotate(0deg) }
+    100% { transform: rotate(360deg) }
   }
-  @keyframes drift-5 {
-    0%   { transform: translate(0, 0) scale(1) }
-    25%  { transform: translate(-5vw, -4vh) scale(1.08) }
-    50%  { transform: translate(-8vw, 3vh) scale(0.93) }
-    75%  { transform: translate(-2vw, -5vh) scale(1.06) }
-    100% { transform: translate(0, 0) scale(1) }
-  }
-  @keyframes drift-6 {
-    0%   { transform: translate(0, 0) scale(1) }
-    25%  { transform: translate(6vw, -2vh) scale(1.05) }
-    50%  { transform: translate(4vw, -6vh) scale(0.97) }
-    75%  { transform: translate(-3vw, -3vh) scale(1.08) }
-    100% { transform: translate(0, 0) scale(1) }
-  }
-  @keyframes drift-7 {
-    0%   { transform: rotate(-15deg) translate(0, 0) scale(1) }
-    25%  { transform: rotate(-12deg) translate(-3vw, 5vh) scale(1.06) }
-    50%  { transform: rotate(-18deg) translate(2vw, 10vh) scale(0.95) }
-    75%  { transform: rotate(-13deg) translate(4vw, 4vh) scale(1.04) }
-    100% { transform: rotate(-15deg) translate(0, 0) scale(1) }
-  }
-  @keyframes caustic-shift {
-    0%   { transform: translate(0, 0) rotate(0deg) }
-    33%  { transform: translate(5%, -3%) rotate(2deg) }
-    66%  { transform: translate(-3%, 4%) rotate(-1deg) }
-    100% { transform: translate(0, 0) rotate(0deg) }
+  @keyframes ghost-float {
+    0%   { transform: translate(0, 0); opacity: 0.6 }
+    25%  { transform: translate(15px, -10px); opacity: 1 }
+    50%  { transform: translate(-10px, 20px); opacity: 0.5 }
+    75%  { transform: translate(-20px, -5px); opacity: 0.8 }
+    100% { transform: translate(0, 0); opacity: 0.6 }
   }
 
-  /* ═══ Noise texture overlay (same as main site) ═══ */
+  /* ═══ Noise texture ═══ */
   .stardust {
     position: fixed; inset: 0; z-index: 2;
-    pointer-events: none;
-    opacity: 0.25;
+    pointer-events: none; opacity: 0.25;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)' opacity='0.5'/%3E%3C/svg%3E");
     background-size: 200px 200px;
     mix-blend-mode: overlay;
@@ -248,23 +181,102 @@
 </head>
 <body>
 
-<!-- Prismatic refracted light background -->
-<div class="prismatic-bg">
-  <div class="prism-light l1"></div>
-  <div class="prism-light l2"></div>
-  <div class="prism-light l3"></div>
-  <div class="prism-light l4"></div>
-  <div class="prism-light l5"></div>
-  <div class="prism-light l6"></div>
-  <div class="prism-light l7"></div>
-  <div class="caustic-layer"></div>
+<div class="flare-bg">
+
+  <!-- ═══ Main flare — top right ═══ -->
+  <div class="flare-wrap">
+    <div class="flare-core"></div>
+    <svg class="flare-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="rayGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgba(255,245,220,0.7)"/>
+          <stop offset="40%" stop-color="rgba(255,220,160,0.3)"/>
+          <stop offset="100%" stop-color="rgba(255,200,140,0)" />
+        </linearGradient>
+        <filter id="rayBlur">
+          <feGaussianBlur stdDeviation="3"/>
+        </filter>
+      </defs>
+      <!-- 6 starburst rays at 60° intervals -->
+      <g filter="url(#rayBlur)" opacity="0.9">
+        <polygon points="400,400 400,0   410,400" fill="url(#rayGrad)"/>
+        <polygon points="400,400 746,200 400,410" fill="url(#rayGrad)"/>
+        <polygon points="400,400 746,600 410,400" fill="url(#rayGrad)"/>
+        <polygon points="400,400 400,800 390,400" fill="url(#rayGrad)"/>
+        <polygon points="400,400 54,600  400,390" fill="url(#rayGrad)"/>
+        <polygon points="400,400 54,200  390,400" fill="url(#rayGrad)"/>
+      </g>
+      <!-- Thinner secondary rays offset 30° -->
+      <g filter="url(#rayBlur)" opacity="0.4">
+        <polygon points="400,400 573,14  405,400" fill="url(#rayGrad)"/>
+        <polygon points="400,400 800,400 400,405" fill="url(#rayGrad)"/>
+        <polygon points="400,400 573,786 395,400" fill="url(#rayGrad)"/>
+        <polygon points="400,400 227,786 400,395" fill="url(#rayGrad)"/>
+        <polygon points="400,400 0,400   400,395" fill="url(#rayGrad)"/>
+        <polygon points="400,400 227,14  405,400" fill="url(#rayGrad)"/>
+      </g>
+      <!-- Center hex shape glow -->
+      <polygon points="400,360 434,380 434,420 400,440 366,420 366,380"
+               fill="rgba(255,250,235,0.4)" filter="url(#rayBlur)"/>
+    </svg>
+  </div>
+
+  <!-- ═══ Secondary flare — bottom left ═══ -->
+  <div class="flare-wrap-2">
+    <div class="flare-core"></div>
+    <svg class="flare-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="rayGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgba(180,220,255,0.5)"/>
+          <stop offset="40%" stop-color="rgba(140,190,255,0.2)"/>
+          <stop offset="100%" stop-color="rgba(120,170,240,0)"/>
+        </linearGradient>
+      </defs>
+      <g filter="url(#rayBlur)" opacity="0.7">
+        <polygon points="400,400 400,0   410,400" fill="url(#rayGrad2)"/>
+        <polygon points="400,400 746,200 400,410" fill="url(#rayGrad2)"/>
+        <polygon points="400,400 746,600 410,400" fill="url(#rayGrad2)"/>
+        <polygon points="400,400 400,800 390,400" fill="url(#rayGrad2)"/>
+        <polygon points="400,400 54,600  400,390" fill="url(#rayGrad2)"/>
+        <polygon points="400,400 54,200  390,400" fill="url(#rayGrad2)"/>
+      </g>
+      <polygon points="400,370 426,385 426,415 400,430 374,415 374,385"
+               fill="rgba(200,230,255,0.3)" filter="url(#rayBlur)"/>
+    </svg>
+  </div>
+
+  <!-- ═══ Third flare — center, faint pink ═══ -->
+  <div class="flare-wrap-3">
+    <div class="flare-core"></div>
+    <svg class="flare-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="rayGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="rgba(255,180,220,0.4)"/>
+          <stop offset="40%" stop-color="rgba(240,140,200,0.15)"/>
+          <stop offset="100%" stop-color="rgba(220,120,180,0)"/>
+        </linearGradient>
+      </defs>
+      <g filter="url(#rayBlur)" opacity="0.6">
+        <polygon points="400,400 400,0   408,400" fill="url(#rayGrad3)"/>
+        <polygon points="400,400 746,200 400,408" fill="url(#rayGrad3)"/>
+        <polygon points="400,400 746,600 408,400" fill="url(#rayGrad3)"/>
+        <polygon points="400,400 400,800 392,400" fill="url(#rayGrad3)"/>
+        <polygon points="400,400 54,600  400,392" fill="url(#rayGrad3)"/>
+        <polygon points="400,400 54,200  392,400" fill="url(#rayGrad3)"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- ═══ Ghost orbs — lens flare secondary spots ═══ -->
+  <div class="ghost-orb g1"></div>
+  <div class="ghost-orb g2"></div>
+  <div class="ghost-orb g3"></div>
+  <div class="ghost-orb g4"></div>
+
 </div>
 
-<!-- Noise texture -->
 <div class="stardust"></div>
-
-<!-- Info -->
-<div class="info">Prismatic Light Background Test — 虹光背景測試</div>
+<div class="info">Lens Flare v1 — 六角光斑 · 緩慢飄動</div>
 
 </body>
 </html>
