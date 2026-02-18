@@ -98,40 +98,6 @@ a, button { cursor: none }
 }
 
 
-/* ═══════════════════════════════════════════
-   AURORA PARTICLES — Floating Stardust
-   ═══════════════════════════════════════════ */
-.aurora-particles {
-  position: fixed; inset: 0; z-index: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-.particle {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(224,255,240,0.9);
-  box-shadow: 0 0 6px 2px rgba(224,255,240,0.4), 0 0 14px 4px rgba(224,255,240,0.15);
-  animation: float-up linear infinite;
-}
-.p1 { left: 12%; bottom: -5%; width:4px; height:4px; animation-duration:22s; animation-delay:0s; opacity:0.7 }
-.p2 { left: 28%; bottom: -8%; width:5px; height:5px; animation-duration:28s; animation-delay:-5s; opacity:0.6 }
-.p3 { left: 45%; bottom: -3%; width:3px; height:3px; animation-duration:25s; animation-delay:-10s; opacity:0.8 }
-.p4 { left: 62%; bottom: -6%; width:6px; height:6px; animation-duration:30s; animation-delay:-3s; opacity:0.5 }
-.p5 { left: 78%; bottom: -4%; width:4px; height:4px; animation-duration:24s; animation-delay:-12s; opacity:0.65 }
-.p6 { left: 35%; bottom: -7%; width:5px; height:5px; animation-duration:26s; animation-delay:-8s; opacity:0.55 }
-.p7 { left: 55%; bottom: -5%; width:3px; height:3px; animation-duration:32s; animation-delay:-15s; opacity:0.75 }
-.p8 { left: 88%; bottom: -3%; width:5px; height:5px; animation-duration:20s; animation-delay:-6s; opacity:0.5 }
-.p9 { left: 8%; bottom: -4%; width:3px; height:3px; animation-duration:27s; animation-delay:-2s; opacity:0.6 }
-.p10 { left: 50%; bottom: -6%; width:4px; height:4px; animation-duration:23s; animation-delay:-14s; opacity:0.55 }
-.p11 { left: 70%; bottom: -3%; width:5px; height:5px; animation-duration:29s; animation-delay:-9s; opacity:0.5 }
-.p12 { left: 20%; bottom: -5%; width:4px; height:4px; animation-duration:21s; animation-delay:-18s; opacity:0.65 }
-
-@keyframes float-up {
-  0%   { transform: translateY(0) translateX(0); opacity: 0 }
-  8%   { opacity: 0.7 }
-  92%  { opacity: 0.7 }
-  100% { transform: translateY(-105vh) translateX(30px); opacity: 0 }
-}
 
 
 /* ═══════════════════════════════════════════
