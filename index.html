@@ -171,29 +171,31 @@
 
     <div class="about-layout">
 
-      <!-- Left: Timeline Sidebar -->
-      <div class="timeline-sidebar">
-        <div class="timeline-rail">
-          <div class="timeline-progress"></div>
+      <!-- Left: Timeline Sidebar (spacer keeps flex layout space) -->
+      <div class="timeline-spacer">
+        <div class="timeline-sidebar" id="timelineSidebar">
+          <div class="timeline-rail">
+            <div class="timeline-progress"></div>
 
-          <div class="timeline-node active" data-chapter="0">
-            <div class="node-label">Chapter 1</div>
-            <div class="node-company">朱銘美術館</div>
-          </div>
+            <div class="timeline-node active" data-chapter="0">
+              <div class="node-label">Chapter 1</div>
+              <div class="node-company">朱銘美術館</div>
+            </div>
 
-          <div class="timeline-node" data-chapter="1">
-            <div class="node-label">Chapter 2</div>
-            <div class="node-company">Ann'S 女鞋</div>
-          </div>
+            <div class="timeline-node" data-chapter="1">
+              <div class="node-label">Chapter 2</div>
+              <div class="node-company">Ann'S 女鞋</div>
+            </div>
 
-          <div class="timeline-node" data-chapter="2">
-            <div class="node-label">Chapter 3</div>
-            <div class="node-company">鼎鈺集團</div>
-          </div>
+            <div class="timeline-node" data-chapter="2">
+              <div class="node-label">Chapter 3</div>
+              <div class="node-company">鼎鈺集團</div>
+            </div>
 
-          <div class="timeline-node" data-chapter="3">
-            <div class="node-label">Chapter 4</div>
-            <div class="node-company">侍達遊戲藝術</div>
+            <div class="timeline-node" data-chapter="3">
+              <div class="node-label">Chapter 4</div>
+              <div class="node-company">侍達遊戲藝術</div>
+            </div>
           </div>
         </div>
       </div>
@@ -338,6 +340,11 @@
   <div class="lightbox-counter"></div>
 </div>
 
+<!-- ═══ Back to Top ═══ -->
+<button class="back-to-top" id="backToTop" title="回到頂部">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
 <!-- ═══ Custom Cursor ═══ -->
 <div class="cursor-dot"></div>
 <div class="cursor-ring"></div>
@@ -377,6 +384,21 @@
         avatar.style.opacity = '1';
       }, 50);
     }
+  });
+  // Back to Top button
+  var btn = document.getElementById('backToTop');
+  if (btn) {
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 300) {
+        btn.classList.add('visible');
+      } else {
+        btn.classList.remove('visible');
+      }
+    });
+    btn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
   });
 })();
 </script>

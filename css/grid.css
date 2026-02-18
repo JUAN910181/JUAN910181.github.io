@@ -235,7 +235,7 @@
     transform .85s cubic-bezier(0.2,1,0.2,1),
     opacity .6s ease,
     color .6s ease,
-    letter-spacing .85s cubic-bezier(0.2,1,0.2,1);
+    letter-spacing 1.4s cubic-bezier(0.16,1,0.3,1);
 }
 .card-title .subtitle {
   display: block;
@@ -250,15 +250,15 @@
   text-overflow: ellipsis;
   transition:
     color .6s ease,
-    letter-spacing .85s cubic-bezier(0.2,1,0.2,1);
+    letter-spacing 1.4s cubic-bezier(0.16,1,0.3,1);
 }
 .card:hover .card-title {
   transform: translateY(0);
   opacity: 1;
   color: rgba(255,255,255,0.95);
-  letter-spacing: 0.15em;
+  letter-spacing: 0.28em;
 }
 .card:hover .card-title .subtitle {
   color: rgba(224,255,240,0.55);
-  letter-spacing: 0.15em;
+  letter-spacing: 0.25em;
 }
