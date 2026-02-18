@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prismatic Light Test — 虹光背景測試</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg-deep: #011A14;
+  }
+
+  body {
+    background: var(--bg-deep);
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: rgba(224,255,240,0.8);
+  }
+
+  /* ═══ Info overlay ═══ */
+  .info {
+    position: fixed;
+    bottom: 24px; left: 24px;
+    z-index: 100;
+    font-size: 0.75rem;
+    color: rgba(224,255,240,0.4);
+    letter-spacing: 0.05em;
+  }
+
+  /* ═══════════════════════════════════════════
+     PRISMATIC LIGHT — Refracted Rainbow Caustics
+     ═══════════════════════════════════════════ */
+
+  .prismatic-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: var(--bg-deep);
+    overflow: hidden;
+  }
+
+  /* Individual light blobs — each is a soft elliptical glow
+     with warm/cool spectral colors, like light through a prism */
+  .prism-light {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    mix-blend-mode: screen;
+    will-change: transform;
+  }
+
+  /* ── Light 1: Warm amber/gold — top right area ── */
+  .prism-light.l1 {
+    width: 45vw; height: 35vh;
+    top: -5%; right: -8%;
+    background: radial-gradient(
+      ellipse 70% 60% at 50% 50%,
+      rgba(255, 200, 100, 0.22) 0%,
+      rgba(255, 160, 60, 0.12) 35%,
+      transparent 70%
+    );
+    animation: drift-1 18s ease-in-out infinite;
+  }
+
+  /* ── Light 2: Cyan/teal refraction — center left ── */
+  .prism-light.l2 {
+    width: 40vw; height: 45vh;
+    top: 20%; left: -5%;
+    background: radial-gradient(
+      ellipse 65% 70% at 50% 50%,
+      rgba(100, 220, 240, 0.18) 0%,
+      rgba(60, 180, 220, 0.10) 40%,
+      transparent 70%
+    );
+    animation: drift-2 22s ease-in-out infinite;
+  }
+
+  /* ── Light 3: Rose/magenta — bottom center ── */
+  .prism-light.l3 {
+    width: 50vw; height: 40vh;
+    bottom: -10%; left: 25%;
+    background: radial-gradient(
+      ellipse 60% 55% at 50% 50%,
+      rgba(255, 140, 180, 0.16) 0%,
+      rgba(220, 100, 160, 0.08) 40%,
+      transparent 65%
+    );
+    animation: drift-3 20s ease-in-out infinite;
+  }
+
+  /* ── Light 4: Blue/violet — upper center ── */
+  .prism-light.l4 {
+    width: 35vw; height: 50vh;
+    top: 10%; left: 35%;
+    background: radial-gradient(
+      ellipse 55% 65% at 50% 50%,
+      rgba(120, 140, 255, 0.15) 0%,
+      rgba(100, 120, 240, 0.08) 40%,
+      transparent 65%
+    );
+    animation: drift-4 25s ease-in-out infinite;
+  }
+
+  /* ── Light 5: Orange/peach — mid right ── */
+  .prism-light.l5 {
+    width: 30vw; height: 35vh;
+    top: 40%; right: 5%;
+    background: radial-gradient(
+      ellipse 60% 50% at 50% 50%,
+      rgba(255, 180, 120, 0.20) 0%,
+      rgba(255, 150, 80, 0.10) 35%,
+      transparent 65%
+    );
+    animation: drift-5 19s ease-in-out infinite;
+  }
+
+  /* ── Light 6: Green/emerald — bottom left ── */
+  .prism-light.l6 {
+    width: 35vw; height: 30vh;
+    bottom: 5%; left: -3%;
+    background: radial-gradient(
+      ellipse 55% 60% at 50% 50%,
+      rgba(100, 240, 180, 0.14) 0%,
+      rgba(80, 200, 150, 0.07) 40%,
+      transparent 65%
+    );
+    animation: drift-6 23s ease-in-out infinite;
+  }
+
+  /* ── Light 7: Warm white/yellow highlight — creates the "sun streak" feel ── */
+  .prism-light.l7 {
+    width: 25vw; height: 60vh;
+    top: -10%; right: 15%;
+    background: radial-gradient(
+      ellipse 40% 80% at 50% 30%,
+      rgba(255, 240, 200, 0.25) 0%,
+      rgba(255, 220, 160, 0.12) 30%,
+      rgba(255, 180, 120, 0.06) 50%,
+      transparent 70%
+    );
+    transform: rotate(-15deg);
+    animation: drift-7 21s ease-in-out infinite;
+  }
+
+  /* ══ Caustic overlay — adds the "refracted edge" streaks ══ */
+  .caustic-layer {
+    position: absolute;
+    inset: -20%;
+    background:
+      /* Diagonal streak 1 */
+      linear-gradient(
+        135deg,
+        transparent 25%,
+        rgba(255, 200, 150, 0.06) 30%,
+        rgba(100, 200, 255, 0.04) 35%,
+        transparent 40%,
+        transparent 55%,
+        rgba(255, 150, 200, 0.05) 60%,
+        rgba(200, 255, 180, 0.03) 65%,
+        transparent 70%
+      ),
+      /* Diagonal streak 2 */
+      linear-gradient(
+        -45deg,
+        transparent 30%,
+        rgba(180, 160, 255, 0.05) 35%,
+        rgba(255, 220, 140, 0.04) 40%,
+        transparent 45%,
+        transparent 60%,
+        rgba(100, 255, 220, 0.04) 65%,
+        transparent 70%
+      );
+    filter: blur(40px);
+    mix-blend-mode: screen;
+    animation: caustic-shift 30s ease-in-out infinite;
+  }
+
+  /* ══ Animations — slow organic drifting ══ */
+  @keyframes drift-1 {
+    0%   { transform: translate(0, 0) scale(1) }
+    25%  { transform: translate(-6vw, 4vh) scale(1.08) }
+    50%  { transform: translate(-3vw, 8vh) scale(0.95) }
+    75%  { transform: translate(4vw, 3vh) scale(1.05) }
+    100% { transform: translate(0, 0) scale(1) }
+  }
+  @keyframes drift-2 {
+    0%   { transform: translate(0, 0) scale(1) }
+    25%  { transform: translate(5vw, -3vh) scale(1.06) }
+    50%  { transform: translate(8vw, 2vh) scale(0.92) }
+    75%  { transform: translate(3vw, 5vh) scale(1.04) }
+    100% { transform: translate(0, 0) scale(1) }
+  }
+  @keyframes drift-3 {
+    0%   { transform: translate(0, 0) scale(1) }
+    25%  { transform: translate(4vw, -5vh) scale(1.1) }
+    50%  { transform: translate(-5vw, -3vh) scale(0.94) }
+    75%  { transform: translate(-2vw, 4vh) scale(1.03) }
+    100% { transform: translate(0, 0) scale(1) }
+  }
+  @keyframes drift-4 {
+    0%   { transform: translate(0, 0) scale(1) rotate(0deg) }
+    25%  { transform: translate(-4vw, 5vh) scale(1.07) rotate(3deg) }
+    50%  { transform: translate(3vw, 8vh) scale(0.96) rotate(-2deg) }
+    75%  { transform: translate(5vw, 2vh) scale(1.04) rotate(1deg) }
+    100% { transform: translate(0, 0) scale(1) rotate(0deg) }
+  }
+  @keyframes drift-5 {
+    0%   { transform: translate(0, 0) scale(1) }
+    25%  { transform: translate(-5vw, -4vh) scale(1.08) }
+    50%  { transform: translate(-8vw, 3vh) scale(0.93) }
+    75%  { transform: translate(-2vw, -5vh) scale(1.06) }
+    100% { transform: translate(0, 0) scale(1) }
+  }
+  @keyframes drift-6 {
+    0%   { transform: translate(0, 0) scale(1) }
+    25%  { transform: translate(6vw, -2vh) scale(1.05) }
+    50%  { transform: translate(4vw, -6vh) scale(0.97) }
+    75%  { transform: translate(-3vw, -3vh) scale(1.08) }
+    100% { transform: translate(0, 0) scale(1) }
+  }
+  @keyframes drift-7 {
+    0%   { transform: rotate(-15deg) translate(0, 0) scale(1) }
+    25%  { transform: rotate(-12deg) translate(-3vw, 5vh) scale(1.06) }
+    50%  { transform: rotate(-18deg) translate(2vw, 10vh) scale(0.95) }
+    75%  { transform: rotate(-13deg) translate(4vw, 4vh) scale(1.04) }
+    100% { transform: rotate(-15deg) translate(0, 0) scale(1) }
+  }
+  @keyframes caustic-shift {
+    0%   { transform: translate(0, 0) rotate(0deg) }
+    33%  { transform: translate(5%, -3%) rotate(2deg) }
+    66%  { transform: translate(-3%, 4%) rotate(-1deg) }
+    100% { transform: translate(0, 0) rotate(0deg) }
+  }
+
+  /* ═══ Noise texture overlay (same as main site) ═══ */
+  .stardust {
+    position: fixed; inset: 0; z-index: 2;
+    pointer-events: none;
+    opacity: 0.25;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    mix-blend-mode: overlay;
+  }
+</style>
+</head>
+<body>
+
+<!-- Prismatic refracted light background -->
+<div class="prismatic-bg">
+  <div class="prism-light l1"></div>
+  <div class="prism-light l2"></div>
+  <div class="prism-light l3"></div>
+  <div class="prism-light l4"></div>
+  <div class="prism-light l5"></div>
+  <div class="prism-light l6"></div>
+  <div class="prism-light l7"></div>
+  <div class="caustic-layer"></div>
+</div>
+
+<!-- Noise texture -->
+<div class="stardust"></div>
+
+<!-- Info -->
+<div class="info">Prismatic Light Background Test — 虹光背景測試</div>
+
+</body>
+</html>
