@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Crystal Refraction v2 — 鑽石折射光</title>
+<title>Green Fabric Light — 綠色絲綢光暈</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root { --bg-deep: #011A14; }
@@ -23,247 +23,160 @@
     font-family: sans-serif;
   }
 
-  .crystal-bg {
+  /* ═══ Container ═══ */
+  .fabric-bg {
     position: fixed;
     inset: 0; z-index: 0;
     pointer-events: none;
+    background: var(--bg-deep);
     overflow: hidden;
   }
 
-  .shard {
-    position: absolute;
-    pointer-events: none;
-  }
-  .shard-layer {
+  /* ═══ Shared glow blob style ═══ */
+  .glow {
     position: absolute;
     border-radius: 50%;
     mix-blend-mode: screen;
+    will-change: transform;
   }
 
-  /* ═══ Shard 1 — Top left, warm ═══ */
-  .shard.s1 { top: -2%; left: 0%; animation: drift-a 14s ease-in-out infinite; }
-  .shard.s1 .red   { width: 300px; height: 220px; top: 0; left: 0;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,80,40,0.50) 0%, rgba(255,60,20,0.12) 50%, transparent 75%);
-    filter: blur(25px); }
-  .shard.s1 .green { width: 250px; height: 190px; top: -20px; left: 55px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(80,255,120,0.35) 0%, rgba(60,220,80,0.08) 50%, transparent 75%);
-    filter: blur(20px); }
-  .shard.s1 .blue  { width: 280px; height: 200px; top: 15px; left: 90px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(60,100,255,0.55) 0%, rgba(40,80,240,0.12) 50%, transparent 75%);
-    filter: blur(22px); }
-  .shard.s1 .white { width: 110px; height: 80px; top: 30px; left: 70px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.6) 0%, transparent 70%);
-    filter: blur(14px); }
-
-  /* ═══ Shard 2 — Top center, blue ═══ */
-  .shard.s2 { top: 0%; left: 30%; animation: drift-b 16s ease-in-out infinite; }
-  .shard.s2 .red   { width: 200px; height: 160px; top: 25px; left: -25px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,60,80,0.32) 0%, rgba(255,40,60,0.06) 50%, transparent 75%);
-    filter: blur(20px); }
-  .shard.s2 .green { width: 170px; height: 140px; top: 0; left: 30px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(100,255,180,0.26) 0%, rgba(80,220,140,0.06) 50%, transparent 75%);
-    filter: blur(18px); }
-  .shard.s2 .blue  { width: 220px; height: 180px; top: -12px; left: 0;
-    background: radial-gradient(ellipse at 50% 50%, rgba(50,80,255,0.50) 0%, rgba(30,60,240,0.10) 50%, transparent 75%);
-    filter: blur(22px); }
-  .shard.s2 .white { width: 85px; height: 70px; top: 22px; left: 40px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.45) 0%, transparent 70%);
-    filter: blur(12px); }
-
-  /* ═══ Shard 3 — Top right, golden ═══ */
-  .shard.s3 { top: -3%; right: 2%; animation: drift-c 12s ease-in-out infinite; }
-  .shard.s3 .red   { width: 330px; height: 250px; top: 0; left: 0;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,160,40,0.45) 0%, rgba(255,130,20,0.10) 50%, transparent 75%);
-    filter: blur(28px); }
-  .shard.s3 .green { width: 220px; height: 170px; top: 28px; left: 80px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(200,255,60,0.30) 0%, rgba(180,240,40,0.06) 50%, transparent 75%);
-    filter: blur(20px); }
-  .shard.s3 .blue  { width: 200px; height: 155px; top: 65px; left: 130px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(80,120,255,0.35) 0%, rgba(60,100,240,0.08) 50%, transparent 75%);
-    filter: blur(22px); }
-  .shard.s3 .white { width: 120px; height: 95px; top: 40px; left: 70px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,250,220,0.55) 0%, transparent 70%);
-    filter: blur(16px); }
-
-  /* ═══ Shard 4 — Left edge, cyan ═══ */
-  .shard.s4 { top: 30%; left: -3%; animation: drift-d 18s ease-in-out infinite; }
-  .shard.s4 .red   { width: 170px; height: 250px; top: 0; left: 40px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,50,70,0.28) 0%, rgba(255,30,50,0.05) 50%, transparent 75%);
-    filter: blur(18px); }
-  .shard.s4 .green { width: 140px; height: 220px; top: 28px; left: 15px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(60,255,200,0.32) 0%, rgba(40,220,180,0.06) 50%, transparent 75%);
-    filter: blur(20px); }
-  .shard.s4 .blue  { width: 195px; height: 280px; top: -15px; left: 0;
-    background: radial-gradient(ellipse at 50% 50%, rgba(40,80,255,0.45) 0%, rgba(20,60,240,0.10) 50%, transparent 75%);
-    filter: blur(24px); }
-  .shard.s4 .white { width: 70px; height: 100px; top: 55px; left: 50px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.40) 0%, transparent 70%);
-    filter: blur(12px); }
-
-  /* ═══ Shard 5 — Bottom left, warm ═══ */
-  .shard.s5 { bottom: 0%; left: 3%; animation: drift-e 15s ease-in-out infinite; }
-  .shard.s5 .red   { width: 360px; height: 250px; top: 0; left: 0;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,140,30,0.45) 0%, rgba(255,120,20,0.10) 50%, transparent 75%);
-    filter: blur(28px); }
-  .shard.s5 .green { width: 250px; height: 195px; top: -28px; left: 70px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(180,255,80,0.26) 0%, rgba(150,240,60,0.05) 50%, transparent 75%);
-    filter: blur(20px); }
-  .shard.s5 .blue  { width: 280px; height: 220px; top: 15px; left: 110px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(50,90,255,0.40) 0%, rgba(30,70,240,0.08) 50%, transparent 75%);
-    filter: blur(24px); }
-  .shard.s5 .white { width: 140px; height: 110px; top: 32px; left: 85px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,250,200,0.50) 0%, transparent 70%);
-    filter: blur(16px); }
-
-  /* ═══ Shard 6 — Bottom center ═══ */
-  .shard.s6 { bottom: 3%; left: 38%; animation: drift-f 13s ease-in-out infinite; }
-  .shard.s6 .red   { width: 210px; height: 165px; top: 15px; left: -15px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,70,100,0.36) 0%, rgba(255,50,80,0.06) 50%, transparent 75%);
-    filter: blur(20px); }
-  .shard.s6 .green { width: 180px; height: 140px; top: -12px; left: 28px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(80,255,160,0.28) 0%, rgba(60,220,120,0.05) 50%, transparent 75%);
-    filter: blur(18px); }
-  .shard.s6 .blue  { width: 220px; height: 170px; top: 0; left: 14px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(60,100,255,0.42) 0%, rgba(40,80,240,0.08) 50%, transparent 75%);
-    filter: blur(22px); }
-  .shard.s6 .white { width: 80px; height: 60px; top: 28px; left: 55px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.42) 0%, transparent 70%);
-    filter: blur(12px); }
-
-  /* ═══ Shard 7 — Bottom right, large warm ═══ */
-  .shard.s7 { bottom: -2%; right: 0%; animation: drift-g 17s ease-in-out infinite; }
-  .shard.s7 .red   { width: 380px; height: 280px; top: 0; left: 0;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,100,50,0.40) 0%, rgba(255,80,30,0.08) 50%, transparent 75%);
-    filter: blur(28px); }
-  .shard.s7 .green { width: 280px; height: 210px; top: 15px; left: 85px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(160,255,100,0.26) 0%, rgba(140,240,80,0.05) 50%, transparent 75%);
-    filter: blur(22px); }
-  .shard.s7 .blue  { width: 300px; height: 235px; top: -15px; left: 125px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(50,80,255,0.44) 0%, rgba(30,60,240,0.10) 50%, transparent 75%);
-    filter: blur(24px); }
-  .shard.s7 .white { width: 140px; height: 110px; top: 40px; left: 100px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,240,0.50) 0%, transparent 70%);
-    filter: blur(16px); }
-
-  /* ═══ Shard 8 — Right edge ═══ */
-  .shard.s8 { top: 45%; right: -2%; animation: drift-h 14.5s ease-in-out infinite; }
-  .shard.s8 .red   { width: 180px; height: 265px; top: 0; left: 28px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,50,80,0.34) 0%, rgba(255,30,60,0.06) 50%, transparent 75%);
-    filter: blur(20px); }
-  .shard.s8 .green { width: 155px; height: 220px; top: 22px; left: 0;
-    background: radial-gradient(ellipse at 50% 50%, rgba(100,255,180,0.26) 0%, rgba(80,220,160,0.05) 50%, transparent 75%);
-    filter: blur(18px); }
-  .shard.s8 .blue  { width: 195px; height: 280px; top: -8px; left: -14px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(60,90,255,0.42) 0%, rgba(40,70,240,0.08) 50%, transparent 75%);
-    filter: blur(22px); }
-  .shard.s8 .white { width: 70px; height: 100px; top: 55px; left: 42px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.35) 0%, transparent 70%);
-    filter: blur(12px); }
-
-  /* ═══ Shard 9 — Top right area, accent ═══ */
-  .shard.s9 { top: 12%; right: 15%; animation: drift-b 11s ease-in-out infinite; }
-  .shard.s9 .red   { width: 140px; height: 110px; top: 0; left: 0;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,80,60,0.30) 0%, rgba(255,60,40,0.06) 50%, transparent 75%);
-    filter: blur(16px); }
-  .shard.s9 .green { width: 110px; height: 95px; top: -14px; left: 32px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(100,255,140,0.24) 0%, rgba(80,220,120,0.05) 50%, transparent 75%);
-    filter: blur(14px); }
-  .shard.s9 .blue  { width: 155px; height: 125px; top: 8px; left: 22px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(60,100,255,0.38) 0%, rgba(40,80,240,0.08) 50%, transparent 75%);
-    filter: blur(18px); }
-  .shard.s9 .white { width: 55px; height: 45px; top: 22px; left: 42px;
-    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.38) 0%, transparent 70%);
-    filter: blur(10px); }
-
-  /* ═══ Light streaks — wider + softer ═══ */
-  .streak {
-    position: absolute;
-    mix-blend-mode: screen;
-    filter: blur(5px);
-    opacity: 0.22;
-  }
-  .streak.st1 {
-    width: 500px; height: 4px; top: 10%; left: 0%; transform: rotate(-30deg);
-    background: linear-gradient(90deg, transparent, rgba(255,200,100,0.5) 30%, rgba(255,255,255,0.7) 50%, rgba(100,180,255,0.5) 70%, transparent);
-    animation: streak-pulse 8s ease-in-out infinite;
-  }
-  .streak.st2 {
-    width: 400px; height: 3px; bottom: 12%; right: 2%; transform: rotate(25deg);
-    background: linear-gradient(90deg, transparent, rgba(255,120,80,0.4) 30%, rgba(255,255,240,0.6) 50%, rgba(80,140,255,0.4) 70%, transparent);
-    animation: streak-pulse 10s ease-in-out infinite reverse;
-  }
-  .streak.st3 {
-    width: 450px; height: 3px; top: 5%; right: 5%; transform: rotate(-15deg);
-    background: linear-gradient(90deg, transparent, rgba(255,180,60,0.4) 30%, rgba(255,255,220,0.6) 50%, rgba(60,120,255,0.4) 70%, transparent);
-    animation: streak-pulse 12s ease-in-out infinite;
-  }
-  .streak.st4 {
-    width: 350px; height: 3px; bottom: 8%; left: 8%; transform: rotate(40deg);
-    background: linear-gradient(90deg, transparent, rgba(255,100,150,0.4) 30%, rgba(255,255,255,0.5) 50%, rgba(100,200,255,0.4) 70%, transparent);
-    animation: streak-pulse 9s ease-in-out infinite reverse;
+  /* ═══ Glow 1 — Large bright cyan, right side ═══ */
+  .glow.g1 {
+    width: 70vw; height: 80vh;
+    top: -15%; right: -15%;
+    background: radial-gradient(
+      ellipse 65% 60% at 50% 50%,
+      rgba(0, 230, 200, 0.30) 0%,
+      rgba(0, 200, 180, 0.15) 30%,
+      rgba(0, 180, 160, 0.05) 55%,
+      transparent 75%
+    );
+    filter: blur(60px);
+    animation: flow-1 12s ease-in-out infinite;
   }
 
-  /* ═══ Animations ═══ */
-  @keyframes drift-a {
-    0%   { transform: translate(0,0) rotate(0deg) }
-    25%  { transform: translate(15px,10px) rotate(2deg) }
-    50%  { transform: translate(-8px,20px) rotate(-1deg) }
-    75%  { transform: translate(10px,-5px) rotate(1.5deg) }
-    100% { transform: translate(0,0) rotate(0deg) }
+  /* ═══ Glow 2 — Deep emerald green, left side ═══ */
+  .glow.g2 {
+    width: 65vw; height: 75vh;
+    top: 10%; left: -20%;
+    background: radial-gradient(
+      ellipse 60% 65% at 50% 50%,
+      rgba(0, 180, 120, 0.28) 0%,
+      rgba(0, 150, 100, 0.12) 35%,
+      rgba(0, 120, 80, 0.04) 55%,
+      transparent 75%
+    );
+    filter: blur(55px);
+    animation: flow-2 15s ease-in-out infinite;
   }
-  @keyframes drift-b {
-    0%   { transform: translate(0,0) rotate(0deg) }
-    25%  { transform: translate(-12px,8px) rotate(-2deg) }
-    50%  { transform: translate(10px,15px) rotate(1deg) }
-    75%  { transform: translate(-5px,-10px) rotate(-1deg) }
-    100% { transform: translate(0,0) rotate(0deg) }
+
+  /* ═══ Glow 3 — Teal blue, upper area ═══ */
+  .glow.g3 {
+    width: 60vw; height: 70vh;
+    top: -20%; left: 20%;
+    background: radial-gradient(
+      ellipse 55% 60% at 50% 50%,
+      rgba(0, 160, 220, 0.25) 0%,
+      rgba(0, 140, 200, 0.10) 35%,
+      rgba(0, 120, 180, 0.04) 55%,
+      transparent 75%
+    );
+    filter: blur(65px);
+    animation: flow-3 18s ease-in-out infinite;
   }
-  @keyframes drift-c {
-    0%   { transform: translate(0,0) rotate(0deg) }
-    25%  { transform: translate(-18px,12px) rotate(3deg) }
-    50%  { transform: translate(5px,25px) rotate(-2deg) }
-    75%  { transform: translate(12px,5px) rotate(1deg) }
-    100% { transform: translate(0,0) rotate(0deg) }
+
+  /* ═══ Glow 4 — Bright mint, bottom right ═══ */
+  .glow.g4 {
+    width: 55vw; height: 65vh;
+    bottom: -20%; right: -5%;
+    background: radial-gradient(
+      ellipse 60% 55% at 50% 50%,
+      rgba(50, 255, 200, 0.22) 0%,
+      rgba(30, 220, 180, 0.10) 35%,
+      rgba(20, 200, 160, 0.03) 55%,
+      transparent 75%
+    );
+    filter: blur(55px);
+    animation: flow-4 14s ease-in-out infinite;
   }
-  @keyframes drift-d {
-    0%   { transform: translate(0,0) rotate(0deg) }
-    25%  { transform: translate(10px,-12px) rotate(-1.5deg) }
-    50%  { transform: translate(18px,8px) rotate(2deg) }
-    75%  { transform: translate(5px,15px) rotate(-1deg) }
-    100% { transform: translate(0,0) rotate(0deg) }
+
+  /* ═══ Glow 5 — Deep ocean blue-green, center ═══ */
+  .glow.g5 {
+    width: 50vw; height: 60vh;
+    top: 25%; left: 30%;
+    background: radial-gradient(
+      ellipse 55% 55% at 50% 50%,
+      rgba(0, 120, 160, 0.20) 0%,
+      rgba(0, 100, 140, 0.08) 35%,
+      rgba(0, 80, 120, 0.03) 55%,
+      transparent 75%
+    );
+    filter: blur(70px);
+    animation: flow-5 20s ease-in-out infinite;
   }
-  @keyframes drift-e {
-    0%   { transform: translate(0,0) rotate(0deg) }
-    25%  { transform: translate(12px,-8px) rotate(2deg) }
-    50%  { transform: translate(-10px,-15px) rotate(-1.5deg) }
-    75%  { transform: translate(-15px,5px) rotate(1deg) }
-    100% { transform: translate(0,0) rotate(0deg) }
+
+  /* ═══ Glow 6 — Warm cyan highlight, accent ═══ */
+  .glow.g6 {
+    width: 40vw; height: 50vh;
+    bottom: 5%; left: -10%;
+    background: radial-gradient(
+      ellipse 50% 55% at 50% 50%,
+      rgba(0, 210, 190, 0.24) 0%,
+      rgba(0, 190, 170, 0.10) 35%,
+      rgba(0, 170, 150, 0.03) 55%,
+      transparent 75%
+    );
+    filter: blur(50px);
+    animation: flow-6 16s ease-in-out infinite;
   }
-  @keyframes drift-f {
-    0%   { transform: translate(0,0) rotate(0deg) }
-    25%  { transform: translate(-8px,-12px) rotate(-2deg) }
-    50%  { transform: translate(12px,-5px) rotate(1.5deg) }
-    75%  { transform: translate(5px,10px) rotate(-1deg) }
-    100% { transform: translate(0,0) rotate(0deg) }
+
+  /* ═══ Animations — large slow organic movement ═══ */
+  @keyframes flow-1 {
+    0%   { transform: translate(0, 0) scale(1) }
+    20%  { transform: translate(-12vw, 8vh) scale(1.08) }
+    40%  { transform: translate(-8vw, 18vh) scale(0.95) }
+    60%  { transform: translate(5vw, 12vh) scale(1.05) }
+    80%  { transform: translate(8vw, 3vh) scale(0.97) }
+    100% { transform: translate(0, 0) scale(1) }
   }
-  @keyframes drift-g {
-    0%   { transform: translate(0,0) rotate(0deg) }
-    25%  { transform: translate(-15px,10px) rotate(2.5deg) }
-    50%  { transform: translate(8px,20px) rotate(-1.5deg) }
-    75%  { transform: translate(15px,-8px) rotate(1deg) }
-    100% { transform: translate(0,0) rotate(0deg) }
+  @keyframes flow-2 {
+    0%   { transform: translate(0, 0) scale(1) }
+    20%  { transform: translate(15vw, -5vh) scale(1.06) }
+    40%  { transform: translate(20vw, 8vh) scale(0.92) }
+    60%  { transform: translate(10vw, 15vh) scale(1.04) }
+    80%  { transform: translate(5vw, -3vh) scale(0.98) }
+    100% { transform: translate(0, 0) scale(1) }
   }
-  @keyframes drift-h {
-    0%   { transform: translate(0,0) rotate(0deg) }
-    25%  { transform: translate(-10px,15px) rotate(-2deg) }
-    50%  { transform: translate(-18px,-5px) rotate(1.5deg) }
-    75%  { transform: translate(8px,-12px) rotate(-1deg) }
-    100% { transform: translate(0,0) rotate(0deg) }
+  @keyframes flow-3 {
+    0%   { transform: translate(0, 0) scale(1) rotate(0deg) }
+    20%  { transform: translate(-5vw, 12vh) scale(1.07) rotate(2deg) }
+    40%  { transform: translate(8vw, 20vh) scale(0.93) rotate(-1deg) }
+    60%  { transform: translate(12vw, 8vh) scale(1.05) rotate(1deg) }
+    80%  { transform: translate(3vw, -5vh) scale(0.96) rotate(-1deg) }
+    100% { transform: translate(0, 0) scale(1) rotate(0deg) }
   }
-  @keyframes streak-pulse {
-    0%   { opacity: 0.12 }
-    50%  { opacity: 0.30 }
-    100% { opacity: 0.12 }
+  @keyframes flow-4 {
+    0%   { transform: translate(0, 0) scale(1) }
+    20%  { transform: translate(-10vw, -10vh) scale(1.10) }
+    40%  { transform: translate(-18vw, -3vh) scale(0.90) }
+    60%  { transform: translate(-8vw, -15vh) scale(1.06) }
+    80%  { transform: translate(3vw, -8vh) scale(0.95) }
+    100% { transform: translate(0, 0) scale(1) }
+  }
+  @keyframes flow-5 {
+    0%   { transform: translate(0, 0) scale(1) rotate(0deg) }
+    25%  { transform: translate(-8vw, 10vh) scale(1.08) rotate(3deg) }
+    50%  { transform: translate(6vw, 15vh) scale(0.94) rotate(-2deg) }
+    75%  { transform: translate(10vw, -5vh) scale(1.03) rotate(1deg) }
+    100% { transform: translate(0, 0) scale(1) rotate(0deg) }
+  }
+  @keyframes flow-6 {
+    0%   { transform: translate(0, 0) scale(1) }
+    20%  { transform: translate(12vw, -8vh) scale(1.05) }
+    40%  { transform: translate(18vw, 5vh) scale(0.93) }
+    60%  { transform: translate(8vw, 12vh) scale(1.07) }
+    80%  { transform: translate(-3vw, 5vh) scale(0.96) }
+    100% { transform: translate(0, 0) scale(1) }
   }
 
   /* ═══ Noise texture ═══ */
@@ -278,25 +191,17 @@
 </head>
 <body>
 
-<div class="crystal-bg">
-  <div class="shard s1"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
-  <div class="shard s2"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
-  <div class="shard s3"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
-  <div class="shard s4"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
-  <div class="shard s5"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
-  <div class="shard s6"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
-  <div class="shard s7"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
-  <div class="shard s8"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
-  <div class="shard s9"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
-
-  <div class="streak st1"></div>
-  <div class="streak st2"></div>
-  <div class="streak st3"></div>
-  <div class="streak st4"></div>
+<div class="fabric-bg">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="glow g3"></div>
+  <div class="glow g4"></div>
+  <div class="glow g5"></div>
+  <div class="glow g6"></div>
 </div>
 
 <div class="stardust"></div>
-<div class="info">Crystal Refraction v2 — 放大 + 更柔</div>
+<div class="info">Green Fabric Light — 綠色絲綢光暈</div>
 
 </body>
 </html>
