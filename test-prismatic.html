@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lens Flare Test — 鏡頭光斑測試</title>
+<title>Crystal Refraction v2 — 鑽石折射光</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root { --bg-deep: #011A14; }
@@ -19,160 +19,257 @@
     bottom: 24px; left: 24px;
     z-index: 100;
     font-size: 0.75rem;
-    color: rgba(224,255,240,0.35);
+    color: rgba(23, 153, 90, 0.3);
     font-family: sans-serif;
   }
 
-  /* ═══ Container ═══ */
-  .flare-bg {
+  .crystal-bg {
     position: fixed;
     inset: 0; z-index: 0;
     pointer-events: none;
     overflow: hidden;
   }
 
-  /* ═══════════════════════════════════════════
-     LENS FLARE — SVG hexagonal starburst
-     ═══════════════════════════════════════════ */
-  .flare-wrap {
+  .shard {
     position: absolute;
-    width: 700px; height: 700px;
-    top: -8%; right: -5%;
-    animation: flare-drift 16s ease-in-out infinite;
+    pointer-events: none;
   }
-
-  /* Core glow — bright white/warm center */
-  .flare-core {
-    position: absolute;
-    width: 100%; height: 100%;
-    top: 0; left: 0;
-    background: radial-gradient(
-      circle at 50% 50%,
-      rgba(255,250,230,0.6) 0%,
-      rgba(255,230,180,0.3) 8%,
-      rgba(255,200,140,0.1) 20%,
-      transparent 45%
-    );
-    filter: blur(8px);
-    mix-blend-mode: screen;
-  }
-
-  /* SVG starburst — 6-pointed rays */
-  .flare-svg {
-    position: absolute;
-    width: 100%; height: 100%;
-    top: 0; left: 0;
-    mix-blend-mode: screen;
-    opacity: 0.85;
-    animation: flare-rotate 20s linear infinite;
-  }
-
-  /* ═══ Secondary smaller flare — bottom left ═══ */
-  .flare-wrap-2 {
-    position: absolute;
-    width: 400px; height: 400px;
-    bottom: 5%; left: 10%;
-    animation: flare-drift-2 18s ease-in-out infinite;
-  }
-  .flare-wrap-2 .flare-core {
-    background: radial-gradient(
-      circle at 50% 50%,
-      rgba(200,230,255,0.35) 0%,
-      rgba(160,200,255,0.15) 10%,
-      rgba(140,180,240,0.06) 25%,
-      transparent 45%
-    );
-  }
-  .flare-wrap-2 .flare-svg { opacity: 0.5; animation-duration: 25s; animation-direction: reverse; }
-
-  /* ═══ Third flare — center, faint ═══ */
-  .flare-wrap-3 {
-    position: absolute;
-    width: 300px; height: 300px;
-    top: 35%; left: 40%;
-    animation: flare-drift-3 14s ease-in-out infinite;
-  }
-  .flare-wrap-3 .flare-core {
-    background: radial-gradient(
-      circle at 50% 50%,
-      rgba(255,200,240,0.25) 0%,
-      rgba(240,160,220,0.10) 12%,
-      rgba(220,140,200,0.04) 25%,
-      transparent 45%
-    );
-  }
-  .flare-wrap-3 .flare-svg { opacity: 0.35; animation-duration: 30s; }
-
-  /* ═══ Ghost orbs along flare axis ═══ */
-  .ghost-orb {
+  .shard-layer {
     position: absolute;
     border-radius: 50%;
     mix-blend-mode: screen;
-    filter: blur(6px);
   }
-  .ghost-orb.g1 {
-    width: 80px; height: 80px;
-    top: 30%; right: 25%;
-    background: radial-gradient(circle, rgba(120,200,255,0.20) 0%, rgba(100,180,240,0.06) 50%, transparent 70%);
-    animation: ghost-float 12s ease-in-out infinite;
+
+  /* ═══ Shard 1 — Top left, warm ═══ */
+  .shard.s1 { top: -2%; left: 0%; animation: drift-a 14s ease-in-out infinite; }
+  .shard.s1 .red   { width: 300px; height: 220px; top: 0; left: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,80,40,0.50) 0%, rgba(255,60,20,0.12) 50%, transparent 75%);
+    filter: blur(25px); }
+  .shard.s1 .green { width: 250px; height: 190px; top: -20px; left: 55px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(80,255,120,0.35) 0%, rgba(60,220,80,0.08) 50%, transparent 75%);
+    filter: blur(20px); }
+  .shard.s1 .blue  { width: 280px; height: 200px; top: 15px; left: 90px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(60,100,255,0.55) 0%, rgba(40,80,240,0.12) 50%, transparent 75%);
+    filter: blur(22px); }
+  .shard.s1 .white { width: 110px; height: 80px; top: 30px; left: 70px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.6) 0%, transparent 70%);
+    filter: blur(14px); }
+
+  /* ═══ Shard 2 — Top center, blue ═══ */
+  .shard.s2 { top: 0%; left: 30%; animation: drift-b 16s ease-in-out infinite; }
+  .shard.s2 .red   { width: 200px; height: 160px; top: 25px; left: -25px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,60,80,0.32) 0%, rgba(255,40,60,0.06) 50%, transparent 75%);
+    filter: blur(20px); }
+  .shard.s2 .green { width: 170px; height: 140px; top: 0; left: 30px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(100,255,180,0.26) 0%, rgba(80,220,140,0.06) 50%, transparent 75%);
+    filter: blur(18px); }
+  .shard.s2 .blue  { width: 220px; height: 180px; top: -12px; left: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(50,80,255,0.50) 0%, rgba(30,60,240,0.10) 50%, transparent 75%);
+    filter: blur(22px); }
+  .shard.s2 .white { width: 85px; height: 70px; top: 22px; left: 40px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.45) 0%, transparent 70%);
+    filter: blur(12px); }
+
+  /* ═══ Shard 3 — Top right, golden ═══ */
+  .shard.s3 { top: -3%; right: 2%; animation: drift-c 12s ease-in-out infinite; }
+  .shard.s3 .red   { width: 330px; height: 250px; top: 0; left: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,160,40,0.45) 0%, rgba(255,130,20,0.10) 50%, transparent 75%);
+    filter: blur(28px); }
+  .shard.s3 .green { width: 220px; height: 170px; top: 28px; left: 80px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(200,255,60,0.30) 0%, rgba(180,240,40,0.06) 50%, transparent 75%);
+    filter: blur(20px); }
+  .shard.s3 .blue  { width: 200px; height: 155px; top: 65px; left: 130px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(80,120,255,0.35) 0%, rgba(60,100,240,0.08) 50%, transparent 75%);
+    filter: blur(22px); }
+  .shard.s3 .white { width: 120px; height: 95px; top: 40px; left: 70px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,250,220,0.55) 0%, transparent 70%);
+    filter: blur(16px); }
+
+  /* ═══ Shard 4 — Left edge, cyan ═══ */
+  .shard.s4 { top: 30%; left: -3%; animation: drift-d 18s ease-in-out infinite; }
+  .shard.s4 .red   { width: 170px; height: 250px; top: 0; left: 40px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,50,70,0.28) 0%, rgba(255,30,50,0.05) 50%, transparent 75%);
+    filter: blur(18px); }
+  .shard.s4 .green { width: 140px; height: 220px; top: 28px; left: 15px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(60,255,200,0.32) 0%, rgba(40,220,180,0.06) 50%, transparent 75%);
+    filter: blur(20px); }
+  .shard.s4 .blue  { width: 195px; height: 280px; top: -15px; left: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(40,80,255,0.45) 0%, rgba(20,60,240,0.10) 50%, transparent 75%);
+    filter: blur(24px); }
+  .shard.s4 .white { width: 70px; height: 100px; top: 55px; left: 50px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.40) 0%, transparent 70%);
+    filter: blur(12px); }
+
+  /* ═══ Shard 5 — Bottom left, warm ═══ */
+  .shard.s5 { bottom: 0%; left: 3%; animation: drift-e 15s ease-in-out infinite; }
+  .shard.s5 .red   { width: 360px; height: 250px; top: 0; left: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,140,30,0.45) 0%, rgba(255,120,20,0.10) 50%, transparent 75%);
+    filter: blur(28px); }
+  .shard.s5 .green { width: 250px; height: 195px; top: -28px; left: 70px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(180,255,80,0.26) 0%, rgba(150,240,60,0.05) 50%, transparent 75%);
+    filter: blur(20px); }
+  .shard.s5 .blue  { width: 280px; height: 220px; top: 15px; left: 110px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(50,90,255,0.40) 0%, rgba(30,70,240,0.08) 50%, transparent 75%);
+    filter: blur(24px); }
+  .shard.s5 .white { width: 140px; height: 110px; top: 32px; left: 85px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,250,200,0.50) 0%, transparent 70%);
+    filter: blur(16px); }
+
+  /* ═══ Shard 6 — Bottom center ═══ */
+  .shard.s6 { bottom: 3%; left: 38%; animation: drift-f 13s ease-in-out infinite; }
+  .shard.s6 .red   { width: 210px; height: 165px; top: 15px; left: -15px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,70,100,0.36) 0%, rgba(255,50,80,0.06) 50%, transparent 75%);
+    filter: blur(20px); }
+  .shard.s6 .green { width: 180px; height: 140px; top: -12px; left: 28px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(80,255,160,0.28) 0%, rgba(60,220,120,0.05) 50%, transparent 75%);
+    filter: blur(18px); }
+  .shard.s6 .blue  { width: 220px; height: 170px; top: 0; left: 14px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(60,100,255,0.42) 0%, rgba(40,80,240,0.08) 50%, transparent 75%);
+    filter: blur(22px); }
+  .shard.s6 .white { width: 80px; height: 60px; top: 28px; left: 55px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.42) 0%, transparent 70%);
+    filter: blur(12px); }
+
+  /* ═══ Shard 7 — Bottom right, large warm ═══ */
+  .shard.s7 { bottom: -2%; right: 0%; animation: drift-g 17s ease-in-out infinite; }
+  .shard.s7 .red   { width: 380px; height: 280px; top: 0; left: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,100,50,0.40) 0%, rgba(255,80,30,0.08) 50%, transparent 75%);
+    filter: blur(28px); }
+  .shard.s7 .green { width: 280px; height: 210px; top: 15px; left: 85px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(160,255,100,0.26) 0%, rgba(140,240,80,0.05) 50%, transparent 75%);
+    filter: blur(22px); }
+  .shard.s7 .blue  { width: 300px; height: 235px; top: -15px; left: 125px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(50,80,255,0.44) 0%, rgba(30,60,240,0.10) 50%, transparent 75%);
+    filter: blur(24px); }
+  .shard.s7 .white { width: 140px; height: 110px; top: 40px; left: 100px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,240,0.50) 0%, transparent 70%);
+    filter: blur(16px); }
+
+  /* ═══ Shard 8 — Right edge ═══ */
+  .shard.s8 { top: 45%; right: -2%; animation: drift-h 14.5s ease-in-out infinite; }
+  .shard.s8 .red   { width: 180px; height: 265px; top: 0; left: 28px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,50,80,0.34) 0%, rgba(255,30,60,0.06) 50%, transparent 75%);
+    filter: blur(20px); }
+  .shard.s8 .green { width: 155px; height: 220px; top: 22px; left: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(100,255,180,0.26) 0%, rgba(80,220,160,0.05) 50%, transparent 75%);
+    filter: blur(18px); }
+  .shard.s8 .blue  { width: 195px; height: 280px; top: -8px; left: -14px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(60,90,255,0.42) 0%, rgba(40,70,240,0.08) 50%, transparent 75%);
+    filter: blur(22px); }
+  .shard.s8 .white { width: 70px; height: 100px; top: 55px; left: 42px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.35) 0%, transparent 70%);
+    filter: blur(12px); }
+
+  /* ═══ Shard 9 — Top right area, accent ═══ */
+  .shard.s9 { top: 12%; right: 15%; animation: drift-b 11s ease-in-out infinite; }
+  .shard.s9 .red   { width: 140px; height: 110px; top: 0; left: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,80,60,0.30) 0%, rgba(255,60,40,0.06) 50%, transparent 75%);
+    filter: blur(16px); }
+  .shard.s9 .green { width: 110px; height: 95px; top: -14px; left: 32px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(100,255,140,0.24) 0%, rgba(80,220,120,0.05) 50%, transparent 75%);
+    filter: blur(14px); }
+  .shard.s9 .blue  { width: 155px; height: 125px; top: 8px; left: 22px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(60,100,255,0.38) 0%, rgba(40,80,240,0.08) 50%, transparent 75%);
+    filter: blur(18px); }
+  .shard.s9 .white { width: 55px; height: 45px; top: 22px; left: 42px;
+    background: radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.38) 0%, transparent 70%);
+    filter: blur(10px); }
+
+  /* ═══ Light streaks — wider + softer ═══ */
+  .streak {
+    position: absolute;
+    mix-blend-mode: screen;
+    filter: blur(5px);
+    opacity: 0.22;
   }
-  .ghost-orb.g2 {
-    width: 50px; height: 50px;
-    top: 45%; right: 35%;
-    background: radial-gradient(circle, rgba(255,180,220,0.18) 0%, rgba(240,140,200,0.05) 50%, transparent 70%);
-    animation: ghost-float 15s ease-in-out infinite reverse;
+  .streak.st1 {
+    width: 500px; height: 4px; top: 10%; left: 0%; transform: rotate(-30deg);
+    background: linear-gradient(90deg, transparent, rgba(255,200,100,0.5) 30%, rgba(255,255,255,0.7) 50%, rgba(100,180,255,0.5) 70%, transparent);
+    animation: streak-pulse 8s ease-in-out infinite;
   }
-  .ghost-orb.g3 {
-    width: 110px; height: 110px;
-    top: 55%; left: 30%;
-    background: radial-gradient(circle, rgba(200,255,200,0.12) 0%, rgba(160,240,180,0.04) 50%, transparent 70%);
-    animation: ghost-float 18s ease-in-out infinite;
+  .streak.st2 {
+    width: 400px; height: 3px; bottom: 12%; right: 2%; transform: rotate(25deg);
+    background: linear-gradient(90deg, transparent, rgba(255,120,80,0.4) 30%, rgba(255,255,240,0.6) 50%, rgba(80,140,255,0.4) 70%, transparent);
+    animation: streak-pulse 10s ease-in-out infinite reverse;
   }
-  .ghost-orb.g4 {
-    width: 65px; height: 65px;
-    top: 22%; left: 50%;
-    background: radial-gradient(circle, rgba(255,220,140,0.16) 0%, rgba(255,200,120,0.05) 50%, transparent 70%);
-    animation: ghost-float 10s ease-in-out infinite reverse;
+  .streak.st3 {
+    width: 450px; height: 3px; top: 5%; right: 5%; transform: rotate(-15deg);
+    background: linear-gradient(90deg, transparent, rgba(255,180,60,0.4) 30%, rgba(255,255,220,0.6) 50%, rgba(60,120,255,0.4) 70%, transparent);
+    animation: streak-pulse 12s ease-in-out infinite;
+  }
+  .streak.st4 {
+    width: 350px; height: 3px; bottom: 8%; left: 8%; transform: rotate(40deg);
+    background: linear-gradient(90deg, transparent, rgba(255,100,150,0.4) 30%, rgba(255,255,255,0.5) 50%, rgba(100,200,255,0.4) 70%, transparent);
+    animation: streak-pulse 9s ease-in-out infinite reverse;
   }
 
   /* ═══ Animations ═══ */
-  @keyframes flare-drift {
-    0%   { transform: translate(0, 0) scale(1) }
-    25%  { transform: translate(-30px, 20px) scale(1.04) }
-    50%  { transform: translate(-15px, 40px) scale(0.97) }
-    75%  { transform: translate(20px, 15px) scale(1.02) }
-    100% { transform: translate(0, 0) scale(1) }
+  @keyframes drift-a {
+    0%   { transform: translate(0,0) rotate(0deg) }
+    25%  { transform: translate(15px,10px) rotate(2deg) }
+    50%  { transform: translate(-8px,20px) rotate(-1deg) }
+    75%  { transform: translate(10px,-5px) rotate(1.5deg) }
+    100% { transform: translate(0,0) rotate(0deg) }
   }
-  @keyframes flare-drift-2 {
-    0%   { transform: translate(0, 0) scale(1) }
-    25%  { transform: translate(25px, -15px) scale(1.05) }
-    50%  { transform: translate(10px, -30px) scale(0.96) }
-    75%  { transform: translate(-15px, -10px) scale(1.03) }
-    100% { transform: translate(0, 0) scale(1) }
+  @keyframes drift-b {
+    0%   { transform: translate(0,0) rotate(0deg) }
+    25%  { transform: translate(-12px,8px) rotate(-2deg) }
+    50%  { transform: translate(10px,15px) rotate(1deg) }
+    75%  { transform: translate(-5px,-10px) rotate(-1deg) }
+    100% { transform: translate(0,0) rotate(0deg) }
   }
-  @keyframes flare-drift-3 {
-    0%   { transform: translate(0, 0) scale(1) }
-    25%  { transform: translate(-20px, 15px) scale(1.06) }
-    50%  { transform: translate(15px, 25px) scale(0.95) }
-    75%  { transform: translate(10px, -10px) scale(1.03) }
-    100% { transform: translate(0, 0) scale(1) }
+  @keyframes drift-c {
+    0%   { transform: translate(0,0) rotate(0deg) }
+    25%  { transform: translate(-18px,12px) rotate(3deg) }
+    50%  { transform: translate(5px,25px) rotate(-2deg) }
+    75%  { transform: translate(12px,5px) rotate(1deg) }
+    100% { transform: translate(0,0) rotate(0deg) }
   }
-  @keyframes flare-rotate {
-    0%   { transform: rotate(0deg) }
-    100% { transform: rotate(360deg) }
+  @keyframes drift-d {
+    0%   { transform: translate(0,0) rotate(0deg) }
+    25%  { transform: translate(10px,-12px) rotate(-1.5deg) }
+    50%  { transform: translate(18px,8px) rotate(2deg) }
+    75%  { transform: translate(5px,15px) rotate(-1deg) }
+    100% { transform: translate(0,0) rotate(0deg) }
   }
-  @keyframes ghost-float {
-    0%   { transform: translate(0, 0); opacity: 0.6 }
-    25%  { transform: translate(15px, -10px); opacity: 1 }
-    50%  { transform: translate(-10px, 20px); opacity: 0.5 }
-    75%  { transform: translate(-20px, -5px); opacity: 0.8 }
-    100% { transform: translate(0, 0); opacity: 0.6 }
+  @keyframes drift-e {
+    0%   { transform: translate(0,0) rotate(0deg) }
+    25%  { transform: translate(12px,-8px) rotate(2deg) }
+    50%  { transform: translate(-10px,-15px) rotate(-1.5deg) }
+    75%  { transform: translate(-15px,5px) rotate(1deg) }
+    100% { transform: translate(0,0) rotate(0deg) }
+  }
+  @keyframes drift-f {
+    0%   { transform: translate(0,0) rotate(0deg) }
+    25%  { transform: translate(-8px,-12px) rotate(-2deg) }
+    50%  { transform: translate(12px,-5px) rotate(1.5deg) }
+    75%  { transform: translate(5px,10px) rotate(-1deg) }
+    100% { transform: translate(0,0) rotate(0deg) }
+  }
+  @keyframes drift-g {
+    0%   { transform: translate(0,0) rotate(0deg) }
+    25%  { transform: translate(-15px,10px) rotate(2.5deg) }
+    50%  { transform: translate(8px,20px) rotate(-1.5deg) }
+    75%  { transform: translate(15px,-8px) rotate(1deg) }
+    100% { transform: translate(0,0) rotate(0deg) }
+  }
+  @keyframes drift-h {
+    0%   { transform: translate(0,0) rotate(0deg) }
+    25%  { transform: translate(-10px,15px) rotate(-2deg) }
+    50%  { transform: translate(-18px,-5px) rotate(1.5deg) }
+    75%  { transform: translate(8px,-12px) rotate(-1deg) }
+    100% { transform: translate(0,0) rotate(0deg) }
+  }
+  @keyframes streak-pulse {
+    0%   { opacity: 0.12 }
+    50%  { opacity: 0.30 }
+    100% { opacity: 0.12 }
   }
 
   /* ═══ Noise texture ═══ */
   .stardust {
     position: fixed; inset: 0; z-index: 2;
-    pointer-events: none; opacity: 0.25;
+    pointer-events: none; opacity: 0.2;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='s'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23s)' opacity='0.5'/%3E%3C/svg%3E");
     background-size: 200px 200px;
     mix-blend-mode: overlay;
@@ -181,102 +278,25 @@
 </head>
 <body>
 
-<div class="flare-bg">
+<div class="crystal-bg">
+  <div class="shard s1"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
+  <div class="shard s2"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
+  <div class="shard s3"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
+  <div class="shard s4"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
+  <div class="shard s5"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
+  <div class="shard s6"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
+  <div class="shard s7"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
+  <div class="shard s8"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
+  <div class="shard s9"><div class="shard-layer red"></div><div class="shard-layer green"></div><div class="shard-layer blue"></div><div class="shard-layer white"></div></div>
 
-  <!-- ═══ Main flare — top right ═══ -->
-  <div class="flare-wrap">
-    <div class="flare-core"></div>
-    <svg class="flare-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="rayGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="rgba(255,245,220,0.7)"/>
-          <stop offset="40%" stop-color="rgba(255,220,160,0.3)"/>
-          <stop offset="100%" stop-color="rgba(255,200,140,0)" />
-        </linearGradient>
-        <filter id="rayBlur">
-          <feGaussianBlur stdDeviation="3"/>
-        </filter>
-      </defs>
-      <!-- 6 starburst rays at 60° intervals -->
-      <g filter="url(#rayBlur)" opacity="0.9">
-        <polygon points="400,400 400,0   410,400" fill="url(#rayGrad)"/>
-        <polygon points="400,400 746,200 400,410" fill="url(#rayGrad)"/>
-        <polygon points="400,400 746,600 410,400" fill="url(#rayGrad)"/>
-        <polygon points="400,400 400,800 390,400" fill="url(#rayGrad)"/>
-        <polygon points="400,400 54,600  400,390" fill="url(#rayGrad)"/>
-        <polygon points="400,400 54,200  390,400" fill="url(#rayGrad)"/>
-      </g>
-      <!-- Thinner secondary rays offset 30° -->
-      <g filter="url(#rayBlur)" opacity="0.4">
-        <polygon points="400,400 573,14  405,400" fill="url(#rayGrad)"/>
-        <polygon points="400,400 800,400 400,405" fill="url(#rayGrad)"/>
-        <polygon points="400,400 573,786 395,400" fill="url(#rayGrad)"/>
-        <polygon points="400,400 227,786 400,395" fill="url(#rayGrad)"/>
-        <polygon points="400,400 0,400   400,395" fill="url(#rayGrad)"/>
-        <polygon points="400,400 227,14  405,400" fill="url(#rayGrad)"/>
-      </g>
-      <!-- Center hex shape glow -->
-      <polygon points="400,360 434,380 434,420 400,440 366,420 366,380"
-               fill="rgba(255,250,235,0.4)" filter="url(#rayBlur)"/>
-    </svg>
-  </div>
-
-  <!-- ═══ Secondary flare — bottom left ═══ -->
-  <div class="flare-wrap-2">
-    <div class="flare-core"></div>
-    <svg class="flare-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="rayGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="rgba(180,220,255,0.5)"/>
-          <stop offset="40%" stop-color="rgba(140,190,255,0.2)"/>
-          <stop offset="100%" stop-color="rgba(120,170,240,0)"/>
-        </linearGradient>
-      </defs>
-      <g filter="url(#rayBlur)" opacity="0.7">
-        <polygon points="400,400 400,0   410,400" fill="url(#rayGrad2)"/>
-        <polygon points="400,400 746,200 400,410" fill="url(#rayGrad2)"/>
-        <polygon points="400,400 746,600 410,400" fill="url(#rayGrad2)"/>
-        <polygon points="400,400 400,800 390,400" fill="url(#rayGrad2)"/>
-        <polygon points="400,400 54,600  400,390" fill="url(#rayGrad2)"/>
-        <polygon points="400,400 54,200  390,400" fill="url(#rayGrad2)"/>
-      </g>
-      <polygon points="400,370 426,385 426,415 400,430 374,415 374,385"
-               fill="rgba(200,230,255,0.3)" filter="url(#rayBlur)"/>
-    </svg>
-  </div>
-
-  <!-- ═══ Third flare — center, faint pink ═══ -->
-  <div class="flare-wrap-3">
-    <div class="flare-core"></div>
-    <svg class="flare-svg" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient id="rayGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="rgba(255,180,220,0.4)"/>
-          <stop offset="40%" stop-color="rgba(240,140,200,0.15)"/>
-          <stop offset="100%" stop-color="rgba(220,120,180,0)"/>
-        </linearGradient>
-      </defs>
-      <g filter="url(#rayBlur)" opacity="0.6">
-        <polygon points="400,400 400,0   408,400" fill="url(#rayGrad3)"/>
-        <polygon points="400,400 746,200 400,408" fill="url(#rayGrad3)"/>
-        <polygon points="400,400 746,600 408,400" fill="url(#rayGrad3)"/>
-        <polygon points="400,400 400,800 392,400" fill="url(#rayGrad3)"/>
-        <polygon points="400,400 54,600  400,392" fill="url(#rayGrad3)"/>
-        <polygon points="400,400 54,200  392,400" fill="url(#rayGrad3)"/>
-      </g>
-    </svg>
-  </div>
-
-  <!-- ═══ Ghost orbs — lens flare secondary spots ═══ -->
-  <div class="ghost-orb g1"></div>
-  <div class="ghost-orb g2"></div>
-  <div class="ghost-orb g3"></div>
-  <div class="ghost-orb g4"></div>
-
+  <div class="streak st1"></div>
+  <div class="streak st2"></div>
+  <div class="streak st3"></div>
+  <div class="streak st4"></div>
 </div>
 
 <div class="stardust"></div>
-<div class="info">Lens Flare v1 — 六角光斑 · 緩慢飄動</div>
+<div class="info">Crystal Refraction v2 — 放大 + 更柔</div>
 
 </body>
 </html>
