@@ -175,6 +175,9 @@
   width: 85vw;
   max-width: 1200px;
   height: 80vh;
+  border-radius: 12px;
+  border: 1px solid rgba(224,255,240,0.12);
+  box-shadow: 0 0 20px 2px rgba(224,255,240,0.06), 0 0 60px 4px rgba(224,255,240,0.03);
   transform: scale(0.92);
   transition: transform .4s cubic-bezier(0.2,1,0.2,1);
 }
@@ -279,27 +282,9 @@
   line-height: 1.7;
 }
 
-/* Close button */
+/* Close button — hidden (click background to close) */
 .lightbox-close {
-  position: absolute;
-  top: 24px; right: 24px;
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  border: 1px solid rgba(224,255,240,0.2);
-  background: rgba(1,26,20,0.5);
-  color: rgba(224,255,240,0.7);
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: none;
-  transition: all .3s ease;
-  z-index: 3;
-}
-.lightbox-close:hover {
-  border-color: rgba(224,255,240,0.6);
-  background: rgba(224,255,240,0.1);
-  color: rgba(224,255,240,1);
+  display: none;
 }
 
 /* Dot indicators (positioned inside .lightbox-left via earlier rule) */
