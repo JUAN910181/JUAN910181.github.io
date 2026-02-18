@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio</title>
+<meta name="description" content="美術設計作品集 — 藝術實踐、行銷宣傳、影音相關、電商相關、宮廟傳統、流程專業">
+<meta property="og:title" content="Portfolio — 美術設計作品集">
+<meta property="og:type" content="website">
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+<!-- Stylesheets -->
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/grid.css">
+<link rel="stylesheet" href="css/hover-effects.css">
+<link rel="stylesheet" href="css/works.css">
+<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<!-- ═══ SVG Filters (hidden) ═══ -->
+<svg style="position:absolute;width:0;height:0">
+  <defs>
+    <!-- Prism Shift filters for Card 1 -->
+    <filter id="prism-red">
+      <feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0"/>
+    </filter>
+    <filter id="prism-blue">
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+    </filter>
+    <!-- Digital Distortion for Card 2 -->
+    <filter id="digital-distort">
+      <feTurbulence type="turbulence" baseFrequency="0.01 0.02" numOctaves="2" result="turb" seed="2"/>
+      <feDisplacementMap in="SourceGraphic" in2="turb" scale="3" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </defs>
+</svg>
+
+<!-- ═══ Background ═══ -->
+<div class="aurora-bg"></div>
+<div class="stardust"></div>
+
+<!-- ═══ Page ═══ -->
+<div class="page">
+
+  <!-- Avatar (always visible) -->
+  <div class="avatar-wrapper">
+    <img class="avatar" src="avatar.png" alt="Avatar" onerror="this.style.background='rgba(224,255,240,0.1)'">
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SECTION: HOME
+       ═══════════════════════════════════════ -->
+  <div id="section-home" class="page-section">
+    <div class="grid">
+
+      <!-- Card 1: 藝術實踐 -->
+      <div class="card card-1" data-category="art">
+        <div class="card-inner">
+          <img class="card-img" src="assets/covers/art.jpg" alt="" onerror="this.src='https://picsum.photos/id/1015/800/400'">
+          <div class="card-pearl"></div>
+          <div class="card-frost"></div>
+          <div class="card-fx"></div>
+          <div class="card-noise"></div>
+          <div class="card-specular"></div>
+          <div class="card-gradient"></div>
+          <div class="card-title">藝術實踐 | 人文美學｜文化底蘊<span class="subtitle">Art Practice</span></div>
+        </div>
+      </div>
+
+      <!-- Card 2: 行銷宣傳 -->
+      <div class="card card-2" data-category="marketing">
+        <div class="card-inner">
+          <img class="card-img" src="assets/covers/marketing.jpg" alt="" onerror="this.src='https://picsum.photos/id/1019/400/400'">
+          <div class="card-pearl"></div>
+          <div class="card-frost"></div>
+          <div class="card-fx"></div>
+          <div class="card-noise"></div>
+          <div class="card-specular"></div>
+          <div class="card-gradient"></div>
+          <div class="card-title">行銷宣傳 | 遊戲廣告｜視覺張力<span class="subtitle">Marketing &amp; Game Ads</span></div>
+        </div>
+      </div>
+
+      <!-- Card 3: 影音相關 -->
+      <div class="card card-3" data-category="video">
+        <div class="card-inner">
+          <img class="card-img" src="assets/covers/video.jpg" alt="" onerror="this.src='https://picsum.photos/id/1025/400/400'">
+          <div class="card-pearl"></div>
+          <div class="card-frost"></div>
+          <div class="card-fx"></div>
+          <div class="card-noise"></div>
+          <div class="card-specular"></div>
+          <div class="card-gradient"></div>
+          <div class="card-title">影音相關 | 動態感官｜敘事影像<span class="subtitle">Video &amp; Motion</span></div>
+        </div>
+      </div>
+
+      <!-- Card 4: 電商相關 -->
+      <div class="card card-4" data-category="ecommerce">
+        <div class="card-inner">
+          <img class="card-img" src="assets/covers/ecommerce.jpg" alt="" onerror="this.src='https://picsum.photos/id/1035/700/400'">
+          <div class="card-pearl"></div>
+          <div class="card-frost"></div>
+          <div class="card-fx"></div>
+          <div class="card-noise"></div>
+          <div class="card-specular"></div>
+          <div class="card-gradient"></div>
+          <div class="card-title">電商相關 | 商業敘事｜品牌轉化<span class="subtitle">E-Commerce &amp; Branding</span></div>
+        </div>
+      </div>
+
+      <!-- Card 5: 宮廟傳統 -->
+      <div class="card card-5" data-category="temple">
+        <div class="card-inner">
+          <img class="card-img" src="assets/covers/temple.jpg" alt="" onerror="this.src='https://picsum.photos/id/1043/500/400'">
+          <div class="card-pearl"></div>
+          <div class="card-frost"></div>
+          <div class="card-fx"></div>
+          <div class="card-noise"></div>
+          <div class="card-specular"></div>
+          <div class="card-gradient"></div>
+          <div class="card-title">宮廟傳統 | 民俗底蘊｜文化傳承<span class="subtitle">Temple &amp; Folk Heritage</span></div>
+        </div>
+      </div>
+
+      <!-- Card 6: 流程專業 -->
+      <div class="card card-6" data-category="digital">
+        <div class="card-inner">
+          <img class="card-img" src="assets/covers/digital.jpg" alt="" onerror="this.src='https://picsum.photos/id/1049/400/400'">
+          <div class="card-pearl"></div>
+          <div class="card-frost"></div>
+          <div class="card-fx"></div>
+          <div class="card-noise"></div>
+          <div class="card-specular"></div>
+          <div class="card-gradient"></div>
+          <div class="card-title">流程專業 | 數位實驗｜AI研究<span class="subtitle">Digital Lab &amp; AI Research</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- R18 Hidden Corner (預設隱藏，設 data-r18-enabled="true" 啟用) -->
+    <div class="r18-corner" id="r18-corner" style="display:none;">
+      <div class="r18-peel">
+        <span class="r18-label">R18</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SECTION: WORKS (dynamic content)
+       ═══════════════════════════════════════ -->
+  <div id="section-works" class="page-section hidden">
+    <!-- Content rendered by js/works.js -->
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SECTION: ABOUT
+       ═══════════════════════════════════════ -->
+  <div id="section-about" class="page-section hidden">
+
+    <a class="back-nav" href="#/">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      <span>返回首頁</span>
+    </a>
+
+    <div class="about-layout">
+
+      <!-- Left: Timeline Sidebar -->
+      <div class="timeline-sidebar">
+        <div class="timeline-rail">
+          <div class="timeline-progress"></div>
+
+          <div class="timeline-node active" data-chapter="0">
+            <div class="node-label">Chapter 1</div>
+            <div class="node-company">朱銘美術館</div>
+          </div>
+
+          <div class="timeline-node" data-chapter="1">
+            <div class="node-label">Chapter 2</div>
+            <div class="node-company">Ann'S 女鞋</div>
+          </div>
+
+          <div class="timeline-node" data-chapter="2">
+            <div class="node-label">Chapter 3</div>
+            <div class="node-company">鼎鈺集團</div>
+          </div>
+
+          <div class="timeline-node" data-chapter="3">
+            <div class="node-label">Chapter 4</div>
+            <div class="node-company">侍達遊戲藝術</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Chapters -->
+      <div class="chapters-content">
+
+        <!-- Chapter 1 -->
+        <div class="chapter" data-chapter="0">
+          <div class="chapter-bg" style="background-image:url('assets/about/ch1-juming.jpg')"></div>
+          <div class="chapter-content">
+            <div class="chapter-number">Chapter 01</div>
+            <div class="chapter-title">藝術人文的築基</div>
+            <div class="chapter-company">朱銘美術館</div>
+            <div class="chapter-desc">
+              在文化場域中磨練視覺傳達的敏銳度。此階段專注於「文化轉譯」，將深層內涵轉化為具藝術質感的設計語彙。
+            </div>
+            <div class="chapter-skills">
+              <span class="chapter-skill">視覺傳達</span>
+              <span class="chapter-skill">文化轉譯</span>
+              <span class="chapter-skill">藝術設計</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 2 -->
+        <div class="chapter" data-chapter="1">
+          <div class="chapter-bg" style="background-image:url('assets/about/ch2-anns.jpg')"></div>
+          <div class="chapter-content">
+            <div class="chapter-number">Chapter 02</div>
+            <div class="chapter-title">品牌行銷與市場感知</div>
+            <div class="chapter-company">Ann'S 女鞋</div>
+            <div class="chapter-desc">
+              進入節奏快速的零售領域，探索視覺如何與消費者心理產生連結。透過精準的影像修圖與排版，強化品牌吸引力。
+            </div>
+            <div class="chapter-skills">
+              <span class="chapter-skill">品牌行銷</span>
+              <span class="chapter-skill">影像修圖</span>
+              <span class="chapter-skill">排版設計</span>
+              <span class="chapter-skill">消費者心理</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 3 -->
+        <div class="chapter" data-chapter="2">
+          <div class="chapter-bg" style="background-image:url('assets/about/ch3-dingyu.jpg')"></div>
+          <div class="chapter-content">
+            <div class="chapter-number">Chapter 03</div>
+            <div class="chapter-title">多樣化空間與情境美學</div>
+            <div class="chapter-company">鼎鈺集團（葛瑪蘭飯店、珠寶及宮廟領域）</div>
+            <div class="chapter-desc">
+              負責大型連鎖集團的視覺整合，從環境佈置、燈箱設計到節慶企劃。在截然不同的行業屬性中，展現極強的設計適應力與執行深度。
+            </div>
+            <div class="chapter-skills">
+              <span class="chapter-skill">視覺整合</span>
+              <span class="chapter-skill">環境佈置</span>
+              <span class="chapter-skill">燈箱設計</span>
+              <span class="chapter-skill">節慶企劃</span>
+              <span class="chapter-skill">跨產業</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter 4 -->
+        <div class="chapter" data-chapter="3">
+          <div class="chapter-bg" style="background-image:url('assets/about/ch4-shida.jpg')"></div>
+          <div class="chapter-content">
+            <div class="chapter-number">Chapter 04</div>
+            <div class="chapter-title">數位張力與娛樂設計</div>
+            <div class="chapter-company">侍達遊戲藝術</div>
+            <div class="chapter-desc">
+              致力於數位娛樂領域的視覺開發，專注於色彩心理與光影氛圍的營造。透過具備張力的構圖，直接驅動用戶的情緒回饋。
+            </div>
+            <div class="chapter-skills">
+              <span class="chapter-skill">遊戲視覺</span>
+              <span class="chapter-skill">色彩心理</span>
+              <span class="chapter-skill">光影氛圍</span>
+              <span class="chapter-skill">情緒設計</span>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /chapters-content -->
+    </div><!-- /about-layout -->
+
+    <!-- Skills Section -->
+    <div class="skills-section">
+      <div class="skills-section-title">擅長工具</div>
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <div class="skill-card-icon">&#9670;</div>
+          <div class="skill-card-title">視覺核心</div>
+          <div class="skill-card-desc">2D 平面製圖、印刷前置相關</div>
+          <div class="skill-card-tools">
+            <span class="skill-tool">Photoshop</span>
+            <span class="skill-tool">Illustrator</span>
+            <span class="skill-tool">InDesign</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-icon">&#9654;</div>
+          <div class="skill-card-title">動態敘事</div>
+          <div class="skill-card-desc">影音剪輯與短影音</div>
+          <div class="skill-card-tools">
+            <span class="skill-tool">Premiere Pro</span>
+            <span class="skill-tool">After Effects</span>
+            <span class="skill-tool">CapCut</span>
+          </div>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-card-icon">&#9881;</div>
+          <div class="skill-card-title">流程賦能</div>
+          <div class="skill-card-desc">AI 協作研究</div>
+          <div class="skill-card-tools">
+            <span class="skill-tool">Midjourney</span>
+            <span class="skill-tool">Stable Diffusion</span>
+            <span class="skill-tool">ChatGPT</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /section-about -->
+
+</div><!-- /page -->
+
+<!-- ═══ Lightbox ═══ -->
+<div id="lightbox" class="lightbox">
+  <img class="lightbox-img" src="" alt="">
+  <button class="lightbox-close">&times;</button>
+  <button class="lightbox-nav lightbox-prev">
+    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="lightbox-nav lightbox-next">
+    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+  </button>
+  <div class="lightbox-counter"></div>
+</div>
+
+<!-- ═══ Custom Cursor ═══ -->
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+<canvas id="trail-canvas"></canvas>
+
+<!-- ═══ Scripts ═══ -->
+<script src="js/data.js"></script>
+<script src="js/router.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/tilt.js"></script>
+<script src="js/hover-effects.js"></script>
+<script src="js/works.js"></script>
+<script src="js/about.js"></script>
+
+<!-- ═══ Entry Animation ═══ -->
+<script>
+(function(){
+  document.addEventListener('DOMContentLoaded', function() {
+    // Staggered card entrance animation
+    var cards = document.querySelectorAll('.card');
+    cards.forEach(function(card, i) {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(20px)';
+      card.style.transition = 'opacity .6s ease, transform .6s ease';
+      setTimeout(function() {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      }, 100 + i * 80);
+    });
+
+    // Avatar entrance
+    var avatar = document.querySelector('.avatar-wrapper');
+    if (avatar) {
+      avatar.style.opacity = '0';
+      avatar.style.transition = 'opacity .8s ease';
+      setTimeout(function() {
+        avatar.style.opacity = '1';
+      }, 50);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

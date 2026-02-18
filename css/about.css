@@ -1,0 +1,275 @@
+/* ═══════════════════════════════════════════
+   ABOUT PAGE — Timeline + Chapters + Skills
+   ═══════════════════════════════════════════ */
+
+.about-layout {
+  display: flex;
+  width: 100%;
+  max-width: 1100px;
+  gap: 40px;
+  min-height: 70vh;
+}
+
+/* --- Left Sidebar: Timeline --- */
+.timeline-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 40px;
+  align-self: flex-start;
+  padding: 32px 20px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  border-radius: 18px;
+  border: 1px solid rgba(224,255,240,0.1);
+}
+
+/* Light rail line */
+.timeline-rail {
+  position: relative;
+  padding-left: 24px;
+}
+.timeline-rail::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(224,255,240,0.05) 0%,
+    rgba(224,255,240,0.15) 20%,
+    rgba(224,255,240,0.15) 80%,
+    rgba(224,255,240,0.05) 100%
+  );
+}
+
+/* Timeline progress glow (JS-controlled height) */
+.timeline-progress {
+  position: absolute;
+  left: 5px;
+  top: 0;
+  width: 4px;
+  height: 0%;
+  background: linear-gradient(
+    to bottom,
+    rgba(224,255,240,0.6),
+    rgba(160,230,210,0.4)
+  );
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(224,255,240,0.3), 0 0 25px rgba(224,255,240,0.1);
+  transition: height .5s ease;
+}
+
+/* Timeline node */
+.timeline-node {
+  position: relative;
+  padding: 16px 0;
+  cursor: none;
+  transition: opacity .3s ease;
+}
+.timeline-node::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 22px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(224,255,240,0.15);
+  border: 1.5px solid rgba(224,255,240,0.2);
+  transition: all .4s ease;
+  z-index: 2;
+}
+.timeline-node.active::before {
+  background: rgba(224,255,240,0.7);
+  border-color: rgba(224,255,240,0.8);
+  box-shadow: 0 0 12px rgba(224,255,240,0.4), 0 0 30px rgba(224,255,240,0.15);
+}
+
+.timeline-node .node-label {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: rgba(224,255,240,0.35);
+  letter-spacing: 0.04em;
+  transition: color .3s ease;
+}
+.timeline-node.active .node-label {
+  color: rgba(224,255,240,0.9);
+}
+.timeline-node .node-company {
+  font-size: 0.65rem;
+  font-weight: 300;
+  color: rgba(224,255,240,0.2);
+  margin-top: 3px;
+  letter-spacing: 0.03em;
+  transition: color .3s ease;
+}
+.timeline-node.active .node-company {
+  color: rgba(224,255,240,0.5);
+}
+
+
+/* --- Right: Chapter Content --- */
+.chapters-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.chapter {
+  position: relative;
+  min-height: 50vh;
+  padding: 48px 40px;
+  margin-bottom: 40px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid rgba(224,255,240,0.06);
+}
+
+/* Chapter background image */
+.chapter-bg {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.12;
+  filter: saturate(0.5);
+  transition: opacity .5s ease;
+}
+.chapter:hover .chapter-bg {
+  opacity: 0.18;
+}
+
+/* Chapter content */
+.chapter-content {
+  position: relative;
+  z-index: 2;
+}
+.chapter-number {
+  font-size: 0.65rem;
+  font-weight: 300;
+  color: rgba(224,255,240,0.3);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.chapter-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: rgba(224,255,240,0.9);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+.chapter-company {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: rgba(224,255,240,0.45);
+  letter-spacing: 0.05em;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chapter-company::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: rgba(224,255,240,0.3);
+}
+.chapter-desc {
+  font-size: 0.85rem;
+  font-weight: 300;
+  color: rgba(224,255,240,0.55);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  max-width: 560px;
+}
+
+/* Chapter skill tags */
+.chapter-skills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+.chapter-skill {
+  padding: 5px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(224,255,240,0.12);
+  background: rgba(224,255,240,0.04);
+  font-size: 0.68rem;
+  font-weight: 400;
+  color: rgba(224,255,240,0.45);
+  letter-spacing: 0.04em;
+}
+
+
+/* --- Skills Section --- */
+.skills-section {
+  width: 100%;
+  max-width: 1100px;
+  margin-top: 48px;
+  padding-top: 48px;
+  border-top: 1px solid rgba(224,255,240,0.06);
+}
+.skills-section-title {
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: rgba(224,255,240,0.35);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.skill-card {
+  padding: 28px 24px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(224,255,240,0.08);
+  transition: border-color .3s ease, background .3s ease;
+}
+.skill-card:hover {
+  border-color: rgba(224,255,240,0.2);
+  background: rgba(255,255,255,0.05);
+}
+.skill-card-icon {
+  font-size: 1.4rem;
+  margin-bottom: 14px;
+  opacity: 0.7;
+}
+.skill-card-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(224,255,240,0.8);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+.skill-card-desc {
+  font-size: 0.72rem;
+  font-weight: 300;
+  color: rgba(224,255,240,0.4);
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+}
+.skill-card-tools {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.skill-tool {
+  padding: 3px 10px;
+  border-radius: 10px;
+  background: rgba(224,255,240,0.05);
+  font-size: 0.62rem;
+  color: rgba(224,255,240,0.4);
+  letter-spacing: 0.04em;
+}

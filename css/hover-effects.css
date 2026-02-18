@@ -1,0 +1,147 @@
+/* ═══════════════════════════════════════════
+   CARD HOVER EFFECTS — Unique per category
+   ═══════════════════════════════════════════ */
+
+/* --- Card 1: Art Practice — Prism Shift --- */
+.card-1 .card-fx .prism-layer {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity .5s ease;
+  pointer-events: none;
+}
+.card-1:hover .card-fx .prism-layer { opacity: 1 }
+.card-1 .card-fx .prism-r,
+.card-1 .card-fx .prism-b {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+.card-1 .card-fx .prism-r {
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+  transform: translate(3px, -1px);
+  filter: url('#prism-red');
+}
+.card-1 .card-fx .prism-b {
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+  transform: translate(-3px, 1px);
+  filter: url('#prism-blue');
+}
+/* Preview image that fades from blur to clear */
+.card-1 .card-fx .preview-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  filter: blur(20px);
+  transition: opacity .6s ease, filter .8s ease;
+}
+.card-1:hover .card-fx .preview-img.active {
+  opacity: 1;
+  filter: blur(0);
+}
+
+
+/* --- Card 2: Marketing — Digital Distortion + Slideshow --- */
+.card-2 .card-fx .slide-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.card-2 .card-fx .slide-img.active { opacity: 1 }
+.card-2:hover .card-inner {
+  filter: url('#digital-distort');
+}
+.card-2 .card-inner {
+  transition: filter .4s ease;
+  filter: none;
+}
+
+
+/* --- Card 3: Video — Aperture Focus + Video Playback --- */
+.card-3 .card-fx .aperture-mask {
+  position: absolute; inset: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    transparent 30%,
+    rgba(0,0,0,0.15) 50%,
+    rgba(0,0,0,0.5) 80%
+  );
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.card-3:hover .card-fx .aperture-mask { opacity: 1 }
+.card-3 .card-fx video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.card-3:hover .card-fx video { opacity: 1 }
+
+
+/* --- Card 4: E-Commerce — Scanning Sheen + Float --- */
+.card-4 .card-fx .sheen {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 40%,
+    rgba(255,255,255,0.08) 45%,
+    rgba(255,255,255,0.15) 50%,
+    rgba(255,255,255,0.08) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+  transform: translateX(-120%);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.card-4:hover .card-fx .sheen {
+  opacity: 1;
+  animation: scan-sheen 1.5s ease-in-out forwards;
+}
+@keyframes scan-sheen {
+  0%   { transform: translateX(-120%) }
+  100% { transform: translateX(120%) }
+}
+/* Float animation for cover image */
+@keyframes gentle-float {
+  0%, 100% { transform: scale(1.04) translateY(0) }
+  50%      { transform: scale(1.04) translateY(-3px) }
+}
+.card-4:hover .card-img {
+  animation: gentle-float 3s ease-in-out infinite;
+}
+
+
+/* --- Card 5: Temple — Particle Flow + Float --- */
+.card-5 .card-fx canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
+@keyframes gentle-float-5 {
+  0%, 100% { transform: scale(1.04) translateY(0) }
+  50%      { transform: scale(1.04) translateY(-3px) }
+}
+.card-5:hover .card-img {
+  animation: gentle-float-5 3s ease-in-out infinite;
+}
+
+
+/* --- Card 6: Digital Lab — Neural Network + Float --- */
+.card-6 .card-fx canvas {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+}
+@keyframes gentle-float-6 {
+  0%, 100% { transform: scale(1.04) translateY(0) }
+  50%      { transform: scale(1.04) translateY(-3px) }
+}
+.card-6:hover .card-img {
+  animation: gentle-float-6 3s ease-in-out infinite;
+}
