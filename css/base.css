@@ -27,61 +27,117 @@ a, button { cursor: none }
 
 
 /* ═══════════════════════════════════════════
-   BACKGROUND — Serene Deep Ink-Green
+   BACKGROUND — Green Fabric Light
    ═══════════════════════════════════════════ */
-.aurora-bg {
+.fabric-bg {
   position: fixed; inset: 0; z-index: 0;
   pointer-events: none;
-  background:
-    radial-gradient(ellipse 70% 60% at 50% 45%, rgba(8,50,38,0.6) 0%, transparent 65%),
-    radial-gradient(ellipse 50% 50% at 25% 70%, rgba(4,40,32,0.3) 0%, transparent 50%),
-    radial-gradient(ellipse 40% 45% at 78% 30%, rgba(12,38,48,0.25) 0%, transparent 50%),
-    var(--bg-deep);
-  background-size: 200% 200%;
-  animation: bg-drift 25s ease-in-out infinite;
-}
-/* Aurora curtain — soft diffused light bands */
-.aurora-bg::before {
-  content: ''; position: absolute;
-  inset: -25%;
-  background:
-    /* 主光暈 — 左上偏薄荷青 */
-    radial-gradient(ellipse 60% 50% at 30% 30%, rgba(120,220,200,0.18) 0%, transparent 60%),
-    /* 中央偏薰衣草 */
-    radial-gradient(ellipse 50% 55% at 60% 45%, rgba(140,180,240,0.16) 0%, transparent 55%),
-    /* 右下偏玫瑰 */
-    radial-gradient(ellipse 55% 45% at 75% 70%, rgba(200,160,200,0.12) 0%, transparent 55%),
-    /* 左下偏暖 */
-    radial-gradient(ellipse 45% 50% at 25% 75%, rgba(180,200,150,0.10) 0%, transparent 50%);
-  filter: blur(100px);
-  mix-blend-mode: screen;
-  animation: curtain-sway 25s ease-in-out infinite;
-}
-/* Mesh gradient breathing — enhanced depth layer */
-.aurora-bg::after {
-  content: ''; position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 55% 50% at 30% 35%, rgba(120,200,180,0.12) 0%, transparent 55%),
-    radial-gradient(ellipse 45% 55% at 75% 65%, rgba(180,160,220,0.10) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 55% 80%, rgba(200,180,140,0.07) 0%, transparent 45%),
-    radial-gradient(ellipse 65% 55% at 50% 50%, transparent 25%, rgba(1,26,20,0.7) 100%);
-  background-size: 250% 250%;
-  animation: bg-drift 30s ease-in-out infinite reverse;
+  background: var(--bg-deep);
+  overflow: hidden;
 }
 
-@keyframes bg-drift {
-  0%   { background-position: 30% 40% }
-  25%  { background-position: 55% 30% }
-  50%  { background-position: 70% 60% }
-  75%  { background-position: 40% 70% }
-  100% { background-position: 30% 40% }
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: screen;
+  will-change: transform;
 }
-@keyframes curtain-sway {
-  0%   { transform: translateX(0) scaleY(1) }
-  25%  { transform: translateX(6%) scaleY(1.03) }
-  50%  { transform: translateX(-4%) scaleY(0.97) }
-  75%  { transform: translateX(3%) scaleY(1.02) }
-  100% { transform: translateX(0) scaleY(1) }
+
+/* G1 — Large bright cyan, right side */
+.glow.g1 {
+  width: 70vw; height: 80vh;
+  top: -15%; right: -15%;
+  background: radial-gradient(ellipse 65% 60% at 50% 50%, rgba(0,230,200,0.30) 0%, rgba(0,200,180,0.15) 30%, rgba(0,180,160,0.05) 55%, transparent 75%);
+  filter: blur(60px);
+  animation: flow-1 12s ease-in-out infinite;
+}
+/* G2 — Deep emerald green, left side */
+.glow.g2 {
+  width: 65vw; height: 75vh;
+  top: 10%; left: -20%;
+  background: radial-gradient(ellipse 60% 65% at 50% 50%, rgba(0,180,120,0.28) 0%, rgba(0,150,100,0.12) 35%, rgba(0,120,80,0.04) 55%, transparent 75%);
+  filter: blur(55px);
+  animation: flow-2 15s ease-in-out infinite;
+}
+/* G3 — Teal blue, upper area */
+.glow.g3 {
+  width: 60vw; height: 70vh;
+  top: -20%; left: 20%;
+  background: radial-gradient(ellipse 55% 60% at 50% 50%, rgba(0,160,220,0.25) 0%, rgba(0,140,200,0.10) 35%, rgba(0,120,180,0.04) 55%, transparent 75%);
+  filter: blur(65px);
+  animation: flow-3 18s ease-in-out infinite;
+}
+/* G4 — Bright mint, bottom right */
+.glow.g4 {
+  width: 55vw; height: 65vh;
+  bottom: -20%; right: -5%;
+  background: radial-gradient(ellipse 60% 55% at 50% 50%, rgba(50,255,200,0.22) 0%, rgba(30,220,180,0.10) 35%, rgba(20,200,160,0.03) 55%, transparent 75%);
+  filter: blur(55px);
+  animation: flow-4 14s ease-in-out infinite;
+}
+/* G5 — Deep ocean blue-green, center */
+.glow.g5 {
+  width: 50vw; height: 60vh;
+  top: 25%; left: 30%;
+  background: radial-gradient(ellipse 55% 55% at 50% 50%, rgba(0,120,160,0.20) 0%, rgba(0,100,140,0.08) 35%, rgba(0,80,120,0.03) 55%, transparent 75%);
+  filter: blur(70px);
+  animation: flow-5 20s ease-in-out infinite;
+}
+/* G6 — Warm cyan highlight, accent */
+.glow.g6 {
+  width: 40vw; height: 50vh;
+  bottom: 5%; left: -10%;
+  background: radial-gradient(ellipse 50% 55% at 50% 50%, rgba(0,210,190,0.24) 0%, rgba(0,190,170,0.10) 35%, rgba(0,170,150,0.03) 55%, transparent 75%);
+  filter: blur(50px);
+  animation: flow-6 16s ease-in-out infinite;
+}
+
+@keyframes flow-1 {
+  0%   { transform: translate(0,0) scale(1) }
+  20%  { transform: translate(-12vw,8vh) scale(1.08) }
+  40%  { transform: translate(-8vw,18vh) scale(0.95) }
+  60%  { transform: translate(5vw,12vh) scale(1.05) }
+  80%  { transform: translate(8vw,3vh) scale(0.97) }
+  100% { transform: translate(0,0) scale(1) }
+}
+@keyframes flow-2 {
+  0%   { transform: translate(0,0) scale(1) }
+  20%  { transform: translate(15vw,-5vh) scale(1.06) }
+  40%  { transform: translate(20vw,8vh) scale(0.92) }
+  60%  { transform: translate(10vw,15vh) scale(1.04) }
+  80%  { transform: translate(5vw,-3vh) scale(0.98) }
+  100% { transform: translate(0,0) scale(1) }
+}
+@keyframes flow-3 {
+  0%   { transform: translate(0,0) scale(1) rotate(0deg) }
+  20%  { transform: translate(-5vw,12vh) scale(1.07) rotate(2deg) }
+  40%  { transform: translate(8vw,20vh) scale(0.93) rotate(-1deg) }
+  60%  { transform: translate(12vw,8vh) scale(1.05) rotate(1deg) }
+  80%  { transform: translate(3vw,-5vh) scale(0.96) rotate(-1deg) }
+  100% { transform: translate(0,0) scale(1) rotate(0deg) }
+}
+@keyframes flow-4 {
+  0%   { transform: translate(0,0) scale(1) }
+  20%  { transform: translate(-10vw,-10vh) scale(1.10) }
+  40%  { transform: translate(-18vw,-3vh) scale(0.90) }
+  60%  { transform: translate(-8vw,-15vh) scale(1.06) }
+  80%  { transform: translate(3vw,-8vh) scale(0.95) }
+  100% { transform: translate(0,0) scale(1) }
+}
+@keyframes flow-5 {
+  0%   { transform: translate(0,0) scale(1) rotate(0deg) }
+  25%  { transform: translate(-8vw,10vh) scale(1.08) rotate(3deg) }
+  50%  { transform: translate(6vw,15vh) scale(0.94) rotate(-2deg) }
+  75%  { transform: translate(10vw,-5vh) scale(1.03) rotate(1deg) }
+  100% { transform: translate(0,0) scale(1) rotate(0deg) }
+}
+@keyframes flow-6 {
+  0%   { transform: translate(0,0) scale(1) }
+  20%  { transform: translate(12vw,-8vh) scale(1.05) }
+  40%  { transform: translate(18vw,5vh) scale(0.93) }
+  60%  { transform: translate(8vw,12vh) scale(1.07) }
+  80%  { transform: translate(-3vw,5vh) scale(0.96) }
+  100% { transform: translate(0,0) scale(1) }
 }
 
 
