@@ -1,12 +1,13 @@
 /* ═══════════════════════════════════════════
-   Works Page — Masonry, Filters, Lightbox
+   Works Page — Masonry, Filters, Gallery Lightbox
    ═══════════════════════════════════════════ */
 (function(){
 
   var currentCategory = '';
   var currentFilter = 'all';
-  var lightboxItems = [];
+  var lightboxImages = [];
   var lightboxIndex = 0;
+  var currentWork = null;
 
   /* ── Render Works Page ── */
   window.renderWorks = function(category) {
@@ -62,8 +63,11 @@
     } else {
       works.forEach(function(work, i) {
         var tags = (work.tags || []).join(' ');
+        // Use images[0] as cover; fallback to src for legacy format
+        var coverSrc = (work.images && work.images[0]) ? work.images[0] : (work.src || '');
+        var imageCount = (work.images) ? work.images.length : 1;
         html += '<div class="work-item loading" data-tags="' + tags + '" data-index="' + i + '">';
-        html += '<img data-src="' + work.src + '" alt="' + (work.title || '') + '">';
+        html += '<img data-src="' + coverSrc + '" alt="' + (work.title || '') + '">';
         html += '<div class="work-info">';
         html += '<div class="work-title">' + (work.title || '') + '</div>';
         if (work.tags && work.tags.length) {
@@ -72,6 +76,9 @@
             html += '<span class="work-tag">' + t + '</span>';
           });
           html += '</div>';
+        }
+        if (imageCount > 1) {
+          html += '<div class="work-count">' + imageCount + ' 張</div>';
         }
         html += '</div></div>';
       });
@@ -148,7 +155,7 @@
     }
   }
 
-  /* ── Lightbox ── */
+  /* ── Gallery Lightbox ── */
   function setupLightbox(section, works) {
     var lightbox = document.getElementById('lightbox');
     if (!lightbox) return;
@@ -162,15 +169,64 @@
     });
   }
 
-  function openLightbox(works, index) {
-    lightboxItems = works;
-    lightboxIndex = index;
+  function openLightbox(works, workIndex) {
+    currentWork = works[workIndex];
+    // Support both new (images[]) and legacy (src) format
+    lightboxImages = currentWork.images ? currentWork.images.slice() : [currentWork.src];
+    lightboxIndex = 0;
+
     var lightbox = document.getElementById('lightbox');
     var img = lightbox.querySelector('.lightbox-img');
-    var counter = lightbox.querySelector('.lightbox-counter');
+    var titleEl = lightbox.querySelector('.lightbox-title');
+    var tagsEl = lightbox.querySelector('.lightbox-tags');
+    var descEl = lightbox.querySelector('.lightbox-desc');
+    var dotsEl = lightbox.querySelector('.lightbox-dots');
 
-    img.src = works[index].src;
-    counter.textContent = (index + 1) + ' / ' + works.length;
+    // Fill right panel
+    titleEl.textContent = currentWork.title || '';
+
+    var tagsHtml = '';
+    if (currentWork.tags && currentWork.tags.length) {
+      currentWork.tags.forEach(function(t) {
+        tagsHtml += '<span class="lightbox-tag">' + t + '</span>';
+      });
+    }
+    tagsEl.innerHTML = tagsHtml;
+
+    descEl.textContent = currentWork.desc || '';
+
+    // Fill image
+    img.src = lightboxImages[0];
+
+    // Generate dots
+    var dotsHtml = '';
+    for (var i = 0; i < lightboxImages.length; i++) {
+      dotsHtml += '<button class="lightbox-dot' + (i === 0 ? ' active' : '') + '" data-dot="' + i + '"></button>';
+    }
+    dotsEl.innerHTML = dotsHtml;
+
+    // Dot click handlers
+    dotsEl.querySelectorAll('.lightbox-dot').forEach(function(dot) {
+      dot.addEventListener('click', function(e) {
+        e.stopPropagation();
+        lightboxIndex = parseInt(dot.dataset.dot);
+        updateLightbox();
+      });
+    });
+
+    // Hide arrows if only 1 image
+    var prevBtn = lightbox.querySelector('.lightbox-prev');
+    var nextBtn = lightbox.querySelector('.lightbox-next');
+    if (lightboxImages.length <= 1) {
+      prevBtn.style.display = 'none';
+      nextBtn.style.display = 'none';
+      dotsEl.style.display = 'none';
+    } else {
+      prevBtn.style.display = '';
+      nextBtn.style.display = '';
+      dotsEl.style.display = '';
+    }
+
     lightbox.classList.add('active');
   }
 
@@ -180,23 +236,26 @@
   }
 
   function prevLightbox() {
-    if (lightboxItems.length === 0) return;
-    lightboxIndex = (lightboxIndex - 1 + lightboxItems.length) % lightboxItems.length;
+    if (lightboxImages.length <= 1) return;
+    lightboxIndex = (lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length;
     updateLightbox();
   }
 
   function nextLightbox() {
-    if (lightboxItems.length === 0) return;
-    lightboxIndex = (lightboxIndex + 1) % lightboxItems.length;
+    if (lightboxImages.length <= 1) return;
+    lightboxIndex = (lightboxIndex + 1) % lightboxImages.length;
     updateLightbox();
   }
 
   function updateLightbox() {
     var lightbox = document.getElementById('lightbox');
     var img = lightbox.querySelector('.lightbox-img');
-    var counter = lightbox.querySelector('.lightbox-counter');
-    img.src = lightboxItems[lightboxIndex].src;
-    counter.textContent = (lightboxIndex + 1) + ' / ' + lightboxItems.length;
+    img.src = lightboxImages[lightboxIndex];
+
+    // Update dots
+    lightbox.querySelectorAll('.lightbox-dot').forEach(function(dot, i) {
+      dot.classList.toggle('active', i === lightboxIndex);
+    });
   }
 
   // Lightbox event listeners
@@ -205,10 +264,16 @@
     if (!lightbox) return;
 
     lightbox.querySelector('.lightbox-close').addEventListener('click', closeLightbox);
-    lightbox.querySelector('.lightbox-prev').addEventListener('click', prevLightbox);
-    lightbox.querySelector('.lightbox-next').addEventListener('click', nextLightbox);
+    lightbox.querySelector('.lightbox-prev').addEventListener('click', function(e) {
+      e.stopPropagation();
+      prevLightbox();
+    });
+    lightbox.querySelector('.lightbox-next').addEventListener('click', function(e) {
+      e.stopPropagation();
+      nextLightbox();
+    });
 
-    // Click background to close
+    // Click background to close (only on lightbox itself or lightbox-body empty area)
     lightbox.addEventListener('click', function(e) {
       if (e.target === lightbox) closeLightbox();
     });

@@ -343,15 +343,27 @@
 
 <!-- ═══ Lightbox ═══ -->
 <div id="lightbox" class="lightbox">
-  <img class="lightbox-img" src="" alt="">
   <button class="lightbox-close">&times;</button>
-  <button class="lightbox-nav lightbox-prev">
-    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-  </button>
-  <button class="lightbox-nav lightbox-next">
-    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
-  </button>
-  <div class="lightbox-counter"></div>
+  <div class="lightbox-body">
+    <!-- Left: image + nav arrows -->
+    <div class="lightbox-left">
+      <button class="lightbox-nav lightbox-prev">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <img class="lightbox-img" src="" alt="">
+      <button class="lightbox-nav lightbox-next">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+      </button>
+    </div>
+    <!-- Right: info panel -->
+    <div class="lightbox-right">
+      <div class="lightbox-title"></div>
+      <div class="lightbox-tags"></div>
+      <div class="lightbox-desc"></div>
+    </div>
+  </div>
+  <!-- Dot indicators -->
+  <div class="lightbox-dots"></div>
 </div>
 
 <!-- ═══ Back to Top ═══ -->

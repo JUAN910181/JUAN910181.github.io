@@ -23,6 +23,20 @@
   .works-grid { column-count: 2; }
   .works-filters { justify-content: flex-start; }
 
+  /* Lightbox: stack on tablet */
+  .lightbox-body {
+    flex-direction: column;
+    gap: 24px;
+    max-height: 92vh;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  .lightbox-left .lightbox-img { max-height: 55vh; }
+  .lightbox-right {
+    width: 100%;
+    padding: 0 12px;
+  }
+
   /* About page: stack layout */
   .about-layout {
     flex-direction: column;
@@ -101,10 +115,23 @@
   /* Works page: single column */
   .works-grid { column-count: 1; }
 
-  /* Lightbox nav */
-  .lightbox-prev { left: 12px }
-  .lightbox-next { right: 12px }
+  /* Lightbox: stack vertically on small screens */
+  .lightbox-body {
+    flex-direction: column;
+    gap: 20px;
+    max-height: 95vh;
+    overflow-y: auto;
+    padding: 16px;
+  }
+  .lightbox-left .lightbox-img { max-height: 50vh; }
+  .lightbox-right {
+    width: 100%;
+    padding: 0 8px;
+  }
+  .lightbox-prev { left: 8px }
+  .lightbox-next { right: 8px }
   .lightbox-nav { width: 36px; height: 36px; }
+  .lightbox-dots { bottom: 12px; }
 
   /* Works header */
   .works-header { flex-direction: column; align-items: flex-start; gap: 12px; }
