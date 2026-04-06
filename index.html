@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CHEN YU CHUAN | PORTFOLIO</title>
+  <meta name="description" content="陳逸辰 — 視覺設計師作品集。30% 中式靈魂 + 70% 數位玻璃。">
+  <meta property="og:title" content="陳逸辰 — Stay Clear. See More.">
+  <meta property="og:type" content="website">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+TC:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/scanner.css">
+  <link rel="stylesheet" href="css/navigation.css">
+  <link rel="stylesheet" href="css/arsenal.css">
+  <link rel="stylesheet" href="css/categories.css">
+  <link rel="stylesheet" href="css/gallery.css">
+  <link rel="stylesheet" href="css/about.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="is-locked">
+
+  <!-- ═══ SVG Definitions ═══ -->
+  <svg class="svg-defs" style="position:absolute;width:0;height:0" aria-hidden="true">
+    <defs>
+      <!-- Cross-window lattice pattern (十字窗櫺) -->
+      <pattern id="lattice" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+        <rect x="0" y="0" width="24" height="24" fill="none"/>
+        <line x1="12" y1="0" x2="12" y2="24" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+        <line x1="0" y1="12" x2="24" y2="12" stroke="currentColor" stroke-width="0.5" opacity="0.3"/>
+        <rect x="4" y="4" width="16" height="16" rx="1" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.15"/>
+      </pattern>
+
+      <!-- Chromatic aberration filter -->
+      <filter id="chromatic">
+        <feOffset in="SourceGraphic" dx="-2" dy="0" result="red"/>
+        <feColorMatrix in="red" type="matrix"
+          values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red-only"/>
+        <feOffset in="SourceGraphic" dx="2" dy="0" result="blue"/>
+        <feColorMatrix in="blue" type="matrix"
+          values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="blue-only"/>
+        <feBlend in="red-only" in2="SourceGraphic" mode="screen" result="rb"/>
+        <feBlend in="blue-only" in2="rb" mode="screen"/>
+      </filter>
+
+      <!-- Glass displacement filter -->
+      <filter id="glass-bulge">
+        <feTurbulence type="turbulence" baseFrequency="0.015" numOctaves="2" result="turb"/>
+        <feDisplacementMap in="SourceGraphic" in2="turb" scale="8" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+
+    </defs>
+  </svg>
+
+  <!-- ═══ Background Layer ═══ -->
+  <div class="bg-layer"></div>
+  <div class="noise-overlay"></div>
+
+  <!-- 海棠窗花 clip path definition -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <clipPath id="begonia-clip" clipPathUnits="objectBoundingBox">
+        <path d="M0.5,0.067 Q0.708,0.067 0.708,0.292 Q0.933,0.292 0.933,0.5 Q0.933,0.708 0.708,0.708 Q0.708,0.933 0.5,0.933 Q0.292,0.933 0.292,0.708 Q0.067,0.708 0.067,0.5 Q0.067,0.292 0.292,0.292 Q0.292,0.067 0.5,0.067Z"/>
+      </clipPath>
+    </defs>
+  </svg>
+
+  <!-- ═══ Navigation (Fixed) ═══ -->
+  <nav class="site-nav" id="siteNav">
+    <div class="avatar-trigger" id="avatarTrigger">
+      <img class="avatar-img" src="image/姓名logo設計_白.png" alt="Chen Yu Juan">
+      <div class="avatar-ring"></div>
+    </div>
+  </nav>
+
+  <!-- ═══ Bio Overlay ═══ -->
+  <div class="bio-overlay" id="bioOverlay" aria-hidden="true">
+    <div class="bio-noise"></div>
+    <div class="bio-content" id="bioContent"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 1: HERO OPENING
+       ═══════════════════════════════════════ -->
+  <section class="scene scene--scanner" id="sectionScanner">
+    <!-- Background artwork layer -->
+    <div class="hero-bg-art" aria-hidden="true">
+      <img src="image/01.png" alt="" class="hero-bg-art-img">
+    </div>
+
+    <!-- Layer 1: name03 blurred (behind name, always visible) -->
+    <div class="hero-text-layer hero-text-layer--back-blur">
+      <img class="hero-name-img" src="image/name03.png" alt="Chen Yu Juan">
+    </div>
+
+    <!-- Layer 2: YuJuan (always visible, no effects) -->
+    <div class="hero-text-layer hero-text-layer--blur" id="heroBlur">
+      <img class="hero-name-img" src="image/YuJuan.png" alt="Chen Yu Juan">
+    </div>
+
+    <!-- Layer 3: name03 clear (revealed by mouse circle) -->
+    <div class="hero-text-layer hero-text-layer--clear" id="heroClear">
+      <img class="hero-name-img" src="image/name03.png" alt="Chen Yu Juan">
+    </div>
+
+    <!-- Tagline -->
+    <div class="hero-tagline">
+      <p>Stay Clear. See More.</p>
+    </div>
+
+    <!-- Glass Folder — frosted white with documents peeking out -->
+    <div class="hero-folder" id="heroFolder">
+      <div class="folder-glow"></div>
+      <svg class="folder-svg" viewBox="0 0 140 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Frosted white gradient for folder body -->
+          <linearGradient id="folder-body-fill" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.18)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0.08)"/>
+          </linearGradient>
+          <!-- Front panel — slightly brighter frosted -->
+          <linearGradient id="folder-front-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.22)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0.10)"/>
+          </linearGradient>
+          <!-- Glass highlight streak -->
+          <linearGradient id="folder-gloss" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.30)"/>
+            <stop offset="30%" stop-color="rgba(255,255,255,0.05)"/>
+            <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+          </linearGradient>
+          <!-- Document paper fill -->
+          <linearGradient id="doc-fill" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.65)"/>
+            <stop offset="100%" stop-color="rgba(240,240,245,0.45)"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Back panel of folder (deeper part) -->
+        <rect x="12" y="28" width="116" height="72" rx="8"
+              fill="url(#folder-body-fill)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+        <!-- Folder tab on top-left -->
+        <path d="M12 36 L12 20 Q12 14 18 14 L48 14 Q54 14 56 20 L60 28 L12 28Z"
+              fill="url(#folder-body-fill)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+
+        <!-- Logo image peeking out of folder -->
+        <image href="image/姓名logo設計_白.png" x="12" y="11" width="115" height="58" opacity="0.9"/>
+
+        <!-- Front panel of folder (overlaps documents at bottom) -->
+        <path d="M12 52 Q12 46 18 46 L122 46 Q128 46 128 52 L128 92 Q128 100 120 100 L20 100 Q12 100 12 92Z"
+              fill="url(#folder-front-fill)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+
+        <!-- Glass highlight on front panel -->
+        <path d="M16 50 Q16 46 22 46 L80 46 Q80 60 40 62 Q16 63 16 50Z"
+              fill="url(#folder-gloss)" opacity="0.6"/>
+
+        <!-- Subtle inner shadow on front panel bottom -->
+        <rect x="16" y="85" width="108" height="12" rx="6"
+              fill="rgba(0,0,0,0.08)" opacity="0.5"/>
+      </svg>
+    </div>
+
+
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 2: TOOL ARSENAL
+       ═══════════════════════════════════════ -->
+  <section class="scene scene--arsenal scene--hidden" id="sectionArsenal">
+    <div class="arsenal-header">
+      <span class="section-label">The Arsenal</span>
+      <h2 class="section-title">擅長工具</h2>
+    </div>
+    <div class="arsenal-track" id="arsenalTrack">
+      <!-- Tool cards rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 2.5: CATEGORY SELECTION
+       ═══════════════════════════════════════ -->
+  <section class="scene scene--categories" id="sectionCategories">
+    <div class="categories-header">
+      <span class="section-label">COLLECTIONS</span>
+      <h2 class="section-title">作品輯錄</h2>
+    </div>
+    <div class="categories-grid">
+      <!-- Cards rendered by JS -->
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 3: GLASS MATRIX GALLERY
+       ═══════════════════════════════════════ -->
+  <section class="scene scene--gallery scene--hidden" id="sectionGallery">
+
+    <!-- Gallery grid (centered, no side labels) -->
+    <div class="gallery-container">
+      <div class="gallery-header">
+        <span class="section-label">SELECTED WORKS</span>
+        <h2 class="section-title">作品展示</h2>
+        <div class="gallery-subtitle-row">
+          <div class="gallery-subtitle" id="gallerySubtitle"></div>
+          <nav class="gallery-breadcrumb" id="galleryBreadcrumb"></nav>
+        </div>
+      </div>
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Work items rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       SECTION 4: ABOUT / TIMELINE
+       ═══════════════════════════════════════ -->
+  <section class="scene scene--about scene--hidden" id="sectionAbout">
+    <div class="about-header">
+      <span class="section-label">Journey</span>
+      <h2 class="section-title">工作歷程</h2>
+    </div>
+    <div class="timeline-container" id="timelineContainer">
+      <div class="timeline-rail">
+        <div class="timeline-progress" id="timelineProgress"></div>
+      </div>
+      <div class="timeline-chapters" id="timelineChapters">
+        <!-- Chapters rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ Profile Overlay (Arsenal + Timeline) ═══ -->
+  <div class="profile-overlay" id="profileOverlay" aria-hidden="true">
+    <!-- close button removed -->
+    <div class="profile-overlay-content" id="profileContent">
+      <!-- Arsenal + About content cloned here by JS -->
+    </div>
+  </div>
+
+  <!-- ═══ Lightbox ═══ -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose" aria-label="關閉">&times;</button>
+    <div class="lightbox-body">
+      <div class="lightbox-left">
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="lightbox-media" id="lightboxMedia"></div>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="下一張">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><polyline points="9 6 15 12 9 18"/></svg>
+        </button>
+        <div class="lightbox-dots" id="lightboxDots"></div>
+      </div>
+      <div class="lightbox-right">
+        <div class="lightbox-title" id="lightboxTitle"></div>
+        <div class="lightbox-tags" id="lightboxTags"></div>
+        <div class="lightbox-desc" id="lightboxDesc"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ Back to Top ═══ -->
+  <button class="back-to-top" id="backToTop" aria-label="回到頂部">
+    <svg viewBox="0 0 48 48" width="48" height="48">
+      <!-- Chinese lattice window pattern -->
+      <circle cx="24" cy="24" r="22" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+      <line x1="24" y1="6" x2="24" y2="42" stroke="currentColor" stroke-width="0.5" opacity="0.25"/>
+      <line x1="6" y1="24" x2="42" y2="24" stroke="currentColor" stroke-width="0.5" opacity="0.25"/>
+      <rect x="10" y="10" width="28" height="28" rx="2" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.2"/>
+      <!-- Arrow -->
+      <polyline points="18 26 24 20 30 26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="btt-ripple"></div>
+  </button>
+
+  <!-- ═══ Scripts ═══ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/scanner.js"></script>
+  <script src="js/arsenal.js"></script>
+  <script src="js/categories.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/about.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+</html>

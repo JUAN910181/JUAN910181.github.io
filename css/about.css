@@ -1,0 +1,162 @@
+/* ═══════════════════════════════════════════
+   ABOUT — Timeline Section
+   ═══════════════════════════════════════════ */
+
+.scene--about {
+  min-height: auto;
+  padding: var(--section-pad) var(--content-pad);
+}
+
+.about-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+/* ── Timeline Container ── */
+
+.timeline-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding-left: 40px;
+}
+
+/* ── Timeline Rail (vertical line) ── */
+
+.timeline-rail {
+  position: absolute;
+  left: 12px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--fluorescent-green-dim) 10%,
+    var(--fluorescent-green-dim) 90%,
+    transparent
+  );
+}
+
+.timeline-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--fluorescent-green);
+  transform-origin: top;
+  transform: scaleY(0);
+  box-shadow: 0 0 8px var(--fluorescent-green-dim);
+}
+
+/* ── Chapter Block ── */
+
+.timeline-chapter {
+  position: relative;
+  display: flex;
+  gap: 24px;
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+}
+
+.timeline-chapter:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* ── Timeline Node (dot) ── */
+
+.timeline-node {
+  position: absolute;
+  left: -40px;
+  top: 24px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--glass-border);
+  border: 1.5px solid var(--fluorescent-green-dim);
+  transition: all var(--duration-med) ease;
+}
+
+.timeline-dot.is-active {
+  background: var(--fluorescent-green);
+  border-color: var(--fluorescent-green);
+  box-shadow:
+    0 0 8px var(--fluorescent-green),
+    0 0 20px var(--fluorescent-green-dim);
+  transform: scale(1.3);
+}
+
+/* ── Chapter Card ── */
+
+.timeline-card {
+  flex: 1;
+  padding: 28px;
+  transition: border-color var(--duration-med) ease, box-shadow var(--duration-med) ease;
+}
+
+.timeline-chapter:hover .timeline-card {
+  border-color: var(--fluorescent-green-faint);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 4px 30px rgba(31, 255, 157, 0.06);
+}
+
+.chapter-number {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--fluorescent-green);
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+
+.chapter-title {
+  font-family: var(--font-zh);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.chapter-company {
+  font-family: var(--font-zh);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.chapter-desc {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* ── Skill Tags ── */
+
+.chapter-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chapter-skill {
+  font-family: var(--font-zh);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(89, 194, 255, 0.35);
+  color: #59c2ff;
+  background: rgba(89, 194, 255, 0.08);
+}

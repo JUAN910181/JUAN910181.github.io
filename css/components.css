@@ -1,0 +1,304 @@
+/* ═══════════════════════════════════════════
+   COMPONENTS — Back-to-Top, Lightbox, Shared
+   ═══════════════════════════════════════════ */
+
+/* ── Back to Top Button ── */
+
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-nav);
+  color: var(--text-muted);
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--duration-med) ease,
+              transform var(--duration-med) ease,
+              color var(--duration-fast) ease,
+              border-color var(--duration-fast) ease,
+              box-shadow var(--duration-med) ease;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.back-to-top.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover {
+  color: var(--fluorescent-green);
+  border-color: var(--fluorescent-green-dim);
+  box-shadow:
+    0 0 15px var(--fluorescent-green-dim),
+    0 0 40px rgba(31, 255, 157, 0.08);
+}
+
+.back-to-top svg {
+  position: relative;
+  z-index: 2;
+}
+
+/* Ripple on hover */
+.btt-ripple {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, var(--fluorescent-green-dim), transparent 70%);
+  opacity: 0;
+  transform: scale(0);
+  transition: transform 0.6s var(--ease-out-expo), opacity 0.6s ease;
+  z-index: 1;
+}
+
+.btt-ripple.is-active {
+  transform: scale(2.5);
+  opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════
+   LIGHTBOX
+   ═══════════════════════════════════════════ */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 5, 10, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-body {
+  display: flex;
+  gap: 32px;
+  max-width: 1100px;
+  max-height: 85vh;
+  width: 90vw;
+  padding: 24px;
+}
+
+/* ── Left: Image ── */
+
+.lightbox-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-width: 0;
+}
+
+.lightbox-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-img {
+  max-width: 100%;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: var(--glass-radius-sm);
+  border: 1px solid var(--fluorescent-green-faint);
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.04);
+}
+
+video.lightbox-img {
+  outline: none;
+}
+
+iframe.lightbox-youtube {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 75vh;
+  border-radius: var(--glass-radius-sm);
+  border: 1px solid var(--fluorescent-green-faint);
+}
+
+/* ── Navigation Arrows ── */
+
+.lightbox-nav {
+  position: absolute;
+  top: calc(50% - 20px);
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-light);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+  z-index: 5;
+}
+
+.lightbox-prev { left: 8px; }
+.lightbox-next { right: 8px; }
+
+.lightbox-nav:hover {
+  color: var(--fluorescent-green);
+  border-color: var(--fluorescent-green-dim);
+  background: rgba(31, 255, 157, 0.06);
+}
+
+/* ── Dots ── */
+
+.lightbox-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.lightbox-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  cursor: pointer;
+  transition: background var(--duration-fast) ease, transform var(--duration-fast) ease;
+}
+
+.lightbox-dot.is-active {
+  background: var(--fluorescent-green);
+  transform: scale(1.3);
+}
+
+/* ── Right: Info Panel ── */
+
+.lightbox-right {
+  width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.lightbox-title {
+  font-family: var(--font-zh);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.lightbox-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.lightbox-desc {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+/* ── Close Button ── */
+
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--fluorescent-green);
+  background: rgba(31, 255, 157, 0.08);
+  border: 1px solid rgba(31, 255, 157, 0.3);
+  cursor: pointer;
+  transition: all var(--duration-fast) ease;
+  z-index: 5;
+}
+
+.lightbox-close:hover {
+  color: #fff;
+  background: rgba(31, 255, 157, 0.15);
+  border-color: var(--fluorescent-green);
+}
+
+/* ═══════════════════════════════════════════
+   ENTRANCE ANIMATION BASE
+   ═══════════════════════════════════════════ */
+
+.entrance-fade {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s var(--ease-out-expo);
+}
+
+.entrance-fade.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   PROFILE OVERLAY (Arsenal + Timeline)
+   ═══════════════════════════════════════════ */
+
+.profile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay, 40);
+  display: flex;
+  flex-direction: column;
+  background: rgba(0, 10, 8, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.profile-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.profile-overlay.is-fading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.profile-overlay-content {
+  width: 100%;
+  max-width: var(--content-max, 1200px);
+  margin: 0 auto;
+  padding: 80px var(--content-pad, 24px) 60px;
+}

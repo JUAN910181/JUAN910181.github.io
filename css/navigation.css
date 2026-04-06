@@ -1,0 +1,220 @@
+/* ═══════════════════════════════════════════
+   NAVIGATION & BIO OVERLAY
+   ═══════════════════════════════════════════ */
+
+/* ── Fixed Avatar ── */
+
+.site-nav {
+  position: fixed;
+  top: 24px;
+  left: 24px;
+  z-index: var(--z-nav);
+  perspective: 400px;
+}
+
+.avatar-trigger {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  cursor: pointer;
+  overflow: visible;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.avatar-trigger:hover {
+  transform: rotateY(-30deg) rotateX(10deg);
+}
+
+/* Back glass layer (Layer 1 — begonia shape) */
+.avatar-trigger::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: none;
+  background: rgba(31, 255, 157, 0.08);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  clip-path: url(#begonia-clip);
+  transform: translateZ(-8px);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.6s ease,
+              background 0.6s ease;
+  opacity: 0;
+}
+
+.avatar-trigger:hover::before {
+  transform: translateZ(-22px);
+  opacity: 1;
+  background: rgba(31, 255, 157, 0.12);
+}
+
+/* Avatar image (Layer 2 — center) */
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  transform: translateZ(0);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+              box-shadow 0.6s ease;
+}
+
+.avatar-trigger:hover .avatar-img {
+  box-shadow: 0 0 20px rgba(31, 255, 157, 0.15);
+}
+
+/* Front glass layer (Layer 3 — begonia shape) */
+.avatar-ring {
+  position: absolute;
+  inset: -3px;
+  border: none;
+  background: rgba(31, 255, 157, 0.06);
+  clip-path: url(#begonia-clip);
+  opacity: 0.6;
+  transform: translateZ(8px);
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+              opacity 0.6s ease,
+              box-shadow 0.6s ease;
+  z-index: 3;
+}
+
+.avatar-trigger:hover .avatar-ring {
+  opacity: 1;
+  transform: translateZ(22px);
+  box-shadow:
+    0 0 12px var(--fluorescent-green-dim),
+    0 0 30px rgba(31, 255, 157, 0.1);
+}
+
+/* Fallback when no image */
+.avatar-fallback {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-light);
+  border: 1.5px solid var(--fluorescent-green-dim);
+}
+.avatar-fallback::after {
+  content: '逸';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-zh);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--fluorescent-green);
+}
+
+/* ── Bio Overlay ── */
+
+.bio-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.bio-overlay.is-active {
+  pointer-events: auto;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Amber gold noise background */
+.bio-noise {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 15, 0.92);
+  clip-path: circle(0% at 48px 48px);
+  transition: clip-path 0.8s var(--ease-out-expo);
+}
+
+.bio-overlay.is-active .bio-noise {
+  clip-path: circle(150% at 48px 48px);
+}
+
+.bio-noise::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  filter: sepia(100%) saturate(400%) hue-rotate(10deg) brightness(1.2);
+  opacity: 0.04;
+  animation: noise-drift 6s linear infinite;
+  mix-blend-mode: overlay;
+}
+
+/* Bio content */
+.bio-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--content-pad);
+}
+
+.bio-text {
+  max-width: 600px;
+  text-align: center;
+}
+
+.bio-line {
+  font-family: var(--font-zh);
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 300;
+  line-height: 2;
+  color: var(--text-primary);
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease;
+  text-shadow:
+    0 0 20px rgba(31, 255, 157, 0.25),
+    0 0 40px rgba(31, 255, 157, 0.10);
+}
+
+.bio-line.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Smoke dissolve exit */
+.bio-overlay.is-dissolving .bio-line {
+  opacity: 0;
+  filter: blur(12px);
+  transform: translateY(-10px);
+}
+
+.bio-overlay.is-dissolving .bio-noise {
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 1.2s ease, filter 1.2s ease;
+}
+
+/* Close hint */
+.bio-close-hint {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.6s ease 1s;
+}
+
+.bio-overlay.is-active .bio-close-hint {
+  opacity: 1;
+}

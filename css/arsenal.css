@@ -1,0 +1,188 @@
+/* ═══════════════════════════════════════════
+   ARSENAL — 旋轉卡牌 (Tool Cards)
+   ═══════════════════════════════════════════ */
+
+.scene--arsenal {
+  min-height: auto;
+  padding: var(--section-pad) var(--content-pad);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+}
+
+/* ── Section Headers (shared pattern) ── */
+
+.section-label {
+  font-family: var(--font-en);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--fluorescent-green);
+  opacity: 0.7;
+}
+
+.section-title {
+  font-family: 'jf Jinxuan', var(--font-zh);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--text-primary);
+  margin-top: 8px;
+}
+
+.arsenal-header,
+.gallery-header,
+.about-header {
+  text-align: center;
+}
+
+/* ── Arsenal Track (outer wrapper — clips overflow) ── */
+
+.arsenal-track {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  padding: 40px 20px;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: pan-y;          /* allow vertical page scroll, capture horizontal */
+}
+.arsenal-track.is-dragging {
+  cursor: grabbing;
+}
+
+/* ── Inner track (moves via translateX) ── */
+
+.arsenal-track-inner {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ── Diamond Tool Card ── */
+
+.tool-card {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  position: relative;
+  cursor: grab;
+  perspective: 800px;
+}
+
+.tool-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s var(--ease-glass);
+}
+
+.tool-card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  /* Circle shape */
+  border-radius: 50%;
+  clip-path: none;
+
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur-light);
+  -webkit-backdrop-filter: var(--glass-blur-light);
+  border: none; /* clip-path clips borders, use box-shadow instead */
+  transition: box-shadow var(--duration-med) ease, background var(--duration-med) ease;
+}
+
+/* Pseudo-border for diamond (since clip-path clips real borders) */
+.tool-card-face::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  clip-path: none;
+  background: linear-gradient(135deg, var(--glass-border), rgba(255, 255, 255, 0.03));
+  z-index: -1;
+}
+
+.tool-card:hover .tool-card-face {
+  background: var(--glass-bg-hover);
+}
+
+.tool-card:hover .tool-card-face::before {
+  background: linear-gradient(135deg, var(--fluorescent-green-dim), var(--fluorescent-green-dim));
+}
+
+/* Fluorescent green flash on hover */
+.tool-card:hover .tool-card-face {
+  box-shadow:
+    inset 0 0 20px rgba(57, 255, 20, 0.06),
+    0 0 30px rgba(57, 255, 20, 0.08);
+}
+
+/* ── Card Content ── */
+
+.tool-card-abbr {
+  font-family: var(--font-en);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: color var(--duration-fast) ease, text-shadow var(--duration-fast) ease;
+}
+
+.tool-card:hover .tool-card-abbr {
+  color: var(--fluorescent-green);
+  text-shadow: 0 0 12px rgba(57, 255, 20, 0.4);
+}
+
+.tool-card-name {
+  font-family: var(--font-mono);
+  font-size: 0.45rem;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 55px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Center Nudge Animation (hint to drag) ── */
+
+@keyframes carousel-nudge {
+  0%, 100% { translate: 0 0; }
+  30%      { translate: 8px 0; }
+  50%      { translate: -4px 0; }
+  70%      { translate: 3px 0; }
+}
+
+.carousel-center-nudge {
+  animation: carousel-nudge 1.6s ease-in-out 0.5s infinite;
+}
+
+/* ── Category Group Labels ── */
+
+.tool-category-label {
+  font-family: var(--font-zh);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  padding: 0 12px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* ── Drag State ── */
+
+.arsenal-track.is-dragging .tool-card {
+  pointer-events: none;
+}

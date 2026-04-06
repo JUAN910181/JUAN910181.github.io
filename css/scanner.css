@@ -1,0 +1,365 @@
+/* ═══════════════════════════════════════════
+   HERO — Editorial Opening Scene
+   毛玻璃大字 + 滑鼠揭示效果
+   ═══════════════════════════════════════════ */
+
+.scene--scanner {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: transparent;  /* bg-layer provides the base color */
+}
+
+/* Diagonal sunlight beam from top-left (avatar) to bottom-right (folder) */
+.scene--scanner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    /* Visible light beam — narrow diagonal band (+50%, softened origin) */
+    linear-gradient(
+      135deg,
+      rgba(255, 250, 235, 0.38) 0%,
+      rgba(255, 250, 235, 0.48) 5%,
+      rgba(255, 248, 225, 0.30) 12%,
+      rgba(255, 245, 215, 0.15) 25%,
+      rgba(255, 240, 200, 0.06) 40%,
+      transparent 55%
+    ),
+    /* Hot spot at light source (top-left corner near avatar, softened edge) (+50%) */
+    radial-gradient(
+      ellipse 45% 45% at 5% 5%,
+      rgba(255, 252, 240, 0.40) 0%,
+      rgba(255, 248, 220, 0.18) 35%,
+      transparent 75%
+    ),
+    /* Secondary warm glow along the beam path (+50%) */
+    radial-gradient(
+      ellipse 60% 50% at 30% 30%,
+      rgba(255, 245, 220, 0.21) 0%,
+      transparent 60%
+    ),
+    /* Fluorescent green rim glow at top-right shadow edge */
+    radial-gradient(
+      ellipse 50% 40% at 85% 15%,
+      rgba(31, 255, 157, 0.06) 0%,
+      rgba(31, 255, 157, 0.03) 40%,
+      transparent 70%
+    ),
+    /* Deep shadow on top-right corner */
+    radial-gradient(
+      ellipse 80% 70% at 100% 0%,
+      rgba(0, 0, 0, 0.90) 0%,
+      rgba(0, 0, 0, 0.60) 35%,
+      rgba(0, 0, 0, 0.25) 65%,
+      transparent 90%
+    ),
+    /* Electric blue rim glow at bottom-left shadow edge */
+    radial-gradient(
+      ellipse 40% 50% at 15% 85%,
+      rgba(31, 47, 255, 0.08) 0%,
+      rgba(31, 47, 255, 0.04) 40%,
+      transparent 70%
+    ),
+    /* Deep shadow on bottom-left corner */
+    radial-gradient(
+      ellipse 80% 70% at 0% 100%,
+      rgba(0, 0, 0, 0.90) 0%,
+      rgba(0, 0, 0, 0.60) 35%,
+      rgba(0, 0, 0, 0.25) 65%,
+      transparent 90%
+    ),
+    /* Strong vignette — heavy darkness everywhere except beam */
+    radial-gradient(
+      ellipse 50% 50% at 20% 20%,
+      transparent 10%,
+      rgba(0, 0, 0, 0.65) 100%
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Extra light streak — narrow visible beam line (soft edges) */
+.scene--scanner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 1%,
+    rgba(255, 250, 235, 0.03) 3%,
+    rgba(255, 250, 235, 0.09) 4.5%,
+    rgba(255, 248, 225, 0.15) 6%,
+    rgba(255, 245, 215, 0.09) 7.5%,
+    rgba(255, 245, 215, 0.03) 9%,
+    transparent 11%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Background Art Layer ── */
+
+.hero-bg-art {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero-bg-art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.2;
+}
+
+/* ── Hero Text Layers ── */
+
+.hero-text-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 18vh;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-name {
+  font-family: 'Noto Serif TC', 'Georgia', serif;
+  font-size: clamp(4rem, 11vw, 12rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.hero-name-img {
+  width: clamp(280px, 60vw, 900px);
+  height: auto;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Back blur layer — name03 blurred behind name */
+.hero-text-layer--back-blur {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-text-layer--back-blur .hero-name-img {
+  filter: blur(14px);
+  opacity: 0.6;
+}
+
+/* YuJuan layer — always on top, crystal glass */
+.hero-text-layer--blur {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+}
+
+/* ── YuJuan — clean display, no effects ── */
+
+.hero-text-layer--blur .hero-name-img {
+  position: absolute;
+  top: calc(50% - 9vh);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.75;
+}
+
+/* No pseudo-elements needed */
+.hero-text-layer--blur::before,
+.hero-text-layer--blur::after {
+  display: none;
+}
+
+/* Clear layer — revealed by mouse circle, below YuJuan */
+.hero-text-layer--clear {
+  z-index: 3;
+  --mx: 50%;
+  --my: 50%;
+  -webkit-mask-image: radial-gradient(circle 0px at var(--mx) var(--my), black 50%, transparent 100%);
+  mask-image: radial-gradient(circle 0px at var(--mx) var(--my), black 50%, transparent 100%);
+  will-change: mask-image;
+}
+
+.hero-text-layer--clear .hero-name,
+.hero-text-layer--clear .hero-name-img {
+  filter: none;
+  opacity: 1;
+  /* Slight magnification — lens effect */
+  transform: scale(1.04);
+  /* Dynamic chromatic aberration via JS custom properties */
+  --chroma-rx: 0px;
+  --chroma-ry: 0px;
+  --chroma-bx: 0px;
+  --chroma-by: 0px;
+  text-shadow:
+    /* Red channel offset */
+    var(--chroma-rx) var(--chroma-ry) 0 rgba(255, 40, 80, 0.18),
+    /* Blue/cyan channel offset (opposite direction) */
+    var(--chroma-bx) var(--chroma-by) 0 rgba(0, 180, 255, 0.18),
+    /* Base green glow */
+    0 0 40px rgba(31, 255, 157, 0.15),
+    0 0 80px rgba(31, 255, 157, 0.05);
+}
+
+/* ── Tagline ── */
+
+.hero-tagline {
+  position: absolute;
+  top: calc(50% - 18vh + 6rem + 80px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  text-align: center;
+}
+
+.hero-tagline p {
+  font-family: var(--font-en);
+  font-size: clamp(0.8rem, 1.2vw, 1rem);
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+/* ── Glass Folder with Prismatic Refraction ── */
+
+.hero-folder {
+  position: absolute;
+  bottom: 80px;
+  left: 50%;
+  --folder-px: 0px;
+  --folder-py: 0px;
+  transform: translateX(-50%) translate(var(--folder-px), var(--folder-py));
+  z-index: 5;
+  width: clamp(48px, 6.4vw, 80px);
+  pointer-events: auto;
+  cursor: pointer;
+  animation: folder-float 3s ease-in-out infinite;
+}
+
+@keyframes folder-float {
+  0%, 100% { transform: translateX(-50%) translate(var(--folder-px), var(--folder-py)) translateY(0); }
+  50%      { transform: translateX(-50%) translate(var(--folder-px), var(--folder-py)) translateY(-8px); }
+}
+
+.folder-svg {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.4))
+          drop-shadow(0 2px 8px rgba(31, 255, 157, 0.08));
+}
+
+/* Fluorescent green glow behind folder */
+.folder-glow {
+  position: absolute;
+  inset: -40%;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at center,
+    rgba(31, 255, 157, 0.18),
+    rgba(31, 255, 157, 0.06) 50%,
+    transparent 70%
+  );
+  filter: blur(12px);
+  animation: folder-glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes folder-glow-pulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.15); }
+}
+
+/* ── Info Labels ── */
+
+.hero-info {
+  position: absolute;
+  bottom: 40px;
+  left: var(--content-pad);
+  z-index: 5;
+  display: flex;
+  gap: 24px;
+}
+
+.hero-info-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ── Mouse Reveal Cursor Ring ── */
+
+.hero-cursor-ring {
+  position: fixed;
+  width: 200px;
+  height: 200px;
+  border: none;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  transition: opacity 0.3s ease;
+}
+
+/* ── Scroll Hint ── */
+
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 5;
+  opacity: 0.5;
+  transition: opacity 0.8s ease;
+}
+
+.scroll-hint.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.scroll-hint-line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(to bottom, var(--fluorescent-green), transparent);
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+
+.scroll-hint-text {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+@keyframes scroll-pulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); transform-origin: top; }
+  50%      { opacity: 1;   transform: scaleY(1);   }
+}
