@@ -176,7 +176,13 @@
   }
 
   .lightbox-right {
-    display: none;
+    display: block;
+    padding: 12px 16px;
+  }
+
+  /* Hide title/tags on mobile gallery cards — only visible in lightbox */
+  .gallery-item .item-content {
+    display: none !important;
   }
 }
 
