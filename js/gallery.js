@@ -635,6 +635,29 @@
       if (e.key === 'ArrowLeft') navigateLightbox(-1);
       if (e.key === 'ArrowRight') navigateLightbox(1);
     });
+
+    /* Touch swipe navigation */
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var isSwiping = false;
+
+    lightbox.el.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].clientX;
+      touchStartY = e.changedTouches[0].clientY;
+      isSwiping = true;
+    }, { passive: true });
+
+    lightbox.el.addEventListener('touchend', function (e) {
+      if (!isSwiping) return;
+      isSwiping = false;
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      var dy = e.changedTouches[0].clientY - touchStartY;
+      /* Only trigger if horizontal swipe > 50px and more horizontal than vertical */
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) navigateLightbox(1);   /* swipe left → next */
+        else navigateLightbox(-1);          /* swipe right → prev */
+      }
+    }, { passive: true });
   }
 
   lightbox.currentWork = null;

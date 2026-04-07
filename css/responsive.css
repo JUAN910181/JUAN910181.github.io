@@ -184,6 +184,11 @@
   .gallery-item .item-content {
     display: none !important;
   }
+
+  /* Hide lightbox arrows on mobile — use swipe instead */
+  .lightbox-nav {
+    display: none !important;
+  }
 }
 
 /* ── Touch Devices: Disable heavy hover effects ── */
