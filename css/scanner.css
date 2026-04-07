@@ -367,6 +367,13 @@
 /* ── Mobile RWD ── */
 @media (max-width: 768px) {
   .hero-folder {
-    bottom: 140px;
+    bottom: 180px;
+  }
+}
+
+/* Tagline line break on narrow screens */
+@media (max-width: 480px) {
+  .tagline-line {
+    display: block;
   }
 }

@@ -187,9 +187,9 @@
     filter: blur(1px) saturate(0.8) brightness(0.8);
   }
 
+  /* Hide title overlay on mobile — only show in lightbox */
   .gallery-item .item-content {
-    opacity: 1;
-    transform: translateY(0);
+    display: none;
   }
 
   .gallery-grid:hover .gallery-item:not(:hover) {

@@ -341,6 +341,13 @@
 }
 
 @media (max-width: 600px) {
+  .scene--categories {
+    padding: 80px 20px 40px;
+    justify-content: flex-start;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .categories-grid {
     flex-wrap: wrap;
     height: auto;
@@ -353,18 +360,15 @@
   }
 
   .card-vertical-text {
-    transform: translateX(-50%) rotate(0deg);
-    bottom: auto;
+    writing-mode: horizontal-tb;
+    white-space: nowrap;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-align: center;
   }
 
   .category-card:hover {
     width: 45%;
-  }
-
-  .scene--categories {
-    padding: 80px 20px 40px;
   }
 }
