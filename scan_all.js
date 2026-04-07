@@ -16,14 +16,17 @@ function scanCategory(folderName, tagName) {
     const subDirs = fs.readdirSync(dirPath, {withFileTypes: true})
       .filter(d => d.isDirectory() && d.name !== '素材');
     const directImages = fs.readdirSync(dirPath)
-      .filter(f => /\.(jpg|png|gif|mp4)$/i.test(f) && fs.statSync(path.join(dirPath, f)).isFile()).sort();
+      .filter(f => /\.(jpg|png|gif|mp4|webp)$/i.test(f) && fs.statSync(path.join(dirPath, f)).isFile()).sort();
     if (directImages.length > 0) {
       entries.push({ images: directImages.map(f => 'image/' + safeEncode(folderName) + '/' + safeEncode(dirName) + '/' + safeEncode(f)), title: dirName.replace(/^\d+_/, ''), tags: [tagName], desc: '' });
+    } else if (subDirs.length === 0) {
+      /* Empty folder — still create entry (may have YouTube link added manually) */
+      entries.push({ images: [], title: dirName.replace(/^\d+_/, ''), tags: [tagName], desc: '' });
     }
     subDirs.forEach(sub => {
       const subPath = path.join(dirPath, sub.name);
       const subImages = fs.readdirSync(subPath)
-        .filter(f => /\.(jpg|png|gif|mp4)$/i.test(f) && fs.statSync(path.join(subPath, f)).isFile()).sort();
+        .filter(f => /\.(jpg|png|gif|mp4|webp)$/i.test(f) && fs.statSync(path.join(subPath, f)).isFile()).sort();
       if (subImages.length > 0) {
         entries.push({ images: subImages.map(f => 'image/' + safeEncode(folderName) + '/' + safeEncode(dirName) + '/' + safeEncode(sub.name) + '/' + safeEncode(f)), title: dirName.replace(/^\d+_/, '') + '\u2014' + sub.name, tags: [tagName], desc: '' });
       }
@@ -66,7 +69,7 @@ function replaceArray(data, key, newArrayStr) {
 // Categories mapping — folder names updated to match actual filesystem
 const categories = [
   { folder: '01_GRAPHIC DESIGN', tag: '\u5e73\u9762\u8a2d\u8a08', key: 'art' },
-  { folder: '02_SOCIAL MARKETING', tag: '\u884c\u92b7\u793e\u7fa4', key: 'marketing' },
+  { folder: '02_Gaming Creatives', tag: '\u904a\u6232\u8996\u89ba', key: 'marketing' },
   { folder: '03_EVENT PLANNING', tag: '\u6d3b\u52d5\u7b56\u5283', key: 'video' },
   { folder: '04_MOTION GRAPHICS', tag: '\u52d5\u614b\u5f71\u50cf', key: 'ecommerce' },
   { folder: '05_WEB DESIGN', tag: '\u7db2\u9801\u8a2d\u8a08', key: 'temple' },

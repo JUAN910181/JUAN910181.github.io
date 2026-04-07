@@ -123,7 +123,7 @@
 .chapter-title {
   font-family: var(--font-zh);
   font-size: 1.3rem;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--text-primary);
   margin-bottom: 4px;
 }
@@ -159,4 +159,117 @@
   border: 1px solid rgba(89, 194, 255, 0.35);
   color: #59c2ff;
   background: rgba(89, 194, 255, 0.08);
+}
+
+/* ═══════════════════════════════════════════
+   CONTACT CARD — Slide-out from left edge
+   ═══════════════════════════════════════════ */
+
+.contact-card {
+  position: fixed;
+  left: -200px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 99998;
+  display: flex;
+  align-items: stretch;
+  transition: left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.contact-card:hover,
+.contact-card.is-touched {
+  left: 0;
+}
+
+/* Hide the separate tab — we use the card edge instead */
+.contact-card-tab {
+  display: none;
+}
+
+/* Card body — right edge peeks out as the clickable tab */
+.contact-card-body {
+  width: 220px;
+  background: rgba(12, 25, 20, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 200, 160, 0.2);
+  border-left: none;
+  border-radius: 0 14px 14px 0;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: visible;
+}
+
+/* Breathing glow on the exposed right edge */
+.contact-card-body::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  bottom: -4px;
+  width: 50px;
+  border-radius: 0 18px 18px 0;
+  background: conic-gradient(
+    from 180deg,
+    rgba(0, 200, 160, 0.4),
+    rgba(60, 180, 255, 0.3),
+    rgba(0, 200, 160, 0.4)
+  );
+  z-index: -1;
+  filter: blur(8px);
+  animation: card-breathe 3s ease-in-out infinite;
+}
+
+@keyframes card-breathe {
+  0%, 100% { opacity: 0.3; }
+  50%      { opacity: 0.7; }
+}
+
+.contact-card-name {
+  font-family: var(--font-zh);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.15em;
+}
+
+.contact-card-divider {
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 200, 160, 0.6), transparent);
+}
+
+.contact-card-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.02em;
+}
+
+.contact-card-row svg {
+  flex-shrink: 0;
+  stroke: rgba(0, 200, 160, 0.7);
+}
+
+/* Mobile — touch support */
+@media (max-width: 768px) {
+  .contact-card {
+    left: -180px;
+  }
+  .contact-card-body {
+    width: 180px;
+    padding: 20px 16px;
+  }
+  .contact-card-name {
+    font-size: 1rem;
+  }
+  .contact-card-row {
+    font-size: 0.72rem;
+  }
 }

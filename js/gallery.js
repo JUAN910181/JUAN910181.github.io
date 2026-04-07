@@ -46,7 +46,8 @@
     window.AppState.view = 'gallery';
 
     /* Determine which category to show */
-    var filterCat = category || 'all';
+    var filterCat = category || sessionStorage.getItem('galleryCategory') || 'all';
+    sessionStorage.setItem('galleryCategory', filterCat);
 
     /* Check if coming from categories (heroFolder not visible) — skip fly animation */
     var heroFolder = document.getElementById('heroFolder');
@@ -335,17 +336,23 @@
       document.body.appendChild(avatarDiv);
 
       avatarDiv.addEventListener('click', function () {
+        /* Save current view so profile can return here */
+        sessionStorage.setItem('profileReturnView', 'gallery');
+        sessionStorage.setItem('galleryCategory', activeCategory);
+
         var ga = document.getElementById('galleryHomeAvatar');
         var gb = document.getElementById('galleryBackBtn');
         var gs = document.getElementById('galleryScrollTop');
         if (ga) ga.remove(); if (gb) gb.remove(); if (gs) gs.remove();
+
+        /* Open profile FIRST (behind gallery), then fade out gallery */
+        if (window.openProfileOverlay) window.openProfileOverlay();
 
         sect.classList.add('is-fading');
         setTimeout(function () {
           sect.classList.remove('is-overlay', 'is-fading', 'cards-landed');
           sect.classList.add('scene--hidden');
           isOverlayOpen = false;
-          window.AppState.view = 'hero';
         }, 400);
       });
       avatarDiv.addEventListener('mouseenter', function () {
@@ -673,7 +680,8 @@
     if (mediaSrc.indexOf('youtube:') === 0) {
       /* YouTube embed */
       var ytId = mediaSrc.replace('youtube:', '');
-      lightbox.media.innerHTML = '<iframe class="lightbox-img lightbox-youtube" src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>';
+      lightbox.media.innerHTML = '<iframe class="lightbox-img lightbox-youtube" src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0&modestbranding=1&origin=' + encodeURIComponent(window.location.origin) + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>' +
+        '<a href="https://www.youtube.com/watch?v=' + ytId + '" target="_blank" rel="noopener" style="display:block; text-align:center; margin-top:12px; color:rgba(89,194,255,0.8); font-size:0.85rem; text-decoration:none;">無法播放？點此前往 YouTube 觀看 ↗</a>';
     } else {
       var ext = mediaSrc.split('.').pop().toLowerCase().split('?')[0];
       if (ext === 'mp4') {

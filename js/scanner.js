@@ -54,6 +54,19 @@
       mouseY = e.clientY;
     });
 
+    /* Touch support — finger drag reveals clear text */
+    section.addEventListener('touchstart', function (e) {
+      var t = e.touches[0];
+      mouseX = t.clientX;
+      mouseY = t.clientY;
+    }, { passive: true });
+
+    section.addEventListener('touchmove', function (e) {
+      var t = e.touches[0];
+      mouseX = t.clientX;
+      mouseY = t.clientY;
+    }, { passive: true });
+
     /* Folder click → open categories overlay */
     if (heroFolder) {
       heroFolder.addEventListener('click', function () {

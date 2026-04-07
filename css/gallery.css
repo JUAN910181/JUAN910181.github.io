@@ -483,3 +483,20 @@ video.item-image {
 .breadcrumb-current {
   color: rgba(89, 194, 255, 0.9);
 }
+
+/* ── Mobile RWD ── */
+@media (max-width: 768px) {
+  .gallery-subtitle-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .gallery-subtitle {
+    text-align: center;
+  }
+
+  .gallery-breadcrumb {
+    text-align: center;
+  }
+}

@@ -28,7 +28,7 @@
       /* Vertical text (visible when collapsed) */
       html += '  <span class="card-vertical-text">' + cat.title + '</span>';
       /* Bottom icon */
-      html += '  <span class="card-bottom-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/></svg></span>';
+      html += '  <span class="card-bottom-icon"><img src="image/姓名logo設計_白.png" alt="" style="width:110%; height:110%; object-fit:contain; opacity:0.1;"></span>';
       /* Expanded content (visible on hover) */
       html += '  <div class="card-expanded">';
       html += '    <span class="card-expanded-number">' + num + '</span>';
@@ -88,7 +88,21 @@
       document.body.appendChild(avatarDiv);
 
       avatarDiv.addEventListener('click', function () {
-        closeCategoriesOverlay();
+        /* Save current view so profile can return here */
+        sessionStorage.setItem('profileReturnView', 'categories');
+        /* Open profile FIRST (behind categories), then hide categories */
+        if (window.openProfileOverlay) window.openProfileOverlay();
+        /* Clean up and hide categories after profile is visible */
+        var av = document.getElementById('categoriesHomeAvatar');
+        var bk = document.getElementById('categoriesBackBtn');
+        if (av) av.remove();
+        if (bk) bk.remove();
+        setTimeout(function () {
+          section.classList.remove('is-open', 'is-fading');
+          isOpen = false;
+          var cards = section.querySelectorAll('.category-card');
+          cards.forEach(function (card) { card.classList.remove('is-visible'); });
+        }, 300);
       });
       avatarDiv.addEventListener('mouseenter', function () {
         this.querySelector('img').style.transform = 'scale(1.1)';

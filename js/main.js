@@ -16,7 +16,10 @@
   var _origView = Object.getOwnPropertyDescriptor(window.AppState, 'view');
   Object.defineProperty(window.AppState, 'view', {
     get: function () { return this._view || 'hero'; },
-    set: function (v) { this._view = v; sessionStorage.setItem('appView', v); },
+    set: function (v) {
+      this._view = v;
+      sessionStorage.setItem('appView', v);
+    },
     configurable: true
   });
   window.AppState.view = savedView;

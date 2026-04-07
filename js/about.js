@@ -40,6 +40,7 @@
 
     /* Events — click: open profile directly */
     avatarTrigger.addEventListener('click', function () {
+      sessionStorage.setItem('profileReturnView', 'hero');
       if (window.openProfileOverlay) window.openProfileOverlay();
     });
   }
@@ -176,12 +177,78 @@
 
     profileContent.innerHTML = html;
 
+    /* Contact card — slides out from left edge */
+    var existingCard = document.getElementById('profileContactCard');
+    if (!existingCard) {
+      var card = document.createElement('div');
+      card.id = 'profileContactCard';
+      card.className = 'contact-card';
+      card.innerHTML =
+        '<div class="contact-card-tab">✉</div>' +
+        '<div class="contact-card-body">' +
+        '  <div class="contact-card-name">陳俞娟</div>' +
+        '  <div class="contact-card-divider"></div>' +
+        '  <div class="contact-card-row">' +
+        '    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>' +
+        '    <span>0970-701-233</span>' +
+        '  </div>' +
+        '  <div class="contact-card-row">' +
+        '    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' +
+        '    <span>aa40332024@gmail.com</span>' +
+        '  </div>' +
+        '</div>';
+      document.body.appendChild(card);
+
+      /* Touch toggle for mobile */
+      card.addEventListener('touchstart', function (e) {
+        e.stopPropagation();
+        card.classList.toggle('is-touched');
+      }, { passive: true });
+
+      /* Close on outside touch */
+      document.addEventListener('touchstart', function (e) {
+        if (card && !card.contains(e.target)) {
+          card.classList.remove('is-touched');
+        }
+      }, { passive: true });
+    }
+
     /* Top-left avatar — appended to body so position:fixed works (backdrop-filter breaks fixed in overlay) */
     var avatarDiv = document.createElement('div');
     avatarDiv.id = 'profileHomeAvatar';
     avatarDiv.style.cssText = 'position:fixed; top:24px; left:24px; z-index:99999; width:48px; height:48px; cursor:pointer; perspective:400px;';
     avatarDiv.innerHTML = '<img src="image/姓名logo設計_白.png" alt="Back to Home" style="width:100%; height:100%; object-fit:contain; border-radius:50%; transition:transform 0.3s ease;">';
     document.body.appendChild(avatarDiv);
+
+    /* Back button — return to previous page */
+    var backBtn = document.createElement('button');
+    backBtn.id = 'profileBackBtn';
+    backBtn.className = 'aurora-scroll-top';
+    backBtn.style.cssText = 'position:fixed; top:84px; left:24px; z-index:99999;';
+    backBtn.setAttribute('aria-label', 'Back');
+    backBtn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>';
+    document.body.appendChild(backBtn);
+
+    backBtn.addEventListener('click', function () {
+      var returnView = sessionStorage.getItem('profileReturnView') || 'hero';
+      sessionStorage.removeItem('profileReturnView');
+
+      if (returnView === 'gallery' || returnView === 'categories') {
+        /* Open target FIRST (behind profile), then fade out profile */
+        if (returnView === 'gallery' && window.openGalleryOverlay) {
+          window.openGalleryOverlay();
+        } else if (returnView === 'categories' && window.openCategoriesOverlay) {
+          window.openCategoriesOverlay();
+        }
+        /* Small delay to let target render, then fade out profile */
+        setTimeout(function () {
+          if (window.closeProfileOverlay) window.closeProfileOverlay();
+        }, 100);
+      } else {
+        /* Return to hero — just close */
+        if (window.closeProfileOverlay) window.closeProfileOverlay();
+      }
+    });
 
     /* Bottom-right scroll-to-top — appended to body so position:fixed works */
     var scrollBtn = document.createElement('button');
@@ -380,12 +447,19 @@
     setTimeout(function () {
       profileOverlay.classList.remove('is-open', 'is-fading');
       profileOverlay.setAttribute('aria-hidden', 'true');
-      window.AppState.view = 'hero';
-      /* Clean up fixed elements appended to overlay */
+      /* Only reset to hero if no other view is active */
+      if (window.AppState._view === 'profile') {
+        window.AppState.view = 'hero';
+      }
+      /* Clean up fixed elements appended to body */
       var avatar = document.getElementById('profileHomeAvatar');
       var scrollTop = document.getElementById('profileScrollTop');
+      var backBtnEl = document.getElementById('profileBackBtn');
+      var contactCard = document.getElementById('profileContactCard');
       if (avatar) avatar.remove();
       if (scrollTop) scrollTop.remove();
+      if (backBtnEl) backBtnEl.remove();
+      if (contactCard) contactCard.remove();
     }, 400);
   };
 
