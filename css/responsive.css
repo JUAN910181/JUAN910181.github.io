@@ -190,7 +190,7 @@
 
 @media (hover: none) and (pointer: coarse) {
   .gallery-item .item-image {
-    filter: blur(1px) saturate(0.8) brightness(0.8);
+    filter: none;
   }
 
   /* Hide title overlay on mobile — only show in lightbox */
