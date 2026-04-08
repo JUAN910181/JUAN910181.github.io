@@ -188,9 +188,15 @@
           });
         }
 
-        /* Step 6: After flight, restore to masonry layout */
-        setTimeout(function () {
+        /* Step 6: After flight, restore to masonry layout.
+           Use transitionend on the first card instead of setTimeout —
+           iPad Safari throttles timers and may never fire on time. */
+        function restoreCards() {
           cards.forEach(function (card) {
+            card.style.position = '';
+            card.style.left = '';
+            card.style.top = '';
+            card.style.width = '';
             card.style.opacity = '';
             card.style.transform = '';
             card.style.zIndex = '';
@@ -208,7 +214,32 @@
 
           /* Set up gallery UI elements */
           setupGalleryUI(section, filterCat);
-        }, flyDelay);
+        }
+
+        if (skipFlyAnimation) {
+          restoreCards();
+        } else {
+          var restored = false;
+          function onceRestore() {
+            if (restored) return;
+            restored = true;
+            restoreCards();
+          }
+
+          /* Primary: listen for transition end on first card */
+          if (cards.length > 0) {
+            cards[0].addEventListener('transitionend', function handler(e) {
+              /* Only react to our fly properties, not child transitions */
+              if (e.target === cards[0]) {
+                cards[0].removeEventListener('transitionend', handler);
+                onceRestore();
+              }
+            });
+          }
+
+          /* Fallback: in case transitionend doesn't fire (iPad edge case) */
+          setTimeout(onceRestore, 1200);
+        }
       });
     });
   };
