@@ -219,6 +219,7 @@ video.item-image {
 .item-image {
   width: 100%;
   height: auto;
+  min-height: 80px; /* Fallback before image loads — prevents 0-height masonry collapse */
   display: block;
   object-fit: contain;
   /* Clear preview — no blur */

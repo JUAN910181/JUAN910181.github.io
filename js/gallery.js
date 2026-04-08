@@ -128,11 +128,18 @@
       if (closeBtn) closeBtn.classList.add('is-visible');
       cards.forEach(function (card) { card.classList.add('is-visible'); });
 
-      /* Delay masonry until overlay is fully visible */
-      setTimeout(function () {
-        layoutMasonry();
-        setupGalleryUI(section, filterCat);
-      }, 100);
+      /* Delay masonry until overlay is fully visible.
+         iPad Safari may not have layout-ready dimensions on first try,
+         so retry with rAF if grid width is still 0. */
+      function doMasonry() {
+        if (grid.clientWidth > 0) {
+          layoutMasonry();
+          setupGalleryUI(section, filterCat);
+        } else {
+          requestAnimationFrame(doMasonry);
+        }
+      }
+      setTimeout(doMasonry, 50);
       return;
     }
 
@@ -554,7 +561,7 @@
       html += '  <div class="item-image-wrap">';
       if (cover.indexOf('youtube:') === 0) {
         var ytId = cover.replace('youtube:', '');
-        html += '    <img class="item-image" src="https://img.youtube.com/vi/' + ytId + '/hqdefault.jpg" alt="' + work.title + '" loading="lazy">';
+        html += '    <img class="item-image" src="https://img.youtube.com/vi/' + ytId + '/hqdefault.jpg" alt="' + work.title + '">';
         html += '    <div class="item-play-icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><polygon points="5 3 19 12 5 21"/></svg></div>';
       } else {
         var coverExt = cover.split('.').pop().toLowerCase().split('?')[0];
@@ -562,7 +569,7 @@
           html += '    <video class="item-image" src="' + cover + '#t=0.5" muted loop playsinline preload="auto"></video>';
           html += '    <div class="item-play-icon"><svg viewBox="0 0 24 24" width="32" height="32" fill="white"><polygon points="5 3 19 12 5 21"/></svg></div>';
         } else {
-          html += '    <img class="item-image" src="' + cover + '" alt="' + work.title + '" loading="lazy"';
+          html += '    <img class="item-image" src="' + cover + '" alt="' + work.title + '"';
           html += '         onerror="this.src=\'https://picsum.photos/id/' + (1010 + index) + '/600/400\'">';
         }
       }
