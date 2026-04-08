@@ -1378,6 +1378,9 @@ const TOOLS_DATA = [
   { name: 'Word',             abbr: 'Wd',  category: '辦公應用', icon: 'image/Tools/word.webp' },
   { name: 'macOS',            abbr: 'Mac', category: '作業系統', icon: 'image/Tools/mac%20OS.webp' },
   { name: 'Windows',          abbr: 'Win', category: '作業系統', icon: 'image/Tools/win10.webp' },
+  { name: 'Claude',           abbr: 'Cl',  category: 'AI 工具',  icon: 'image/Tools/Claude.webp' },
+  { name: 'Gemini',           abbr: 'Ge',  category: 'AI 工具',  icon: 'image/Tools/Gemini.webp' },
+  { name: 'ComfyUI',          abbr: 'CU',  category: 'AI 工具',  icon: 'image/Tools/ComfyUI.webp' },
 ];
 
 /* ── 工作經歷時間軸 ── */
