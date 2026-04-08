@@ -1369,18 +1369,18 @@ const GALLERY_LABELS = [
 
 /* ── 工具軍火庫 ── */
 const TOOLS_DATA = [
-  { name: 'Photoshop',        abbr: 'Ps',  category: '視覺核心', icon: 'image/Tools/Ps.webp' },
-  { name: 'Illustrator',      abbr: 'Ai',  category: '視覺核心', icon: 'image/Tools/Ai.webp' },
-  { name: 'InDesign',         abbr: 'Id',  category: '視覺核心', icon: 'image/Tools/Id.webp' },
-  { name: 'Premiere Pro',     abbr: 'Pr',  category: '動態敘事', icon: 'image/Tools/Pr.webp' },
-  { name: 'PowerPoint',       abbr: 'PPT', category: '辦公應用', icon: 'image/Tools/PPT.webp' },
-  { name: 'Excel',            abbr: 'Ex',  category: '辦公應用', icon: 'image/Tools/excel.webp' },
-  { name: 'Word',             abbr: 'Wd',  category: '辦公應用', icon: 'image/Tools/word.webp' },
-  { name: 'macOS',            abbr: 'Mac', category: '作業系統', icon: 'image/Tools/mac%20OS.webp' },
-  { name: 'Windows',          abbr: 'Win', category: '作業系統', icon: 'image/Tools/win10.webp' },
-  { name: 'Claude',           abbr: 'Cl',  category: 'AI 工具',  icon: 'image/Tools/Claude.webp' },
-  { name: 'Gemini',           abbr: 'Ge',  category: 'AI 工具',  icon: 'image/Tools/Gemini.webp' },
-  { name: 'ComfyUI',          abbr: 'CU',  category: 'AI 工具',  icon: 'image/Tools/ComfyUI.webp' },
+  { name: 'Illustrator',      abbr: 'Ai',  category: '視覺核心', icon: 'image/Tools/01_Ai.webp' },
+  { name: 'Photoshop',        abbr: 'Ps',  category: '視覺核心', icon: 'image/Tools/02_Ps.webp' },
+  { name: 'Premiere Pro',     abbr: 'Pr',  category: '動態敘事', icon: 'image/Tools/03_Pr.webp' },
+  { name: 'InDesign',         abbr: 'Id',  category: '視覺核心', icon: 'image/Tools/04_Id.webp' },
+  { name: 'Claude',           abbr: 'Cl',  category: 'AI 工具',  icon: 'image/Tools/05_Claude.webp' },
+  { name: 'ComfyUI',          abbr: 'CU',  category: 'AI 工具',  icon: 'image/Tools/06_ComfyUI.webp' },
+  { name: 'Gemini',           abbr: 'Ge',  category: 'AI 工具',  icon: 'image/Tools/07_Gemini.webp' },
+  { name: 'Word',             abbr: 'Wd',  category: '辦公應用', icon: 'image/Tools/08_word.webp' },
+  { name: 'Excel',            abbr: 'Ex',  category: '辦公應用', icon: 'image/Tools/09_excel.webp' },
+  { name: 'PowerPoint',       abbr: 'PPT', category: '辦公應用', icon: 'image/Tools/10_PPT.webp' },
+  { name: 'macOS',            abbr: 'Mac', category: '作業系統', icon: 'image/Tools/11_mac%20OS.webp' },
+  { name: 'Windows',          abbr: 'Win', category: '作業系統', icon: 'image/Tools/12_win10.webp' },
 ];
 
 /* ── 工作經歷時間軸 ── */
