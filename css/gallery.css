@@ -200,8 +200,10 @@
   transition: opacity 0.3s ease;
 }
 
-.gallery-item:hover .item-play-icon {
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item:hover .item-play-icon {
+    opacity: 1;
+  }
 }
 
 /* Video in gallery card */
@@ -227,36 +229,38 @@ video.item-image {
     transform 0.6s var(--ease-glass);
 }
 
-/* ── Hover: Clear + Magnifying Bulge ── */
+/* ── Hover: Clear + Magnifying Bulge (mouse only) ── */
 
-.gallery-item:hover {
-  border-color: var(--fluorescent-green-dim);
-  box-shadow:
-    0 0 20px rgba(57, 255, 20, 0.08),
-    0 0 40px rgba(57, 255, 20, 0.03),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  transform: translateY(-4px) scale(1.01);
-  z-index: 5;
-}
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item:hover {
+    border-color: var(--fluorescent-green-dim);
+    box-shadow:
+      0 0 20px rgba(57, 255, 20, 0.08),
+      0 0 40px rgba(57, 255, 20, 0.03),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transform: translateY(-4px) scale(1.01);
+    z-index: 5;
+  }
 
-.gallery-item:hover .item-image {
-  filter: blur(0) saturate(1.1) brightness(0.9);
-  /* Image shifts toward mouse via JS --mx/--my custom properties */
-  transform: scale(1.12) translate(
-    calc(var(--mx, 0) * 10px),
-    calc(var(--my, 0) * 10px)
-  );
-}
+  .gallery-item:hover .item-image {
+    filter: blur(0) saturate(1.1) brightness(0.9);
+    /* Image shifts toward mouse via JS --mx/--my custom properties */
+    transform: scale(1.12) translate(
+      calc(var(--mx, 0) * 10px),
+      calc(var(--my, 0) * 10px)
+    );
+  }
 
-/* Dim siblings on hover */
-.gallery-grid:hover .gallery-item:not(:hover) {
-  opacity: 0.5;
-  filter: brightness(0.6);
-  transition: opacity 0.4s ease, filter 0.4s ease;
-}
+  /* Dim siblings on hover */
+  .gallery-grid:hover .gallery-item:not(:hover) {
+    opacity: 0.5;
+    filter: brightness(0.6);
+    transition: opacity 0.4s ease, filter 0.4s ease;
+  }
 
-.gallery-grid:hover .gallery-item:not(:hover).is-visible {
-  opacity: 0.5;
+  .gallery-grid:hover .gallery-item:not(:hover).is-visible {
+    opacity: 0.5;
+  }
 }
 
 /* ── Glass Frost Overlay ── */
@@ -295,9 +299,31 @@ video.item-image {
   transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
-.gallery-item:hover .item-content {
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item:hover .item-content {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ── Touch: tap-to-reveal via JS .is-touched class ── */
+.gallery-item.is-touched {
+  border-color: var(--fluorescent-green-dim);
+  box-shadow:
+    0 0 20px rgba(57, 255, 20, 0.08),
+    0 0 40px rgba(57, 255, 20, 0.03),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  z-index: 5;
+}
+
+.gallery-item.is-touched .item-content {
   transform: translateY(0);
   opacity: 1;
+}
+
+.gallery-item.is-touched .item-image {
+  filter: blur(0) saturate(1.1) brightness(0.9);
+  transform: scale(1.05);
 }
 
 .item-title {
@@ -344,7 +370,13 @@ video.item-image {
   transition: opacity 0.5s ease;
 }
 
-.gallery-item:hover::after {
+@media (hover: hover) and (pointer: fine) {
+  .gallery-item:hover::after {
+    opacity: 1;
+  }
+}
+
+.gallery-item.is-touched::after {
   opacity: 1;
 }
 

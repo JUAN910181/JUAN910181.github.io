@@ -570,37 +570,72 @@
 
   /* ── Item Mouse Interactions ── */
 
+  /* Detect touch device (iPad reports hover:hover but has touch) */
+  var isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
   function initItemInteractions(items) {
     FX.qsa('.gallery-item', grid).forEach(function (item, i) {
-      /* Mouse-relative image shift */
-      item.addEventListener('mousemove', function (e) {
-        var rect = item.getBoundingClientRect();
-        var mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-        var my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-        item.style.setProperty('--mx', mx.toFixed(3));
-        item.style.setProperty('--my', my.toFixed(3));
-      });
 
-      item.addEventListener('mouseleave', function () {
-        item.style.setProperty('--mx', '0');
-        item.style.setProperty('--my', '0');
-        /* Pause video on mouse leave */
-        var vid = item.querySelector('video.item-image');
-        if (vid) { vid.pause(); vid.currentTime = 0.5; }
-      });
+      if (isTouch) {
+        /* ── Touch: tap to reveal, second tap to open lightbox ── */
+        item.addEventListener('click', function (e) {
+          if (item.classList.contains('is-touched')) {
+            /* Already revealed → open lightbox */
+            var idx = parseInt(item.dataset.index, 10);
+            openLightbox(items[idx].work);
+          } else {
+            /* First tap → reveal info, clear others */
+            e.preventDefault();
+            FX.qsa('.gallery-item.is-touched', grid).forEach(function (el) {
+              el.classList.remove('is-touched');
+            });
+            item.classList.add('is-touched');
+          }
+        });
+      } else {
+        /* ── Mouse: original behavior ── */
 
-      /* Hover play for video cards */
-      item.addEventListener('mouseenter', function () {
-        var vid = item.querySelector('video.item-image');
-        if (vid) { vid.currentTime = 0; vid.play(); }
-      });
+        /* Mouse-relative image shift */
+        item.addEventListener('mousemove', function (e) {
+          var rect = item.getBoundingClientRect();
+          var mx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+          var my = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+          item.style.setProperty('--mx', mx.toFixed(3));
+          item.style.setProperty('--my', my.toFixed(3));
+        });
 
-      /* Click to open lightbox */
-      item.addEventListener('click', function () {
-        var idx = parseInt(item.dataset.index, 10);
-        openLightbox(items[idx].work);
-      });
+        item.addEventListener('mouseleave', function () {
+          item.style.setProperty('--mx', '0');
+          item.style.setProperty('--my', '0');
+          /* Pause video on mouse leave */
+          var vid = item.querySelector('video.item-image');
+          if (vid) { vid.pause(); vid.currentTime = 0.5; }
+        });
+
+        /* Hover play for video cards */
+        item.addEventListener('mouseenter', function () {
+          var vid = item.querySelector('video.item-image');
+          if (vid) { vid.currentTime = 0; vid.play(); }
+        });
+
+        /* Click to open lightbox */
+        item.addEventListener('click', function () {
+          var idx = parseInt(item.dataset.index, 10);
+          openLightbox(items[idx].work);
+        });
+      }
     });
+
+    /* Touch: tap outside cards to clear .is-touched */
+    if (isTouch) {
+      document.addEventListener('click', function (e) {
+        if (!e.target.closest('.gallery-item')) {
+          FX.qsa('.gallery-item.is-touched', grid).forEach(function (el) {
+            el.classList.remove('is-touched');
+          });
+        }
+      });
+    }
   }
 
   /* ═══ LIGHTBOX ═══ */
