@@ -375,6 +375,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
+    font-size: 1.15rem;
+    letter-spacing: 0.2em;
   }
 
 }
