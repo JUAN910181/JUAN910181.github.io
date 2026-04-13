@@ -160,9 +160,11 @@
   }
 }
 
-.category-card:hover {
-  animation: glow-breathe 3s ease-in-out infinite;
-  border-color: rgba(0, 200, 160, 0.4);
+@media (pointer: fine) {
+  .category-card:hover {
+    animation: glow-breathe 3s ease-in-out infinite;
+    border-color: rgba(0, 200, 160, 0.4);
+  }
 }
 
 /* Inner dark mask — reveals aurora glow as border */
@@ -180,12 +182,14 @@
   pointer-events: none;
 }
 
-.category-card:hover::after {
-  background: radial-gradient(
-    ellipse at 50% 0%,
-    rgba(20, 40, 30, 0.92) 0%,
-    rgba(6, 18, 12, 0.97) 100%
-  );
+@media (pointer: fine) {
+  .category-card:hover::after {
+    background: radial-gradient(
+      ellipse at 50% 0%,
+      rgba(20, 40, 30, 0.92) 0%,
+      rgba(6, 18, 12, 0.97) 100%
+    );
+  }
 }
 
 /* ── Vertical Text (default state) ── */
@@ -293,33 +297,35 @@
   color: rgba(255, 255, 255, 0.25);
 }
 
-/* ── Hover → Expand ── */
+/* ── Hover → Expand (desktop only) ── */
 
-.category-card:hover {
-  width: 220px;
-  background: linear-gradient(
-    180deg,
-    rgba(35, 65, 50, 0.35) 0%,
-    rgba(20, 45, 35, 0.6) 40%,
-    rgba(8, 20, 15, 0.85) 100%
-  );
-  border-color: rgba(0, 200, 160, 0.4);
-  z-index: 10;
-}
+@media (pointer: fine) {
+  .category-card:hover {
+    width: 220px;
+    background: linear-gradient(
+      180deg,
+      rgba(35, 65, 50, 0.35) 0%,
+      rgba(20, 45, 35, 0.6) 40%,
+      rgba(8, 20, 15, 0.85) 100%
+    );
+    border-color: rgba(0, 200, 160, 0.4);
+    z-index: 10;
+  }
 
-/* Hide vertical text on hover */
-.category-card:hover .card-vertical-text {
-  opacity: 0;
-}
+  /* Hide vertical text on hover */
+  .category-card:hover .card-vertical-text {
+    opacity: 0;
+  }
 
-/* Hide bottom icon on hover */
-.category-card:hover .card-bottom-icon {
-  opacity: 0;
-}
+  /* Hide bottom icon on hover */
+  .category-card:hover .card-bottom-icon {
+    opacity: 0;
+  }
 
-/* Show expanded content */
-.category-card:hover .card-expanded {
-  opacity: 1;
+  /* Show expanded content */
+  .category-card:hover .card-expanded {
+    opacity: 1;
+  }
 }
 
 /* ── Responsive ── */
@@ -335,6 +341,9 @@
     height: 260px;
   }
 
+}
+
+@media (max-width: 900px) and (pointer: fine) {
   .category-card:hover {
     width: 180px;
   }
@@ -368,7 +377,4 @@
     text-align: center;
   }
 
-  .category-card:hover {
-    width: 45%;
-  }
 }
