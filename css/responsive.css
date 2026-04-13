@@ -193,7 +193,7 @@
 
 /* ── Touch Devices: Disable heavy hover effects ── */
 
-@media (hover: none) and (pointer: coarse) {
+@media (pointer: coarse) {
   .gallery-item .item-image {
     filter: none;
   }
@@ -201,6 +201,18 @@
   /* Hide title overlay on mobile — only show in lightbox */
   .gallery-item .item-content {
     display: none;
+  }
+
+  /* Kill all gallery hover effects on touch */
+  .gallery-item:hover {
+    border-color: transparent !important;
+    box-shadow: none !important;
+    transform: none !important;
+  }
+
+  .gallery-item:hover .item-image {
+    filter: none !important;
+    transform: scale(1.02) !important;
   }
 
   .gallery-grid:hover .gallery-item:not(:hover) {
