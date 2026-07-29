@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>侍達遊戲 — Chen Yu Juan Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F3F4EF; --ink: #20241F; --muted: #6C7066;
+    --accent: #00723C; --accent-soft: #80B99E; --accent-wash: rgba(0,114,60,0.08);
+    --line: #D9D9CE;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; background: var(--paper); color: var(--ink); font-family: 'Work Sans', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .wrap{ max-width: 1160px; margin: 0 auto; padding: 0 40px; position: relative; }
+
+  .chamfer-lg{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%); }
+  .chamfer-md{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%); }
+  .chamfer-sm{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+
+  .nav-fixed{ position: fixed; top:0; left:0; right:0; z-index:50; background: var(--paper); border-bottom: 1px solid var(--line); }
+  nav{ max-width: 1160px; margin: 0 auto; display:flex; align-items:center; justify-content: space-between; padding: 22px 40px; }
+  .logo{ font-family:'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; text-decoration:none; color: var(--ink); }
+  .logo em{ font-family:'Fraunces', serif; font-style: italic; color: var(--accent); margin-left: 6px; }
+  .nav-links{ display:flex; gap: 34px; }
+  .nav-links a{ font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-links a:hover{ color: var(--ink); }
+  .nav-links a.current{ color: var(--accent); }
+  .nav-spacer{ height: 78px; }
+
+  .case-hero{ position: relative; margin-top: 26px; aspect-ratio: 16/9;
+    background: linear-gradient(200deg, rgba(32,36,31,0.2), rgba(32,36,31,0.55)),
+                url('images/S4繁星盛會主視覺_1200x675_TC.jpg');
+    background-size: cover; background-position: center;
+    display:flex; align-items:flex-end; overflow:hidden; }
+  .hero-overlay{ position: relative; z-index: 2; padding: 0 0 44px 8px; color: #F3F4EF; }
+  .hero-overlay .num{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; opacity: 0.85; margin: 0 0 12px; }
+  .hero-overlay h1{ font-family:'Fraunces', serif; font-weight: 400; font-size: 44px; margin: 0 0 14px; }
+  .hero-credit{ position: absolute; right: 60px; bottom: 20px; z-index: 2; font-family:'IBM Plex Mono', monospace; font-weight: 300; font-size: 9px; letter-spacing: 0.03em; color: rgba(243,244,239,0.45); }
+  .info-strip{ display:flex; gap: 26px; padding: 24px 0; border-bottom: 1px solid var(--line); font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
+  .info-strip strong{ color: var(--ink); display:block; font-size: 12.5px; margin-bottom: 4px; font-family:'Work Sans', sans-serif; }
+
+  .section{ padding: 70px 0; border-bottom: 1px solid var(--line); }
+  .section-label{ display:flex; align-items:center; gap: 12px; margin-bottom: 22px; }
+  .section-label .slash{ color: var(--accent); font-size: 15px; }
+  .section-label span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .section h2{ font-family:'Fraunces', serif; font-weight: 400; font-size: 26px; margin: 0 0 18px; max-width: 22ch; line-height: 1.4; }
+  .section p{ font-size: 14.5px; color: var(--muted); line-height: 1.85; max-width: 62ch; margin: 0; }
+
+  /* ---------- 延伸內容區塊 ---------- */
+  .extras-intro p{ margin-bottom: 40px; }
+  .extra-block{ margin-bottom: 60px; }
+  .extra-block:last-child{ margin-bottom: 0; }
+  .extra-label{ font-family:'IBM Plex Mono', monospace; font-size: 15px; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 14px; }
+  .extra-placeholder{ display:flex; align-items:center; justify-content:center; width:100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.08em; }
+
+  /* --- Banner 展示 --- */
+  .banner-arrow{ position:absolute; top:50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid var(--accent); background: rgba(243,244,239,0.85); color: var(--accent); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index: 5; transition: background .3s ease, color .3s ease; }
+  .banner-arrow:hover{ background: var(--accent); color: var(--paper); }
+  .banner-arrow.prev{ left: 16px; }
+  .banner-arrow.next{ right: 16px; }
+  .banner-arrow svg{ width: 18px; height: 18px; }
+
+  .banner-counter{ position:absolute; bottom: 14px; right: 18px; font-family:'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--paper); background: rgba(32,36,31,0.55); padding: 4px 10px; z-index: 5; }
+
+  .banner-stage{ position: relative; width: 100%; max-width: 860px; margin: 0 auto; aspect-ratio: 16/9; max-height: 480px; background: var(--line); overflow: hidden; }
+  .banner-track{ position: relative; width: 100%; height: 100%; display:flex; align-items:center; justify-content:center; }
+  .banner-slide-media{ height: 100%; max-width: 100%; width: auto; object-fit: contain; display: block; background: var(--line); }
+
+  .banner-thumbs{ display:flex; gap: 12px; margin: 16px auto 0; max-width: 860px; }
+  .banner-thumb{ flex: 1 1 0; width: 0; aspect-ratio: 16/9; background: var(--bg, #C9CDBE) center/cover no-repeat; border: 2px solid transparent; padding: 0; cursor: pointer; position: relative; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%); opacity: 0.5; transition: opacity .3s ease, border-color .3s ease, transform .3s ease; }
+  .banner-thumb.active{ opacity: 1; border-color: var(--accent); transform: scale(1.04); }
+  .banner-thumb:hover{ opacity: 0.85; }
+  .banner-thumb span{ position:absolute; bottom: 6px; left: 8px; font-family:'IBM Plex Mono', monospace; font-size: 11px; color: rgba(32,36,31,0.6); }
+
+  .banner-item-tag{ position:absolute; bottom: 14px; left: 18px; max-width: calc(100% - 36px); display:flex; flex-wrap: wrap; gap: 6px; z-index: 5; }
+  .banner-item-tag span{ font-family:'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--paper); background: rgba(32,36,31,0.55); padding: 4px 10px; }
+
+  .prev-next{ padding: 50px 0 90px; display:grid; grid-template-columns: 1fr 1fr; }
+  .prev-next a{ text-decoration:none; color: var(--ink); padding: 20px; }
+  .prev-next a:first-child{ text-align:left; border-right: 1px solid var(--line); }
+  .prev-next a:last-child{ text-align:right; }
+  .prev-next .dir{ font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); display:block; margin-bottom: 6px; }
+  .prev-next .name{ font-family:'Fraunces', serif; font-size: 18px; }
+  .prev-next a:hover .name{ color: var(--accent); }
+
+  footer{ border-top: 1px solid var(--line); padding: 26px 0 46px; display:flex; justify-content:space-between; color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12px; }
+
+  .back-to-top{ position: fixed; right: 32px; bottom: 32px; width: 48px; height: 48px; background: transparent; border: none; display:flex; align-items:center; justify-content:center; color: var(--accent); cursor: pointer; z-index: 40; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .35s ease, transform .35s ease, color .25s ease; }
+  .back-to-top.visible{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover{ color: var(--ink); }
+  .back-to-top svg{ width: 34.4px; height: 34.4px; }
+
+  @media (max-width: 860px){
+    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; }
+    .hero-overlay h1{ font-size: 28px; }
+    .info-strip{ flex-wrap:wrap; }
+    .prev-next{ grid-template-columns: 1fr; }
+    .prev-next a:first-child{ border-right:none; border-bottom: 1px solid var(--line); }
+    .extra-placeholder{ aspect-ratio: 4/3; max-height: none; }
+    .banner-arrow{ width: 38px; height: 38px; }
+    .banner-stage{ aspect-ratio: 4/3; max-height: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-fixed">
+  <nav>
+    <a class="logo" href="index.html">Chen Yu Juan <em>陳俞娟</em></a>
+    <div class="nav-links">
+      <a href="works.html" class="current">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+</div>
+
+<div class="wrap">
+  <div class="nav-spacer"></div>
+
+  <section class="case-hero chamfer-lg">
+    <div class="hero-overlay">
+      <p class="num">04 / 07</p>
+      <h1>侍達遊戲</h1>
+    </div>
+  </section>
+
+  <div class="info-strip">
+    <div><strong>類型</strong>手機遊戲行銷美術 · 多元題材視覺規劃</div>
+    <div><strong>技能</strong>設計 · 視覺延伸 · 版面編排 · 週邊製作</div>
+  </div>
+
+  <section class="section">
+    <div class="section-label"><span class="slash">／</span><span>Context</span></div>
+    <h2>專案背景</h2>
+    <p>擔任侍達遊戲行銷美術,負責跨越四款不同題材與美術風格之遊戲專案,善於快速掌握各專案的核心世界觀與視覺規範,靈活切換視覺風格,並透過視覺排版與角色層次強化行銷效益。</p>
+  </section>
+
+  <section class="section extras-intro">
+    <div class="section-label"><span class="slash">／</span><span>Works</span></div>
+    <h2>作品</h2>
+
+    <div class="extra-block">
+      <div class="extra-label">01 · 男性向_萬源聖魔錄</div>
+      <div class="banner-stage" id="game1Stage">
+        <button class="banner-arrow prev" id="game1Prev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="banner-track" id="game1Track">
+          <img class="banner-slide-media" id="game1Media" alt="">
+        </div>
+        <button class="banner-arrow next" id="game1Next" aria-label="下一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="banner-counter" id="game1Counter">00 / 00</span>
+      </div>
+      <div class="banner-thumbs" id="game1Thumbs">
+        <button class="banner-thumb" data-slot="0"><span></span></button>
+        <button class="banner-thumb" data-slot="1"><span></span></button>
+        <button class="banner-thumb" data-slot="2"><span></span></button>
+        <button class="banner-thumb" data-slot="3"><span></span></button>
+        <button class="banner-thumb" data-slot="4"><span></span></button>
+        <button class="banner-thumb" data-slot="5"><span></span></button>
+        <button class="banner-thumb" data-slot="6"><span></span></button>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">02 · 同志向_XXL猛漢町</div>
+      <div class="banner-stage" id="game2Stage">
+        <button class="banner-arrow prev" id="game2Prev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="banner-track" id="game2Track">
+          <img class="banner-slide-media" id="game2Media" alt="">
+        </div>
+        <button class="banner-arrow next" id="game2Next" aria-label="下一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="banner-counter" id="game2Counter">00 / 00</span>
+      </div>
+      <div class="banner-thumbs" id="game2Thumbs">
+        <button class="banner-thumb" data-slot="0"><span></span></button>
+        <button class="banner-thumb" data-slot="1"><span></span></button>
+        <button class="banner-thumb" data-slot="2"><span></span></button>
+        <button class="banner-thumb" data-slot="3"><span></span></button>
+        <button class="banner-thumb" data-slot="4"><span></span></button>
+        <button class="banner-thumb" data-slot="5"><span></span></button>
+        <button class="banner-thumb" data-slot="6"><span></span></button>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">03 · 乙女向_時空心語</div>
+      <div class="banner-stage" id="game3Stage">
+        <button class="banner-arrow prev" id="game3Prev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="banner-track" id="game3Track">
+          <img class="banner-slide-media" id="game3Media" alt="">
+        </div>
+        <button class="banner-arrow next" id="game3Next" aria-label="下一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="banner-counter" id="game3Counter">00 / 00</span>
+      </div>
+      <div class="banner-thumbs" id="game3Thumbs">
+        <button class="banner-thumb" data-slot="0"><span></span></button>
+        <button class="banner-thumb" data-slot="1"><span></span></button>
+        <button class="banner-thumb" data-slot="2"><span></span></button>
+        <button class="banner-thumb" data-slot="3"><span></span></button>
+        <button class="banner-thumb" data-slot="4"><span></span></button>
+        <button class="banner-thumb" data-slot="5"><span></span></button>
+        <button class="banner-thumb" data-slot="6"><span></span></button>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">04 · 女性向_超感穿梭</div>
+      <div class="banner-stage" id="game4Stage">
+        <button class="banner-arrow prev" id="game4Prev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="banner-track" id="game4Track">
+          <img class="banner-slide-media" id="game4Media" alt="">
+        </div>
+        <button class="banner-arrow next" id="game4Next" aria-label="下一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="banner-counter" id="game4Counter">00 / 00</span>
+      </div>
+      <div class="banner-thumbs" id="game4Thumbs">
+        <button class="banner-thumb" data-slot="0"><span></span></button>
+        <button class="banner-thumb" data-slot="1"><span></span></button>
+        <button class="banner-thumb" data-slot="2"><span></span></button>
+        <button class="banner-thumb" data-slot="3"><span></span></button>
+        <button class="banner-thumb" data-slot="4"><span></span></button>
+        <button class="banner-thumb" data-slot="5"><span></span></button>
+        <button class="banner-thumb" data-slot="6"><span></span></button>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">05 · 週邊製作</div>
+      <div class="banner-stage" id="game5Stage">
+        <button class="banner-arrow prev" id="game5Prev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="banner-track" id="game5Track">
+          <img class="banner-slide-media" id="game5Media" alt="">
+        </div>
+        <button class="banner-arrow next" id="game5Next" aria-label="下一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="banner-counter" id="game5Counter">00 / 00</span>
+        <div class="banner-item-tag" id="game5ItemTag">
+          <span>（待補）</span>
+        </div>
+      </div>
+      <div class="banner-thumbs" id="game5Thumbs">
+        <button class="banner-thumb" data-slot="0"><span></span></button>
+        <button class="banner-thumb" data-slot="1"><span></span></button>
+        <button class="banner-thumb" data-slot="2"><span></span></button>
+        <button class="banner-thumb" data-slot="3"><span></span></button>
+        <button class="banner-thumb" data-slot="4"><span></span></button>
+        <button class="banner-thumb" data-slot="5"><span></span></button>
+        <button class="banner-thumb" data-slot="6"><span></span></button>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="prev-next">
+    <a href="project-detail-art.html"><span class="dir">← 上一個</span><span class="name">藝術季專案</span></a>
+    <a href="project-detail-skincare.html"><span class="dir">下一個 →</span><span class="name">保養產品</span></a>
+  </div>
+
+  <footer>
+    <span>© Chen Yu Juan Portfolio</span>
+    <span>Visual Design</span>
+  </footer>
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="回到頂部" title="回到頂部">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 19V6M12 6L6 12M12 6L18 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 480));
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  function initBanner(prefix, images, labels){
+    const media = document.getElementById(prefix + 'Media');
+    const thumbs = document.querySelectorAll('#' + prefix + 'Thumbs .banner-thumb');
+    const counter = document.getElementById(prefix + 'Counter');
+    const prev = document.getElementById(prefix + 'Prev');
+    const next = document.getElementById(prefix + 'Next');
+    const itemTag = document.getElementById(prefix + 'ItemTag');
+    const total = images.length;
+    if (!total) return; // 尚未提供圖片，先不渲染
+    const thumbWindow = thumbs.length;
+    const thumbHalf = Math.floor(thumbWindow / 2);
+    let idx = 0;
+
+    function render(){
+      media.src = images[idx];
+      counter.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+      if (itemTag && labels && labels[idx]) itemTag.innerHTML = `<span>${labels[idx]}</span>`;
+      thumbs.forEach((el, slot) => {
+        const offset = slot - thumbHalf;
+        const imgIdx = ((idx + offset) % total + total) % total;
+        el.style.setProperty('--bg', `url("${images[imgIdx]}")`);
+        el.querySelector('span').textContent = String(imgIdx + 1).padStart(2, '0');
+        el.dataset.imgIdx = imgIdx;
+        el.classList.toggle('active', slot === thumbHalf);
+      });
+    }
+    prev.addEventListener('click', () => { idx = (idx - 1 + total) % total; render(); });
+    next.addEventListener('click', () => { idx = (idx + 1) % total; render(); });
+    thumbs.forEach((el) => el.addEventListener('click', () => { idx = Number(el.dataset.imgIdx); render(); }));
+    render();
+  }
+
+  // ---------- 01 · 男性向_萬源聖魔錄 ----------
+  initBanner('game1', [
+    'images/15/01.jpg', 'images/15/02.jpg', 'images/15/03.jpg', 'images/15/04.jpg',
+    'images/15/05.webp', 'images/15/06.jpg', 'images/15/07.jpg', 'images/15/08.jpg',
+    'images/15/09.jpg', 'images/15/10.jpg', 'images/15/11.jpg', 'images/15/12.jpg',
+    'images/15/13.jpg', 'images/15/14.jpg', 'images/15/15.jpg', 'images/15/16.jpg',
+  ]);
+
+  // ---------- 02 · 同志向_XXL猛漢町 ----------
+  initBanner('game2', [
+    'images/16/01.jpg', 'images/16/02.jpg', 'images/16/03.jpg', 'images/16/04.jpg',
+    'images/16/05.jpg', 'images/16/06.jpg', 'images/16/07.jpg', 'images/16/08.jpg',
+    'images/16/09.jpg', 'images/16/10.jpg', 'images/16/11.jpg', 'images/16/12.jpg',
+    'images/16/13.jpg', 'images/16/14.jpg', 'images/16/15.jpg', 'images/16/16.jpg',
+  ]);
+
+  // ---------- 03 · 乙女向_時空心語 ----------
+  initBanner('game3', [
+    'images/17/01.webp', 'images/17/02.webp', 'images/17/03.webp', 'images/17/04.webp',
+    'images/17/05.webp', 'images/17/06.jpg', 'images/17/07.jpg', 'images/17/08.jpg',
+    'images/17/09.jpg', 'images/17/10.jpg',
+  ]);
+
+  // ---------- 04 · 女性向_超感穿梭 ----------
+  initBanner('game4', [
+    'images/18/00.jpg',
+    'images/18/01.jpg', 'images/18/02.jpg', 'images/18/03.jpg', 'images/18/04.jpg',
+    'images/18/05.jpg', 'images/18/06.jpg', 'images/18/07.jpg', 'images/18/08.jpg',
+  ]);
+
+  // ---------- 05 · 週邊製作 ----------
+  initBanner('game5', [
+    'images/19/01.jpg', 'images/19/02.jpg', 'images/19/03.jpg', 'images/19/04.jpg',
+    'images/19/05.jpg', 'images/19/06.jpg', 'images/19/07.jpg',
+  ], [
+    'XXL猛漢町_海報', 'XXL猛漢町_活動酒單', 'XXL猛漢町_飯友01', 'XXL猛漢町_飯友02',
+    'XXL猛漢町_飯友03', '萬源聖魔錄_掛軸', '萬源聖魔錄_眼鏡布',
+  ]);
+</script>
+</body>
+</html>

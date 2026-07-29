@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>電商鞋款專案 — Chen Yu Juan Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F3F4EF; --ink: #20241F; --muted: #6C7066;
+    --accent: #00723C; --accent-soft: #80B99E; --accent-wash: rgba(0,114,60,0.08);
+    --line: #D9D9CE;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; background: var(--paper); color: var(--ink); font-family: 'Work Sans', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .wrap{ max-width: 1160px; margin: 0 auto; padding: 0 40px; position: relative; }
+
+  .chamfer-lg{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%); }
+  .chamfer-md{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%); }
+  .chamfer-sm{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+
+  .nav-fixed{ position: fixed; top:0; left:0; right:0; z-index:50; background: var(--paper); border-bottom: 1px solid var(--line); }
+  nav{ max-width: 1160px; margin: 0 auto; display:flex; align-items:center; justify-content: space-between; padding: 22px 40px; }
+  .logo{ font-family:'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; text-decoration:none; color: var(--ink); }
+  .logo em{ font-family:'Fraunces', serif; font-style: italic; color: var(--accent); margin-left: 6px; }
+  .nav-links{ display:flex; gap: 34px; }
+  .nav-links a{ font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-links a:hover{ color: var(--ink); }
+  .nav-links a.current{ color: var(--accent); }
+  .nav-spacer{ height: 78px; }
+
+  .case-hero{ position: relative; margin-top: 26px; aspect-ratio: 16/9;
+    background: linear-gradient(200deg, rgba(32,36,31,0.2), rgba(32,36,31,0.55)),
+                url('images/4.gif');
+    background-size: cover; background-position: center;
+    display:flex; align-items:flex-end; overflow:hidden; }
+  .hero-overlay{ position: relative; z-index: 2; padding: 0 0 44px 8px; color: #F3F4EF; }
+  .hero-overlay .num{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; opacity: 0.85; margin: 0 0 12px; }
+  .hero-overlay h1{ font-family:'Fraunces', serif; font-weight: 400; font-size: 44px; margin: 0 0 14px; }
+  .info-strip{ display:flex; gap: 26px; padding: 24px 0; border-bottom: 1px solid var(--line); font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
+  .info-strip strong{ color: var(--ink); display:block; font-size: 12.5px; margin-bottom: 4px; font-family:'Work Sans', sans-serif; }
+
+  .section{ padding: 70px 0; border-bottom: 1px solid var(--line); }
+  .section-label{ display:flex; align-items:center; gap: 12px; margin-bottom: 22px; }
+  .section-label .slash{ color: var(--accent); font-size: 15px; }
+  .section-label span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .section h2{ font-family:'Fraunces', serif; font-weight: 400; font-size: 26px; margin: 0 0 18px; max-width: 22ch; line-height: 1.4; }
+  .section p{ font-size: 14.5px; color: var(--muted); line-height: 1.85; max-width: 62ch; margin: 0; }
+
+  .process-shots{ display:grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 34px; }
+  .process-frame{ aspect-ratio: 4/3; background: var(--line); position: relative; overflow: hidden; }
+  .process-frame span{ position:absolute; bottom: 10px; left: 12px; font-family:'IBM Plex Mono', monospace; font-size: 10.5px; color: rgba(32,36,31,0.4); }
+
+  /* ---------- 延伸內容區塊 ---------- */
+  .extras-intro p{ margin-bottom: 40px; }
+  .extra-block{ margin-bottom: 60px; }
+  .extra-block:last-child{ margin-bottom: 0; }
+  .extra-label{ font-family:'IBM Plex Mono', monospace; font-size: 15px; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 14px; }
+
+  /* --- Banner 展示區 --- */
+  .banner-stage{ position: relative; width: 100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); overflow: hidden; }
+  .banner-track{ position: relative; width: 100%; height: 100%; display:flex; align-items:center; justify-content:center; }
+  .banner-slide-media{ height: 100%; max-width: 100%; width: auto; object-fit: contain; display: block; background: var(--line); }
+
+  .banner-arrow{ position:absolute; top:50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid var(--accent); background: rgba(243,244,239,0.85); color: var(--accent); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index: 5; transition: background .3s ease, color .3s ease; }
+  .banner-arrow:hover{ background: var(--accent); color: var(--paper); }
+  .banner-arrow.prev{ left: 16px; }
+  .banner-arrow.next{ right: 16px; }
+  .banner-arrow svg{ width: 18px; height: 18px; }
+
+  .banner-counter{ position:absolute; bottom: 14px; right: 18px; font-family:'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--paper); background: rgba(32,36,31,0.55); padding: 4px 10px; z-index: 5; }
+
+  .banner-thumbs{ display:flex; gap: 12px; margin-top: 16px; }
+  .banner-thumb{ flex: 1 1 0; width: 0; aspect-ratio: 16/9; background: var(--bg, #C9CDBE) center/cover no-repeat; border: 2px solid transparent; padding: 0; cursor: pointer; position: relative; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%); opacity: 0.5; transition: opacity .3s ease, border-color .3s ease, transform .3s ease; }
+  .banner-thumb.active{ opacity: 1; border-color: var(--accent); transform: scale(1.04); }
+  .banner-thumb:hover{ opacity: 0.85; }
+  .banner-thumb span{ position:absolute; bottom: 6px; left: 8px; font-family:'IBM Plex Mono', monospace; font-size: 11px; color: rgba(32,36,31,0.6); }
+
+  /* --- 限時動態(直式)--- */
+  .story-stage{ position: relative; width: 100%; background: var(--line); overflow: hidden; padding: 40px 76px; }
+  .story-row{ display:flex; align-items:center; justify-content:center; gap: 10px; }
+  .story-slide-media{ height: 640px; max-height: 70vh; aspect-ratio: 9/16; object-fit: cover; display: block; background: var(--line); }
+
+  .story-arrow{ position:absolute; top:50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid var(--accent); background: rgba(243,244,239,0.85); color: var(--accent); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index: 5; transition: background .3s ease, color .3s ease; }
+  .story-arrow:hover{ background: var(--accent); color: var(--paper); }
+  .story-arrow.prev{ left: 16px; }
+  .story-arrow.next{ right: 16px; }
+  .story-arrow svg{ width: 18px; height: 18px; }
+
+  .story-counter{ position:absolute; bottom: 14px; right: 18px; font-family:'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--paper); background: rgba(32,36,31,0.55); padding: 4px 10px; z-index: 5; }
+
+  /* --- 影片嵌入 --- */
+  .video-grid{ display:grid; grid-template-columns: 1fr; gap: 24px; }
+  .video-frame{ position: relative; aspect-ratio: 16/9; overflow: hidden; background: #000; }
+  .video-frame iframe{ width:100%; height:100%; border:0; display:block; }
+
+  /* --- Before / After 拉桿 --- */
+  .ba-stage{ position:relative; max-width: 480px; margin: 0 auto; }
+  .ba-slider{ position:relative; aspect-ratio: 3/4; overflow: hidden; cursor: ew-resize; user-select:none; }
+  .ba-layer{ position:absolute; inset:0; background: var(--line) center/cover no-repeat; }
+  .ba-before{ clip-path: inset(0 50% 0 0); }
+  .ba-tag{ position:absolute; top:14px; font-family:'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing:0.08em; padding: 4px 10px; background: rgba(243,244,239,0.85); color: var(--ink); }
+  .ba-tag.before{ left: 14px; } .ba-tag.after{ right: 14px; }
+  .ba-handle-line{ position:absolute; top:0; bottom:0; left:50%; width: 2px; background: var(--paper); transform: translateX(-50%); pointer-events:none; }
+  .ba-handle-btn{ position:absolute; top:50%; left:50%; width: 38px; height: 38px; border-radius:50%; background: var(--paper); border: 2px solid var(--ink); transform: translate(-50%,-50%); display:flex; align-items:center; justify-content:center; pointer-events:none; }
+  .ba-handle-btn svg{ width:16px; height:16px; color: var(--ink); }
+  .ba-range{ position:absolute; inset:0; width:100%; height:100%; opacity:0; margin:0; cursor: ew-resize; }
+
+  /* --- 部落格文章連結卡 --- */
+  .blog-card{ display:block; text-decoration:none; color: var(--ink); background: var(--accent-wash); border: 1px solid var(--line); overflow:hidden; transition: border-color .3s ease; max-width: 620px; }
+  .blog-card:hover{ border-color: var(--accent); }
+  .blog-card-media{ width:100%; aspect-ratio: 16/9; background-size: cover; background-position: center; transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+  .blog-card:hover .blog-card-media{ transform: scale(1.03); }
+  .blog-card-text{ padding: 28px 32px 32px; }
+  .blog-card-tag{ display:block; font-family:'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 10px; }
+  .blog-card h3{ font-family:'Fraunces', serif; font-weight: 400; font-size: 22px; margin: 0 0 8px; }
+  .blog-card p{ font-size: 13.5px; color: var(--muted); margin: 0 0 22px; max-width: 46ch; }
+  .blog-card-btn{ display:inline-flex; align-items:center; gap: 8px; font-family:'IBM Plex Mono', monospace; font-size: 13px; color: var(--accent); border: 1px solid var(--accent); padding: 11px 22px; transition: background .3s ease, transform .3s ease; }
+  .blog-card:hover .blog-card-btn{ background: rgba(0,114,60,0.08); transform: translateX(4px); }
+
+  .prev-next{ padding: 50px 0 90px; display:grid; grid-template-columns: 1fr 1fr; }
+  .prev-next a{ text-decoration:none; color: var(--ink); padding: 20px; }
+  .prev-next a:first-child{ text-align:left; border-right: 1px solid var(--line); }
+  .prev-next a:last-child{ text-align:right; }
+  .prev-next .dir{ font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); display:block; margin-bottom: 6px; }
+  .prev-next .name{ font-family:'Fraunces', serif; font-size: 18px; }
+  .prev-next a:hover .name{ color: var(--accent); }
+
+  footer{ border-top: 1px solid var(--line); padding: 26px 0 46px; display:flex; justify-content:space-between; color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12px; }
+
+  .back-to-top{ position: fixed; right: 32px; bottom: 32px; width: 48px; height: 48px; background: transparent; border: none; display:flex; align-items:center; justify-content:center; color: var(--accent); cursor: pointer; z-index: 40; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .35s ease, transform .35s ease, color .25s ease; }
+  .back-to-top.visible{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover{ color: var(--ink); }
+  .back-to-top svg{ width: 34.4px; height: 34.4px; }
+
+  @media (max-width: 860px){
+    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; }
+    .hero-overlay h1{ font-size: 28px; }
+    .info-strip{ flex-wrap:wrap; }
+    .prev-next{ grid-template-columns: 1fr; }
+    .prev-next a:first-child{ border-right:none; border-bottom: 1px solid var(--line); }
+    .banner-stage{ aspect-ratio: 4/3; max-height: none; }
+    .banner-arrow{ width: 38px; height: 38px; }
+    .story-stage{ padding: 20px 50px; }
+    .story-row{ gap: 6px; }
+    .story-slide-media{ height: 260px; }
+    .story-arrow{ width: 38px; height: 38px; }
+    .blog-card-text{ padding: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-fixed">
+  <nav>
+    <a class="logo" href="index.html">Chen Yu Juan <em>陳俞娟</em></a>
+    <div class="nav-links">
+      <a href="works.html" class="current">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+</div>
+
+<div class="wrap">
+  <div class="nav-spacer"></div>
+
+  <section class="case-hero chamfer-lg">
+    <div class="hero-overlay">
+      <p class="num">01 / 07</p>
+      <h1>Ann's女鞋</h1>
+    </div>
+  </section>
+
+  <div class="info-strip">
+    <div><strong>類型</strong>電商 · 品牌視覺</div>
+    <div><strong>技能</strong>設計 · 影片剪輯 · 文案 · 網頁製作</div>
+  </div>
+
+  <section class="section">
+    <div class="section-label"><span class="slash">／</span><span>Context</span></div>
+    <h2>專案背景</h2>
+    <p>品牌旨在打造兼具年輕吸引力與高品質感的鞋款系列。面對緊湊的上市時程,需在短時間內串聯視覺、文案與影片,交付完整的一站式行銷內容。</p>
+  </section>
+
+  <section class="section extras-intro">
+    <div class="section-label"><span class="slash">／</span><span>Works</span></div>
+    <h2>作品</h2>
+
+    <div class="extra-block">
+      <div class="extra-label">01 · Banner 展示</div>
+      <div class="banner-stage" id="bannerStage">
+        <button class="banner-arrow prev" id="bannerPrev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="banner-track" id="bannerTrack">
+          <img class="banner-slide-media" id="bannerMedia" alt="">
+
+        </div>
+        <button class="banner-arrow next" id="bannerNext" aria-label="下一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="banner-counter" id="bannerCounter">01 / 11</span>
+      </div>
+      <div class="banner-thumbs" id="bannerThumbs">
+        <button class="banner-thumb" data-slot="0"><span></span></button>
+        <button class="banner-thumb" data-slot="1"><span></span></button>
+        <button class="banner-thumb" data-slot="2"><span></span></button>
+        <button class="banner-thumb" data-slot="3"><span></span></button>
+        <button class="banner-thumb" data-slot="4"><span></span></button>
+        <button class="banner-thumb" data-slot="5"><span></span></button>
+        <button class="banner-thumb" data-slot="6"><span></span></button>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">02 · 限時動態</div>
+      <div class="story-stage" id="storyStage">
+        <button class="story-arrow prev" id="storyPrev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="story-row" id="storyRow">
+          <img class="story-slide-media" data-slot="0" alt="">
+          <img class="story-slide-media" data-slot="1" alt="">
+          <img class="story-slide-media" data-slot="2" alt="">
+        </div>
+        <button class="story-arrow next" id="storyNext" aria-label="下一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="story-counter" id="storyCounter">01 / 16</span>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">03 · 影片作品</div>
+      <div class="video-grid">
+        <div class="video-frame chamfer-md">
+          <iframe src="https://www.youtube.com/embed/pw_agGQZ5GM" title="作品影片 01" allowfullscreen></iframe>
+        </div>
+        <div class="video-frame chamfer-md">
+          <iframe src="https://www.youtube.com/embed/rTlStWiuXNA" title="作品影片 02" allowfullscreen></iframe>
+        </div>
+        <div class="video-frame chamfer-md">
+          <iframe src="https://www.youtube.com/embed/4LDhzHpRwG8" title="作品影片 03" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">04 · 修圖</div>
+      <div class="ba-stage" id="baStage">
+        <button class="banner-arrow prev" id="baPrev" aria-label="上一組">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="ba-slider chamfer-md">
+          <div class="ba-layer ba-after" id="baAfter"></div>
+          <span class="ba-tag after">AFTER</span>
+          <div class="ba-layer ba-before" id="baBefore"></div>
+          <span class="ba-tag before">BEFORE</span>
+          <div class="ba-handle-line" id="baLine"></div>
+          <div class="ba-handle-btn" id="baBtn">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M8 8L4 12L8 16M16 8L20 12L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <input type="range" class="ba-range" id="baRange" min="0" max="100" value="50">
+        </div>
+        <button class="banner-arrow next" id="baNext" aria-label="下一組">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="banner-counter" id="baCounter">01 / 04</span>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">05 · 部落格文章撰寫</div>
+      <a class="blog-card chamfer-md" href="https://www.anns.tw/page/COMBABOOTSPK" target="_blank" rel="noopener">
+        <div class="blog-card-media" style="background-image:url('images/6.jpg')"></div>
+        <div class="blog-card-text">
+          <span class="blog-card-tag">EXTERNAL LINK</span>
+          <h3>小腿肌OUT!【逆天心機軍靴推薦X6】</h3>
+          <p>前往 Ann's 官網,閱讀完整的圖文介紹與產品內容。</p>
+          <span class="blog-card-btn">點擊閱讀→</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <div class="prev-next">
+    <a href="project-detail-freelance.html"><span class="dir">← 上一個</span><span class="name">個人接案</span></a>
+    <a href="project-detail-hotel.html"><span class="dir">下一個 →</span><span class="name">飯店旅遊相關</span></a>
+  </div>
+
+  <footer>
+    <span>© Chen Yu Juan Portfolio</span>
+    <span>Visual Design</span>
+  </footer>
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="回到頂部" title="回到頂部">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 19V6M12 6L6 12M12 6L18 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 480));
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ---------- Banner 展示區 ----------
+  const bannerImages = [
+    'images/01_banner/banner_Ann\'s (1).jpg',
+    'images/01_banner/banner_Ann\'s (2).jpg',
+    'images/01_banner/banner_Ann\'s (3).jpg',
+    'images/01_banner/banner_Ann\'s (4).jpg',
+    'images/01_banner/banner_Ann\'s (5).jpg',
+    'images/01_banner/banner_Ann\'s (6).jpg',
+    'images/01_banner/banner_Ann\'s (7).jpg',
+    'images/01_banner/banner_Ann\'s (8).jpg',
+    'images/01_banner/banner_Ann\'s (9).jpg',
+    'images/01_banner/banner_Ann\'s (10).jpg',
+    'images/01_banner/banner_Ann\'s (11).jpg',
+  ].map(encodeURI);
+  const bannerMedia = document.getElementById('bannerMedia');
+  const bannerThumbs = document.querySelectorAll('#bannerThumbs .banner-thumb');
+  const bannerCounter = document.getElementById('bannerCounter');
+  const bannerPrev = document.getElementById('bannerPrev');
+  const bannerNext = document.getElementById('bannerNext');
+  const bannerTotal = bannerImages.length;
+  const thumbWindow = bannerThumbs.length; // 7
+  const thumbHalf = Math.floor(thumbWindow / 2); // 3
+  let bannerIdx = 0;
+
+  function renderBanner(){
+    bannerMedia.src = bannerImages[bannerIdx];
+    bannerCounter.textContent = String(bannerIdx + 1).padStart(2,'0') + ' / ' + String(bannerTotal).padStart(2,'0');
+
+    bannerThumbs.forEach((el, slot) => {
+      const offset = slot - thumbHalf;
+      const imgIdx = ((bannerIdx + offset) % bannerTotal + bannerTotal) % bannerTotal;
+      el.style.setProperty('--bg', `url("${bannerImages[imgIdx]}")`);
+      el.querySelector('span').textContent = String(imgIdx + 1).padStart(2,'0');
+      el.dataset.imgIdx = imgIdx;
+      el.classList.toggle('active', slot === thumbHalf);
+    });
+  }
+  bannerPrev.addEventListener('click', () => { bannerIdx = (bannerIdx - 1 + bannerTotal) % bannerTotal; renderBanner(); });
+  bannerNext.addEventListener('click', () => { bannerIdx = (bannerIdx + 1) % bannerTotal; renderBanner(); });
+  bannerThumbs.forEach((el) => el.addEventListener('click', () => { bannerIdx = Number(el.dataset.imgIdx); renderBanner(); }));
+  renderBanner();
+
+  // ---------- 限時動態(直式)----------
+  const storyImages = [
+    'images/02/01.jpg', 'images/02/02.jpg', 'images/02/03.jpg',
+    'images/02/06.jpg', 'images/02/07.jpg', 'images/02/08.jpg',
+    'images/02/09.jpg', 'images/02/10.jpg', 'images/02/11.jpg',
+    'images/02/12.jpg', 'images/02/13.jpg', 'images/02/14.jpg',
+    'images/02/15.jpg', 'images/02/16.jpg', 'images/02/17.jpg',
+    'images/02/18.jpg',
+  ].map(encodeURI);
+  const storySlides = document.querySelectorAll('#storyRow .story-slide-media');
+  const storyCounter = document.getElementById('storyCounter');
+  const storyPrev = document.getElementById('storyPrev');
+  const storyNext = document.getElementById('storyNext');
+  const storyTotal = storyImages.length;
+  let storyIdx = 0;
+
+  function renderStory(){
+    storySlides.forEach((el, slot) => {
+      const imgIdx = (storyIdx + slot) % storyTotal;
+      el.src = storyImages[imgIdx];
+    });
+    storyCounter.textContent = String(storyIdx + 1).padStart(2,'0') + ' / ' + String(storyTotal).padStart(2,'0');
+  }
+  storyPrev.addEventListener('click', () => { storyIdx = (storyIdx - 1 + storyTotal) % storyTotal; renderStory(); });
+  storyNext.addEventListener('click', () => { storyIdx = (storyIdx + 1) % storyTotal; renderStory(); });
+  renderStory();
+
+  // ---------- Before / After 拉桿 ----------
+  const baGroups = [
+    { before: 'images/03/01-1.jpg', after: 'images/03/01-2.jpg' },
+    { before: 'images/03/02-1.jpg', after: 'images/03/02-2.jpg' },
+    { before: 'images/03/03-1.jpg', after: 'images/03/03-2.jpg' },
+    { before: 'images/03/04-1.jpg', after: 'images/03/04-2.jpg' },
+  ].map(g => ({ before: encodeURI(g.before), after: encodeURI(g.after) }));
+  const baRange = document.getElementById('baRange');
+  const baBefore = document.getElementById('baBefore');
+  const baAfter = document.getElementById('baAfter');
+  const baLine = document.getElementById('baLine');
+  const baBtn = document.getElementById('baBtn');
+  const baPrev = document.getElementById('baPrev');
+  const baNext = document.getElementById('baNext');
+  const baCounter = document.getElementById('baCounter');
+  const baTotal = baGroups.length;
+  let baIdx = 0;
+
+  function updateBA(v){
+    baBefore.style.clipPath = `inset(0 ${100-v}% 0 0)`;
+    baLine.style.left = v + '%';
+    baBtn.style.left = v + '%';
+  }
+  function renderBA(){
+    const g = baGroups[baIdx];
+    baBefore.style.backgroundImage = `url("${g.before}")`;
+    baAfter.style.backgroundImage = `url("${g.after}")`;
+    baCounter.textContent = String(baIdx + 1).padStart(2,'0') + ' / ' + String(baTotal).padStart(2,'0');
+    baRange.value = 50;
+    updateBA(50);
+  }
+  baRange.addEventListener('input', (e) => updateBA(e.target.value));
+  baPrev.addEventListener('click', () => { baIdx = (baIdx - 1 + baTotal) % baTotal; renderBA(); });
+  baNext.addEventListener('click', () => { baIdx = (baIdx + 1) % baTotal; renderBA(); });
+  renderBA();
+</script>
+</body>
+</html>

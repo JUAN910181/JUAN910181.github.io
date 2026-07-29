@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>關於我 — Chen Yu Juan Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F3F4EF; --ink: #20241F; --muted: #6C7066;
+    --accent: #00723C; --accent-soft: #80B99E; --accent-wash: rgba(0,114,60,0.08);
+    --line: #D9D9CE;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; background: var(--paper); color: var(--ink); font-family: 'Work Sans', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .wrap{ max-width: 1160px; margin: 0 auto; padding: 0 40px; position: relative; }
+
+  .chamfer-lg{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%); }
+  .chamfer-md{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%); }
+  .chamfer-sm{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+
+  .nav-fixed{ position: fixed; top:0; left:0; right:0; z-index:50; background: var(--paper); border-bottom: 1px solid var(--line); }
+  nav{ max-width: 1160px; margin: 0 auto; display:flex; align-items:center; justify-content: space-between; padding: 22px 40px; }
+  .logo{ font-family:'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; text-decoration:none; color: var(--ink); }
+  .logo em{ font-family:'Fraunces', serif; font-style: italic; color: var(--accent); margin-left: 6px; }
+  .nav-links{ display:flex; gap: 34px; }
+  .nav-links a{ font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-links a:hover{ color: var(--ink); }
+  .nav-links a.current{ color: var(--accent); }
+  .nav-spacer{ height: 78px; }
+
+  .side-tag{ position: fixed; right: 26px; top: 50%; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; font-family:'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--accent); z-index: 5; }
+
+  /* ---------- Intro ---------- */
+  .intro{ display:grid; grid-template-columns: 0.85fr 1.15fr; gap: 60px; padding: 70px 0 90px; align-items:center; border-bottom: 1px solid var(--line); }
+  .portrait{ aspect-ratio: 5/4; background: linear-gradient(135deg,#DCD6C4,#8F978A); }
+  .intro-text .label-row{ display:flex; align-items:center; gap: 12px; margin-bottom: 18px; }
+  .intro-text .slash{ color: var(--accent); font-size: 15px; }
+  .intro-text .label-row span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .intro-text h1{ font-family:'Fraunces', serif; font-weight: 400; font-size: 34px; margin: 0 0 20px; line-height: 1.4; }
+  .intro-text h1 em{ font-style: italic; color: var(--accent); }
+  .intro-text p{ font-size: 14.5px; color: var(--muted); line-height: 1.85; max-width: 52ch; margin: 0 0 14px; }
+
+  /* ---------- Ghost text 呼應首頁 ---------- */
+  .philosophy{ position: relative; padding: 90px 0; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .ghost-text{ position: absolute; top: 50%; left: -20px; transform: translateY(-50%); font-family:'IBM Plex Mono', monospace; font-weight: 700; letter-spacing: -0.02em; font-size: 150px; line-height: 1; color: transparent; -webkit-text-stroke: 1px rgba(0,114,60,0.14); white-space: nowrap; z-index: 0; pointer-events: none; }
+  .philosophy-inner{ position: relative; z-index: 1; }
+  .philosophy .label-row{ display:flex; align-items:center; gap: 12px; margin-bottom: 18px; }
+  .philosophy .slash{ color: var(--accent); font-size: 15px; }
+  .philosophy .label-row span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
+  .philosophy h2{ font-family:'Fraunces', serif; font-weight: 400; font-size: 26px; max-width: 26ch; line-height: 1.5; margin: 0; }
+
+  /* ---------- Skills ---------- */
+  .section{ padding: 70px 0; border-bottom: 1px solid var(--line); }
+  .section-label{ display:flex; align-items:center; gap: 12px; margin-bottom: 30px; }
+  .section-label .slash{ color: var(--accent); font-size: 15px; }
+  .section-label h2{ font-family:'Fraunces', serif; font-weight: 400; font-style: italic; font-size: 22px; margin: 0; }
+  .skills-grid{ display:grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .skill-item{
+    background: var(--accent);
+    padding: 0.6px;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  }
+  .skill-item-inner{
+    background: var(--paper);
+    padding: 19px;
+    text-align:center;
+    height: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
+  }
+  .skill-item span{ font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.03em; }
+
+  /* ---------- Experience Timeline ---------- */
+  .timeline-wrap{ position: relative; padding-left: 32px; }
+  .timeline-line{ position:absolute; left: 0; top: 6px; bottom: 6px; width: 1px; background: var(--line); }
+  .timeline-dot{
+    position:absolute; left: -3.5px; top: 6px;
+    width: 8px; height: 8px;
+    background: var(--accent);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%);
+    transition: top .3s cubic-bezier(.3,.7,.3,1);
+  }
+  .timeline-item{ display:grid; grid-template-columns: 140px 1fr; gap: 30px; padding: 26px 0; border-bottom: 1px solid var(--line); }
+  .timeline-item:last-child{ border-bottom: none; }
+  .timeline-item .period{ font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--accent); }
+  .timeline-item h3{ font-family:'Fraunces', serif; font-weight: 500; font-size: 18px; margin: 0 0 6px; }
+  .timeline-item p{ font-size: 13.5px; color: var(--muted); line-height: 1.75; margin: 0; max-width: 56ch; }
+  .timeline-item .company{ font-size: 13.5px; color: var(--ink); margin: 0 0 10px; }
+  .timeline-item .duty-list{ margin: 0; padding-left: 18px; color: var(--muted); font-size: 13.5px; line-height: 1.8; max-width: 56ch; }
+  .timeline-item .duty-list li{ margin-bottom: 2px; }
+  .placeholder-note{ font-family:'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--muted); margin-top: 30px; }
+
+  footer{ border-top: 1px solid var(--line); padding: 26px 0 46px; display:flex; justify-content:space-between; color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12px; }
+
+  .back-to-top{ position: fixed; right: 32px; bottom: 32px; width: 48px; height: 48px; background: transparent; border: none; display:flex; align-items:center; justify-content:center; color: var(--accent); cursor: pointer; z-index: 40; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .35s ease, transform .35s ease, color .25s ease; }
+  .back-to-top.visible{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover{ color: var(--ink); }
+  .back-to-top svg{ width: 34.4px; height: 34.4px; }
+
+  @media (max-width: 860px){
+    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; }
+    .intro{ grid-template-columns: 1fr; gap: 28px; }
+    .ghost-text{ font-size: 68px; }
+    .skills-grid{ grid-template-columns: repeat(2, 1fr); }
+    .timeline-item{ grid-template-columns: 1fr; gap: 8px; }
+    .side-tag{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-fixed">
+  <nav>
+    <a class="logo" href="index.html">Chen Yu Juan <em>陳俞娟</em></a>
+    <div class="nav-links">
+      <a href="works.html">Works</a>
+      <a href="about.html" class="current">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+</div>
+
+<div class="wrap">
+  <div class="nav-spacer"></div>
+
+  <section class="section">
+    <div class="section-label"><span class="slash">／</span><h2>工具</h2></div>
+    <div class="skills-grid">
+      <div class="skill-item"><div class="skill-item-inner"><span>Adobe InDesign</span></div></div>
+      <div class="skill-item"><div class="skill-item-inner"><span>Adobe Illustrator</span></div></div>
+      <div class="skill-item"><div class="skill-item-inner"><span>Adobe Photoshop</span></div></div>
+      <div class="skill-item"><div class="skill-item-inner"><span>Adobe Premiere Pro</span></div></div>
+      <div class="skill-item"><div class="skill-item-inner"><span>Clip Studio Paint</span></div></div>
+      <div class="skill-item"><div class="skill-item-inner"><span>Gemini</span></div></div>
+      <div class="skill-item"><div class="skill-item-inner"><span>Claude</span></div></div>
+      <div class="skill-item"><div class="skill-item-inner"><span>ChatGPT</span></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-label"><span class="slash">／</span><h2>工作經歷</h2></div>
+
+    <div class="timeline-wrap" id="timelineWrap">
+      <div class="timeline-line"></div>
+      <div class="timeline-dot" id="timelineDot"></div>
+
+      <div class="timeline-item">
+        <div class="period">2023 — 2026</div>
+        <div>
+          <h3>行銷美術設計</h3>
+          <p class="company">侍達遊戲藝術有限公司</p>
+          <ul class="duty-list">
+            <li>遊戲行銷社群圖製作</li>
+            <li>遊戲週邊印刷物製作</li>
+            <li>展場支援</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2023</div>
+        <div>
+          <h3>設計部專員</h3>
+          <p class="company">朱銘美術館_財團法人朱銘文教基金會</p>
+          <ul class="duty-list">
+            <li>政府標案製作</li>
+            <li>館內展覽設計</li>
+            <li>館內例行性製作物與印刷相關</li>
+            <li>社群行銷圖製作</li>
+            <li>館內展覽導覽解說</li>
+            <li>包裝設計需求</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2022 — 2023</div>
+        <div>
+          <h3>平面設計師</h3>
+          <p class="company">Ann'S_紘瑞國際股份有限公司</p>
+          <ul class="duty-list">
+            <li>鞋款拍攝修圖</li>
+            <li>模特人像修圖</li>
+            <li>網頁設計製作</li>
+            <li>FB圖文設計</li>
+            <li>棚拍、戶外拍攝協助</li>
+            <li>形象影片剪輯</li>
+          </ul>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="period">2019 — 2022</div>
+        <div>
+          <h3>平面設計師</h3>
+          <p class="company">鼎鈺國際開發股份有限公司・葛瑪蘭集團飯店</p>
+          <ul class="duty-list">
+            <li>海報及DM設計</li>
+            <li>燈箱設計</li>
+            <li>飯店菜單製作</li>
+            <li>社群圖文設計</li>
+            <li>例行性活動企劃與執行</li>
+            <li>節慶活動規劃與執行</li>
+            <li>官網Banner</li>
+            <li>相關廠商聯繫簽約</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© Chen Yu Juan Portfolio</span>
+    <span>Visual Design</span>
+  </footer>
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="回到頂部" title="回到頂部">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 19V6M12 6L6 12M12 6L18 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 480));
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ---------- 工作經歷時間軸互動 ----------
+  const timelineWrap = document.getElementById('timelineWrap');
+  const timelineDot = document.getElementById('timelineDot');
+  const timelineItems = Array.from(timelineWrap.querySelectorAll('.timeline-item'));
+
+  function updateDot(){
+    if(!timelineItems.length) return;
+    const triggerY = 160;
+    let activeIndex = 0;
+    for(let i = 0; i < timelineItems.length; i++){
+      const top = timelineItems[i].getBoundingClientRect().top;
+      if(top <= triggerY){ activeIndex = i; }
+    }
+    const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+    if(atBottom){ activeIndex = timelineItems.length - 1; }
+    const wrapTop = timelineWrap.getBoundingClientRect().top;
+    const itemRect = timelineItems[activeIndex].getBoundingClientRect();
+    const relativeCenter = (itemRect.top - wrapTop) + (itemRect.height / 2);
+    timelineDot.style.top = relativeCenter + 'px';
+  }
+
+  window.addEventListener('scroll', updateDot, { passive: true });
+  window.addEventListener('resize', updateDot);
+  window.addEventListener('load', updateDot);
+  updateDot();
+  setTimeout(updateDot, 300);
+</script>
+</body>
+</html>

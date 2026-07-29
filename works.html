@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>作品分類 — Chen Yu Juan Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F3F4EF; --ink: #20241F; --muted: #6C7066;
+    --accent: #00723C; --accent-soft: #80B99E; --accent-wash: rgba(0,114,60,0.08);
+    --line: #D9D9CE;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; background: var(--paper); color: var(--ink); font-family: 'Work Sans', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .wrap{ max-width: 1160px; margin: 0 auto; padding: 0 40px; position: relative; }
+
+  .chamfer-lg{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%); }
+  .chamfer-md{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%); }
+  .chamfer-sm{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+
+  .nav-fixed{ position: fixed; top:0; left:0; right:0; z-index:50; background: var(--paper); border-bottom: 1px solid var(--line); }
+  nav{ max-width: 1160px; margin: 0 auto; display:flex; align-items:center; justify-content: space-between; padding: 22px 40px; }
+  .logo{ font-family:'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; text-decoration:none; color: var(--ink); }
+  .logo em{ font-family:'Fraunces', serif; font-style: italic; color: var(--accent); margin-left: 6px; }
+  .nav-links{ display:flex; gap: 34px; }
+  .nav-links a{ font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-links a:hover{ color: var(--ink); }
+  .nav-links a.current{ color: var(--accent); }
+  .nav-spacer{ height: 78px; }
+
+
+
+  .page-head{ padding: 60px 0 70px; border-bottom: 1px solid var(--line); }
+  .page-head .label-row{ display:flex; align-items:center; gap: 12px; margin-bottom: 16px; }
+  .page-head .slash{ color: var(--accent); font-size: 15px; }
+  .page-head .label-row span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+  .page-head h1{ font-family:'Fraunces', serif; font-weight: 400; font-size: 44px; margin: 0; line-height: 1.25; }
+  .page-head h1 em{ font-style: italic; color: var(--muted); }
+  .page-head p{ font-size: 14.5px; color: var(--muted); margin: 18px 0 0; max-width: 46ch; line-height: 1.75; }
+
+  /* ---------- 正方形交錯區塊(左右左)---------- */
+  .square-rows{ position: relative; padding: 30px 0 40px; }
+  .square-row{
+    position: relative;
+    z-index: 1;
+    display:grid;
+    grid-template-columns: 420px 1fr;
+    gap: 60px;
+    align-items:center;
+    padding: 54px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .square-row.mirror{ grid-template-columns: 1fr 420px; }
+  .square-row.mirror .sq-frame{ order: 2; }
+  .square-row.mirror .sq-text{ order: 1; }
+
+  .sq-frame{ display:block; position:relative; width: 420px; aspect-ratio: 1/1; overflow:hidden; background: var(--line); transition: transform .45s cubic-bezier(.2,.7,.2,1); }
+  .square-row:nth-of-type(3n+1):hover .sq-frame{ transform: rotate(-1.4deg) translateY(-6px); }
+  .square-row:nth-of-type(3n+2):hover .sq-frame{ transform: rotate(1.1deg) translateY(-6px); }
+  .square-row:nth-of-type(3n+3):hover .sq-frame{ transform: rotate(-0.8deg) translateY(-6px); }
+  .sq-cover{ position:absolute; inset:0; transition: transform .7s cubic-bezier(.2,.7,.2,1); }
+  .sq-frame:hover .sq-cover{ transform: scale(1.04); }
+
+  .square-row{ overflow: hidden; }
+  .sq-text{ position: relative; }
+  .big-num-wrap{ position: relative; height: 92px; margin-bottom: 14px; }
+  .big-num{
+    position: absolute;
+    top: 0; left: -4px;
+    font-family:'Fraunces', serif;
+    font-weight: 600;
+    font-size: 120px;
+    line-height: 0.8;
+    color: var(--ink);
+  }
+  .sq-text .label-row{
+    position: absolute;
+    left: -2px;
+    top: 54%;
+    transform: translateY(-50%);
+    display:inline-flex;
+    align-items:center;
+    gap: 10px;
+    background: var(--paper);
+    padding: 1px 7px 1px 0;
+    z-index: 1;
+  }
+  .sq-text .slash{ color: var(--accent); font-size: 15px; display: inline; }
+  .sq-text .label-row span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: 0.08em; }
+  .sq-text .slash{ display: none; }
+  .sq-text h3{ font-family:'Fraunces', serif; font-weight: 400; font-size: 26px; margin: 0 0 14px; }
+  .sq-text .tags{ display:flex; flex-wrap:wrap; gap: 8px; margin-bottom: 20px; }
+  .tag{ font-family:'IBM Plex Mono', monospace; font-size: 11px; padding: 4px 9px; background: var(--accent-wash); color: var(--ink); }
+  .sq-text a.view{
+    display:inline-flex; align-items:center; gap: 8px;
+    font-family:'IBM Plex Mono', monospace; font-size: 13px;
+    color: var(--paper); text-decoration:none;
+    padding: 13px 28px;
+    background: var(--ink); border: 1px solid var(--ink);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+    transition: background .3s ease, border-color .3s ease;
+  }
+  .sq-text a.view:hover{ background: var(--accent); border-color: var(--accent); }
+
+  /* ---------- 其餘 5 個小方格 ---------- */
+  .rest-section{ padding: 70px 0 120px; }
+  .rest-head{ display:flex; align-items:center; gap: 12px; margin-bottom: 34px; }
+  .rest-head .slash{ color: var(--accent); font-size: 15px; }
+  .rest-head h2{ font-family:'Fraunces', serif; font-weight: 400; font-style: italic; font-size: 22px; margin: 0; }
+  .rest-grid{ display:grid; gap: 20px; }
+  .rest-grid-top{ grid-template-columns: repeat(4, 1fr); margin-bottom: 20px; }
+  .rest-grid-bottom{ grid-template-columns: repeat(4, 1fr); }
+  .rest-card{ text-decoration:none; color: inherit; display:block; transition: transform .4s cubic-bezier(.2,.7,.2,1); }
+  .rest-card:nth-child(3n+1):hover{ transform: rotate(-1.4deg) translateY(-5px); }
+  .rest-card:nth-child(3n+2):hover{ transform: rotate(1.1deg) translateY(-5px); }
+  .rest-card:nth-child(3n+3):hover{ transform: rotate(-0.8deg) translateY(-5px); }
+  .rest-frame{ aspect-ratio: 1/1; overflow: hidden; background: var(--line); }
+  .rest-cover{ position:relative; width:100%; height:100%; transition: transform .6s ease; }
+  .rest-card:hover .rest-cover{ transform: scale(1.05); }
+  .rest-meta{ margin-top: 12px; display:flex; justify-content: space-between; align-items:baseline; }
+  .rest-meta h4{ font-family:'Fraunces', serif; font-weight: 500; font-size: 13.5px; margin: 0; }
+  .rest-meta span{ font-family:'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--accent); }
+
+  footer{ border-top: 1px solid var(--line); padding: 26px 0 46px; display:flex; justify-content:space-between; color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12px; }
+
+  .back-to-top{ position: fixed; right: 32px; bottom: 32px; width: 48px; height: 48px; background: transparent; border: none; display:flex; align-items:center; justify-content:center; color: var(--accent); cursor: pointer; z-index: 40; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .35s ease, transform .35s ease, color .25s ease; }
+  .back-to-top.visible{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover{ color: var(--ink); }
+  .back-to-top svg{ width: 34.4px; height: 34.4px; }
+
+  @media (max-width: 960px){
+    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; }
+    .page-head h1{ font-size: 30px; }
+    .square-row, .square-row.mirror{ grid-template-columns: 1fr; gap: 30px; }
+    .square-row.mirror .sq-frame{ order: 1; } .square-row.mirror .sq-text{ order: 2; }
+    .sq-frame{ width: 100%; }
+    .rest-grid-top{ grid-template-columns: repeat(2, 1fr); }
+    .rest-grid-bottom{ grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-fixed">
+  <nav>
+    <a class="logo" href="index.html">Chen Yu Juan <em>陳俞娟</em></a>
+    <div class="nav-links">
+      <a href="works.html" class="current">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+</div>
+
+
+<div class="wrap">
+  <div class="nav-spacer"></div>
+
+  <section class="page-head">
+    <div class="label-row"><span class="slash">／</span><span>Portfolio Index</span></div>
+    <h1>在框架之中,<br><em>探尋美感的錨點。</em></h1>
+    <p>從電商、飯店、藝術季到遊戲,每一件作品都從不同的商業脈絡出發,找到兼顧美感與可用性的最佳解法。</p>
+  </section>
+
+  <section class="square-rows">
+
+    <div class="square-row">
+      <a class="sq-frame chamfer-md" href="project-detail.html"><div class="sq-cover" style="background: url('images/5.jpg') center/cover;"></div></a>
+      <div class="sq-text">
+        <div class="big-num-wrap">
+          <div class="big-num">01</div>
+          <div class="label-row"><span class="slash">／</span><span>Ecommerce</span></div>
+        </div>
+        <h3>電商相關</h3>
+        <div class="tags"><span class="tag">品牌設計</span><span class="tag">電商視覺</span><span class="tag">影片剪輯</span><span class="tag">文案撰寫</span><span class="tag">網頁製作</span></div>
+        <a class="view" href="project-detail.html">查看作品 →</a>
+      </div>
+    </div>
+
+    <div class="square-row mirror">
+      <a class="sq-frame chamfer-md" href="project-detail-hotel.html"><div class="sq-cover" style="background: url('images/7.jpg') center/cover;"></div></a>
+      <div class="sq-text">
+        <div class="big-num-wrap">
+          <div class="big-num">02</div>
+          <div class="label-row"><span class="slash">／</span><span>Hotel</span></div>
+        </div>
+        <h3>飯店旅遊相關</h3>
+        <div class="tags"><span class="tag">平面設計</span><span class="tag">空間視覺</span><span class="tag">品牌識別</span><span class="tag">活動策劃</span><span class="tag">視覺攝影</span></div>
+        <a class="view" href="project-detail-hotel.html">查看作品 →</a>
+      </div>
+    </div>
+
+    <div class="square-row">
+      <a class="sq-frame chamfer-md" href="project-detail-art.html"><div class="sq-cover" style="background: url('images/9.jpg') center/cover;"></div></a>
+      <div class="sq-text">
+        <div class="big-num-wrap">
+          <div class="big-num">03</div>
+          <div class="label-row"><span class="slash">／</span><span>Art Festival</span></div>
+        </div>
+        <h3>藝術季專案</h3>
+        <div class="tags"><span class="tag">大型專案協作</span><span class="tag">攝影活動主視覺</span></div>
+        <a class="view" href="project-detail-art.html">查看作品 →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="rest-section">
+    <div class="rest-head"><span class="slash">／</span><h2>更多作品</h2></div>
+
+    <div class="rest-grid rest-grid-top">
+      <a class="rest-card" href="project-detail-game.html">
+        <div class="rest-frame chamfer-sm"><div class="rest-cover" style="background: url('images/戰事投稿_1080x1080.jpg') center/cover;"></div></div>
+        <div class="rest-meta"><h4>遊戲相關</h4><span>04</span></div>
+      </a>
+      <a class="rest-card" href="project-detail-skincare.html">
+        <div class="rest-frame chamfer-sm"><div class="rest-cover" style="background: url('images/13.jpg') center/cover;"></div></div>
+        <div class="rest-meta"><h4>保養產品</h4><span>05</span></div>
+      </a>
+      <a class="rest-card" href="project-detail-event.html">
+        <div class="rest-frame chamfer-sm"><div class="rest-cover" style="background: url('images/15.png') center/cover;"></div></div>
+        <div class="rest-meta"><h4>活動策劃</h4><span>06</span></div>
+      </a>
+      <a class="rest-card" href="project-detail-freelance.html">
+        <div class="rest-frame chamfer-sm"><div class="rest-cover" style="background: url('images/16.png') center/cover;"></div></div>
+        <div class="rest-meta"><h4>個人接案</h4><span>07</span></div>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© Chen Yu Juan Portfolio</span>
+    <span>Visual Design</span>
+  </footer>
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="回到頂部" title="回到頂部">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 19V6M12 6L6 12M12 6L18 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 480));
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>

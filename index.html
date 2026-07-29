@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chen Yu Juan — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F3F4EF;
+    --ink: #20241F;
+    --muted: #6C7066;
+    --accent: #00723C;
+    --accent-soft: #80B99E;
+    --accent-wash: rgba(0,114,60,0.08);
+    --line: #D9D9CE;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Work Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .wrap{ max-width: 1160px; margin: 0 auto; padding: 0 40px; position: relative; }
+
+  /* 切角工具類:右下角等腰三角形切角,統一復古方形語言 */
+  .chamfer-lg{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%); }
+  .chamfer-md{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%); }
+  .chamfer-sm{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+
+  /* ---------- 懸浮導覽列 ---------- */
+  .nav-fixed{
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  nav{
+    max-width: 1160px;
+    margin: 0 auto;
+    display:flex;
+    align-items:center;
+    justify-content: space-between;
+    padding: 22px 40px;
+  }
+  .logo{ font-family:'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; text-decoration:none; color: var(--ink); }
+  .logo em{ font-family:'Fraunces', serif; font-style: italic; color: var(--accent); margin-left: 6px; }
+  .nav-links{ display:flex; gap: 34px; }
+  .nav-links a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color .25s ease;
+  }
+  .nav-links a:hover{ color: var(--ink); }
+  .nav-links a.current{ color: var(--accent); }
+  .nav-spacer{ height: 78px; }
+
+  /* 右側直式輔助文字 */
+  .side-tag{
+    position: fixed;
+    right: 26px;
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    z-index: 5;
+  }
+
+  /* ---------- Hero:照片 + 文字疊壓 ---------- */
+  .hero-photo{
+    position: relative;
+    margin-top: 26px;
+    height: 76vh;
+    min-height: 460px;
+    display:flex;
+    align-items: flex-end;
+    overflow: hidden;
+  }
+  .hero-photo::before{
+    content:"";
+    position:absolute; inset: -8%;
+    background: url('images/hero-01.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: saturate(1.3) contrast(1.06) brightness(1.08);
+    animation: heroFlow 24s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+  .hero-photo::after{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(200deg, rgba(20,30,22,0.12), rgba(20,30,22,0.4));
+    z-index: 1;
+  }
+  @keyframes heroFlow{
+    0%{ transform: scale(1.02) translate(-1.5%, 0); }
+    100%{ transform: scale(1.06) translate(1.5%, 0); }
+  }
+  .hero-overlay{
+    position: relative;
+    z-index: 2;
+    padding: 0 0 48px 8px;
+    color: #F3F4EF;
+  }
+  .hero-overlay .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin: 0 0 14px;
+  }
+  .hero-overlay h1{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight: 700;
+    font-size: 60px;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    margin: 0;
+    max-width: 12ch;
+  }
+  .hero-overlay h1 em{ font-style: normal; font-weight: 500; opacity: 0.75; }
+
+  /* ---------- Philosophy ---------- */
+  .philosophy{
+    position: relative;
+    padding: 120px 0 100px;
+    overflow: hidden;
+  }
+  .ghost-text{
+    position: absolute;
+    top: 50%;
+    left: -20px;
+    transform: translateY(-50%);
+    font-family:'IBM Plex Mono', monospace;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-size: 190px;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(0,114,60,0.16);
+    white-space: nowrap;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .philosophy-content{
+    position: relative;
+    z-index: 1;
+    display:grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 50px;
+  }
+  .philosophy-label{
+    display:flex;
+    align-items: baseline;
+    gap: 12px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .philosophy-label .slash{ color: var(--accent); font-size: 15px; }
+  .philosophy-content h2{
+    font-family:'Fraunces', serif;
+    font-weight: 400;
+    font-size: 30px;
+    margin: 14px 0 0;
+    line-height: 1.4;
+  }
+  .philosophy-content p{
+    font-size: 14.5px;
+    color: var(--accent);
+    line-height: 1.85;
+    margin: 0;
+    align-self: end;
+  }
+
+  .cta-solid{
+    display:inline-flex;
+    align-items:center;
+    gap: 8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--paper);
+    text-decoration:none;
+    padding: 13px 28px;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    cursor: pointer;
+    transition: background .3s ease, color .3s ease, opacity .3s ease;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%);
+  }
+  .cta-solid:hover{ background: var(--accent); border-color: var(--accent); opacity: 1; }
+
+  /* ---------- 8分類:三格並排網格 ---------- */
+  .cat-section{ margin: 20px 0 110px; }
+  .cat-head{ display:flex; align-items:baseline; gap: 12px; margin-bottom: 36px; }
+  .cat-head .slash{ color: var(--accent); font-size: 15px; }
+  .cat-head h2{ font-family:'Fraunces', serif; font-weight: 400; font-style: italic; font-size: 22px; margin: 0; }
+
+  .cat-grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px 28px;
+  }
+  .cat-card{
+    text-decoration:none;
+    color: inherit;
+    display:block;
+    transition: transform .45s cubic-bezier(.2,.7,.2,1);
+  }
+  .cat-card:nth-child(3n+1):hover{ transform: rotate(-1.4deg) translateY(-6px); }
+  .cat-card:nth-child(3n+2):hover{ transform: rotate(1.1deg) translateY(-6px); }
+  .cat-card:nth-child(3n+3):hover{ transform: rotate(-0.8deg) translateY(-6px); }
+  .cat-frame{
+    position: relative;
+    aspect-ratio: 4/5;
+    overflow: hidden;
+    background: #E9E8E1;
+  }
+  .cat-cover{
+    position:absolute; inset:0;
+    filter: grayscale(1) contrast(1.05) saturate(0);
+    transition: filter .5s ease, transform .7s cubic-bezier(.2,.7,.2,1);
+  }
+  .cat-card:hover .cat-cover{ filter: grayscale(0) contrast(1); transform: scale(1.04); }
+  .cat-meta{
+    margin-top: 16px;
+    display:flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .cat-meta h3{
+    font-family:'Fraunces', serif;
+    font-weight: 500;
+    font-size: 16.5px;
+    margin: 0;
+  }
+  .cat-meta span{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+  }
+
+  .view-all-wrap{ display:flex; justify-content: center; margin-top: 50px; }
+
+  /* ---------- Contact ---------- */
+  .contact{
+    padding: 90px 0 70px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+  .contact .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 20px;
+  }
+  .contact h2{
+    font-family:'Fraunces', serif; font-weight: 400; font-size: 34px;
+    margin: 0 0 30px; line-height: 1.4;
+  }
+  .contact h2 em{ font-style: italic; color: var(--muted); }
+  .email-row{
+    margin: 0 auto;
+    display:flex; align-items:center; justify-content:center; gap: 10px;
+    width: fit-content;
+    position: relative;
+  }
+  .email-plain{
+    margin:0;
+    font-family:'IBM Plex Mono', monospace;
+    font-size: 13px; color: var(--muted); letter-spacing: 0.02em;
+    user-select: all;
+  }
+  .copy-btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    width: 26px; height: 26px; padding: 0;
+    background: transparent; border: 1px solid var(--line);
+    color: var(--muted); cursor: pointer;
+    transition: color .2s ease, border-color .2s ease, background .2s ease;
+  }
+  .copy-btn svg{ width: 14px; height: 14px; }
+  .copy-btn:hover{ color: var(--accent); border-color: var(--accent); background: var(--accent-wash); }
+  .copy-btn.copied{ color: var(--accent); border-color: var(--accent); }
+  .copy-toast{
+    position: absolute; left: 50%; bottom: calc(100% + 8px);
+    transform: translateX(-50%) translateY(4px);
+    font-family:'IBM Plex Mono', monospace; font-size: 11px;
+    color: var(--paper); background: var(--ink); padding: 4px 10px;
+    opacity: 0; pointer-events:none;
+    transition: opacity .25s ease, transform .25s ease; white-space: nowrap;
+  }
+  .copy-toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+  .channels{ margin-top: 26px; display:flex; justify-content:center; gap: 24px; }
+  .channels a{ font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); text-decoration:none; }
+  .channels a:hover{ color: var(--accent); }
+
+  footer{
+    border-top: 1px solid var(--line);
+    padding: 26px 0 46px;
+    display:flex; justify-content:space-between;
+    color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12px;
+  }
+
+  /* ---------- 回到頂端按鈕 ---------- */
+  .back-to-top{
+    position: fixed;
+    right: 32px; bottom: 32px;
+    width: 48px; height: 48px;
+    background: transparent;
+    border: none;
+    display:flex; align-items:center; justify-content:center;
+    color: var(--accent);
+    cursor: pointer;
+    z-index: 40;
+    opacity: 0; transform: translateY(10px);
+    pointer-events: none;
+    transition: opacity .35s ease, transform .35s ease, color .25s ease;
+  }
+  .back-to-top.visible{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover{ color: var(--ink); }
+  .back-to-top svg{ width: 34.4px; height: 34.4px; }
+
+  @media (max-width: 860px){
+    nav{ padding: 18px 22px; }
+    .wrap{ padding: 0 22px; }
+    .hero-overlay h1{ font-size: 32px; }
+    .philosophy-content{ grid-template-columns: 1fr; gap: 24px; }
+    .ghost-text{ font-size: 78px; }
+    .side-tag{ display:none; }
+    .cat-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-fixed">
+  <nav>
+    <a class="logo" href="index.html">Chen Yu Juan <em>陳俞娟</em></a>
+    <div class="nav-links">
+      <a href="works.html" class="current">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+</div>
+
+<div class="wrap">
+  <div class="nav-spacer"></div>
+
+  <section class="hero-photo chamfer-lg">
+    <div class="hero-overlay">
+      <p class="eyebrow">Visual Designer</p>
+      <h1>Juan's<br><em>Portfolio</em></h1>
+    </div>
+  </section>
+
+  <section class="philosophy">
+    <div class="ghost-text">DESIGN</div>
+    <div class="philosophy-content">
+      <div class="philosophy-label">
+        <span class="slash">／</span>
+        <span>Design Philosophy　設計理念</span>
+      </div>
+      <div>
+        <h2>在獨立創作與跨團隊對話之間找到平衡,<br>把繁雜的需求化繁為簡。</h2>
+        <p>跨越螢幕與實體場域,不被單一領域定義,靈活提供全方位的視覺風格。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cat-section">
+    <div class="cat-head">
+      <span class="slash">／</span>
+      <h2>精選作品</h2>
+    </div>
+
+    <div class="cat-grid">
+      <a class="cat-card" href="project-detail.html">
+        <div class="cat-frame chamfer-md">
+          <div class="cat-cover" style="background: url('images/1.jpg'); background-size: cover; background-position: center;"></div>
+        </div>
+        <div class="cat-meta"><h3>電商相關</h3><span>01</span></div>
+      </a>
+      <a class="cat-card" href="project-detail-hotel.html">
+        <div class="cat-frame chamfer-md">
+          <div class="cat-cover" style="background: url('images/2.jpg'); background-size: cover; background-position: center;"></div>
+        </div>
+        <div class="cat-meta"><h3>飯店旅遊相關</h3><span>02</span></div>
+      </a>
+      <a class="cat-card" href="project-detail-art.html">
+        <div class="cat-frame chamfer-md">
+          <div class="cat-cover" style="background: url('images/3.jpg'); background-size: cover; background-position: center;"></div>
+        </div>
+        <div class="cat-meta"><h3>藝術季專案</h3><span>03</span></div>
+      </a>
+    </div>
+
+    <div class="view-all-wrap">
+      <a class="cta-solid" href="works.html">查看更多作品 →</a>
+    </div>
+  </section>
+
+  <section class="contact">
+    <p class="eyebrow">Let's Talk</p>
+    <h2>對這些作品有興趣?</h2>
+    <a class="cta-solid" href="contact.html" style="margin-bottom:18px; display:inline-flex;">歡迎聊聊→</a>
+    <div class="email-row">
+      <p class="email-plain" id="emailText">aa40332024@gmail.com</p>
+      <button class="copy-btn" id="copyBtn" type="button" aria-label="複製信箱地址" title="複製信箱地址">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="8" width="12" height="13" rx="1" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+      </button>
+      <span class="copy-toast" id="copyToast">已複製</span>
+    </div>
+  </section>
+
+  <footer>
+    <span>© Chen Yu Juan Portfolio</span>
+    <span>Visual Design</span>
+  </footer>
+</div>
+
+<button class="back-to-top chamfer-sm" id="backToTop" type="button" aria-label="回到頂部" title="回到頂部">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 19V6M12 6L6 12M12 6L18 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  // ---------- 複製信箱 ----------
+  const copyBtn = document.getElementById('copyBtn');
+  const copyToast = document.getElementById('copyToast');
+  const emailText = document.getElementById('emailText').textContent.trim();
+  copyBtn.addEventListener('click', async () => {
+    try{ await navigator.clipboard.writeText(emailText); }
+    catch(err){
+      const t = document.createElement('textarea');
+      t.value = emailText; document.body.appendChild(t); t.select();
+      document.execCommand('copy'); document.body.removeChild(t);
+    }
+    copyBtn.classList.add('copied'); copyToast.classList.add('show');
+    setTimeout(() => { copyBtn.classList.remove('copied'); copyToast.classList.remove('show'); }, 1600);
+  });
+
+  // ---------- 回到頂部 ----------
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    backToTop.classList.toggle('visible', window.scrollY > 480);
+  });
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>

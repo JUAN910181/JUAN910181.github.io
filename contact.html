@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>聯繫我 — Chen Yu Juan Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F3F4EF; --ink: #20241F; --muted: #6C7066;
+    --accent: #00723C; --accent-soft: #80B99E; --accent-wash: rgba(0,114,60,0.08);
+    --line: #D9D9CE;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; background: var(--paper); color: var(--ink); font-family: 'Work Sans', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .wrap{ max-width: 1160px; margin: 0 auto; padding: 0 40px; position: relative; }
+
+  .chamfer-lg{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%); }
+  .chamfer-md{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%); }
+  .chamfer-sm{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+
+  .nav-fixed{ position: fixed; top:0; left:0; right:0; z-index:50; background: var(--paper); border-bottom: 1px solid var(--line); }
+  nav{ max-width: 1160px; margin: 0 auto; display:flex; align-items:center; justify-content: space-between; padding: 22px 40px; }
+  .logo{ font-family:'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; text-decoration:none; color: var(--ink); }
+  .logo em{ font-family:'Fraunces', serif; font-style: italic; color: var(--accent); margin-left: 6px; }
+  .nav-links{ display:flex; gap: 34px; }
+  .nav-links a{ font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-links a:hover{ color: var(--ink); }
+  .nav-links a.current{ color: var(--accent); }
+  .nav-spacer{ height: 78px; }
+
+  .side-tag{ position: fixed; right: 26px; top: 50%; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl; font-family:'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.15em; color: var(--accent); z-index: 5; }
+
+  /* ---------- Contact 主體 ---------- */
+  .contact-main{ display:grid; grid-template-columns: 0.8fr 1.2fr; gap: 70px; padding: 90px 0 100px; align-items: stretch; }
+  .contact-portrait{ width: 100%; aspect-ratio: 1/1; align-self: start; background: url('images/17.jpg') center/cover; }
+  .contact-text{ display:flex; flex-direction: column; justify-content: space-between; }
+
+  .contact-text .label-row{ display:flex; align-items:center; gap: 12px; margin-bottom: 14px; }
+  .contact-text .slash{ color: var(--accent); font-size: 15px; }
+  .contact-text .label-row span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .contact-text h1{ font-family:'Fraunces', serif; font-weight: 400; font-size: 28px; margin: 0 0 16px; line-height: 1.4; }
+  .contact-text h1 em{ font-style: italic; color: var(--accent); }
+  .contact-text > p{ font-size: 14.5px; color: var(--muted); line-height: 1.85; max-width: 50ch; margin: 0 0 28px; }
+
+  .info-list{ border-top: 1px solid var(--line); }
+  .info-row{ display:flex; align-items:center; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .info-row .label{ width: 34px; flex-shrink:0; }
+  .info-row .icon-label{ display:flex; align-items:center; color: var(--accent); }
+  .info-row .icon-label svg{ width: 18px; height: 18px; }
+  .mark-104{ display:flex; align-items:center; justify-content:center; width: 18px; height: 18px; border: 1.3px solid var(--accent); border-radius: 3px; font-family:'IBM Plex Mono', monospace; font-weight: 600; font-size: 7px; letter-spacing: -0.03em; color: var(--accent); line-height: 1; }
+  .info-row .value{ font-family:'IBM Plex Mono', monospace; font-size: 14px; color: var(--ink); flex: 1; user-select: all; }
+  .info-row a.value{ text-decoration:none; }
+  .info-row a.value:hover{ color: var(--accent); }
+
+  .copy-btn{ display:inline-flex; align-items:center; justify-content:center; width: 26px; height: 26px; padding: 0; background: transparent; border: 1px solid var(--line); color: var(--muted); cursor: pointer; transition: color .2s ease, border-color .2s ease, background .2s ease; flex-shrink:0; }
+  .copy-btn svg{ width: 13px; height: 13px; }
+  .copy-btn:hover{ color: var(--accent); border-color: var(--accent); background: var(--accent-wash); }
+  .copy-btn.copied{ color: var(--accent); border-color: var(--accent); }
+
+  .social-row{ display:flex; gap: 16px; margin-top: 30px; flex-wrap: wrap; }
+  .social-row a{ display:inline-flex; align-items:center; gap: 8px; font-family:'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--paper); text-decoration:none; padding: 11px 20px; border: 1px solid var(--ink); background: var(--ink); transition: background .3s ease, color .3s ease, border-color .3s ease; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%); }
+  .social-row a:hover{ background: var(--accent); color: var(--paper); border-color: var(--accent); }
+
+  .toast{ position: fixed; left: 50%; bottom: 40px; transform: translateX(-50%) translateY(10px); font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--paper); background: var(--ink); padding: 10px 20px; opacity: 0; pointer-events:none; transition: opacity .25s ease, transform .25s ease; z-index: 60; }
+  .toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  footer{ border-top: 1px solid var(--line); padding: 26px 0 46px; display:flex; justify-content:space-between; color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12px; }
+
+  .back-to-top{ position: fixed; right: 32px; bottom: 32px; width: 48px; height: 48px; background: transparent; border: none; display:flex; align-items:center; justify-content:center; color: var(--accent); cursor: pointer; z-index: 40; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .35s ease, transform .35s ease, color .25s ease; }
+  .back-to-top.visible{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover{ color: var(--ink); }
+  .back-to-top svg{ width: 34.4px; height: 34.4px; }
+
+  @media (max-width: 860px){
+    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; }
+    .contact-main{ grid-template-columns: 1fr; gap: 34px; }
+    .contact-portrait{ max-width: 220px; height: auto; aspect-ratio: 5/4; }
+    .info-row .label{ width: 80px; font-size: 10.5px; }
+    .side-tag{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-fixed">
+  <nav>
+    <a class="logo" href="index.html">Chen Yu Juan <em>陳俞娟</em></a>
+    <div class="nav-links">
+      <a href="works.html">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="current">Contact</a>
+    </div>
+  </nav>
+</div>
+
+<div class="wrap">
+  <div class="nav-spacer"></div>
+
+  <section class="contact-main">
+    <div class="contact-portrait chamfer-md"></div>
+    <div class="contact-text">
+      <div class="label-row"><span class="slash">／</span><span>Let's Talk</span></div>
+      <h1>對這些作品有興趣?<br><em>歡迎聊聊合作的可能。</em></h1>
+      <p>不管是全職機會、專案合作,或單純想聊聊設計,都歡迎透過以下方式聯繫我,我會盡快回覆。</p>
+
+      <div class="info-list">
+        <div class="info-row">
+          <span class="label icon-label" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="value" id="emailText">aa40332024@gmail.com</span>
+          <button class="copy-btn" data-copy="aa40332024@gmail.com" aria-label="複製 Email">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="13" rx="1" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+        </div>
+        <div class="info-row">
+          <span class="label icon-label" aria-label="Phone">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M6 3h3l2 5-2.5 1.5a11 11 0 0 0 5 5L15 12l5 2v3a2 2 0 0 1-2 2C10.5 19 5 13.5 5 6a2 2 0 0 1 1-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          </span>
+          <span class="value">+886 970 701 233</span>
+          <button class="copy-btn" data-copy="+886970701233" aria-label="複製電話">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="13" rx="1" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+        </div>
+        <div class="info-row">
+          <span class="label icon-label" aria-label="104">
+            <span class="mark-104">104</span>
+          </span>
+          <a class="value" href="images/陳俞娟.pdf" download>陳俞娟的104履歷</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© Chen Yu Juan Portfolio</span>
+    <span>Visual Design</span>
+  </footer>
+</div>
+
+<span class="toast" id="toast">已複製</span>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="回到頂部" title="回到頂部">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 19V6M12 6L6 12M12 6L18 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  const toast = document.getElementById('toast');
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const text = btn.getAttribute('data-copy');
+      try{ await navigator.clipboard.writeText(text); }
+      catch(err){
+        const t = document.createElement('textarea');
+        t.value = text; document.body.appendChild(t); t.select();
+        document.execCommand('copy'); document.body.removeChild(t);
+      }
+      btn.classList.add('copied');
+      toast.classList.add('show');
+      setTimeout(() => { btn.classList.remove('copied'); toast.classList.remove('show'); }, 1500);
+    });
+  });
+
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 480));
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>

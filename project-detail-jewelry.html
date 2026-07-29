@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formosa — Chen Yu Juan Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F3F4EF; --ink: #20241F; --muted: #6C7066;
+    --accent: #00723C; --accent-soft: #80B99E; --accent-wash: rgba(0,114,60,0.08);
+    --line: #D9D9CE;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; background: var(--paper); color: var(--ink); font-family: 'Work Sans', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .wrap{ max-width: 1160px; margin: 0 auto; padding: 0 40px; position: relative; }
+
+  .chamfer-lg{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%); }
+  .chamfer-md{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%); }
+  .chamfer-sm{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+
+  .nav-fixed{ position: fixed; top:0; left:0; right:0; z-index:50; background: var(--paper); border-bottom: 1px solid var(--line); }
+  nav{ max-width: 1160px; margin: 0 auto; display:flex; align-items:center; justify-content: space-between; padding: 22px 40px; }
+  .logo{ font-family:'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; text-decoration:none; color: var(--ink); }
+  .logo em{ font-family:'Fraunces', serif; font-style: italic; color: var(--accent); margin-left: 6px; }
+  .nav-links{ display:flex; gap: 34px; }
+  .nav-links a{ font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-links a:hover{ color: var(--ink); }
+  .nav-links a.current{ color: var(--accent); }
+  .nav-spacer{ height: 78px; }
+
+  .case-hero{ position: relative; margin-top: 26px; aspect-ratio: 16/9;
+    background: linear-gradient(200deg, rgba(32,36,31,0.2), rgba(32,36,31,0.55)),
+                url('images/11.jpg');
+    background-size: cover; background-position: center;
+    display:flex; align-items:flex-end; overflow:hidden; }
+  .hero-overlay{ position: relative; z-index: 2; padding: 0 0 44px 8px; color: #F3F4EF; }
+  .hero-overlay .num{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; opacity: 0.85; margin: 0 0 12px; }
+  .hero-overlay h1{ font-family:'Fraunces', serif; font-weight: 400; font-size: 44px; margin: 0 0 14px; }
+  .hero-credit{ position: absolute; right: 60px; bottom: 20px; z-index: 2; font-family:'IBM Plex Mono', monospace; font-weight: 300; font-size: 9px; letter-spacing: 0.03em; color: rgba(243,244,239,0.45); }
+  .info-strip{ display:flex; gap: 26px; padding: 24px 0; border-bottom: 1px solid var(--line); font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
+  .info-strip strong{ color: var(--ink); display:block; font-size: 12.5px; margin-bottom: 4px; font-family:'Work Sans', sans-serif; }
+
+  .section{ padding: 70px 0; border-bottom: 1px solid var(--line); }
+  .section-label{ display:flex; align-items:center; gap: 12px; margin-bottom: 22px; }
+  .section-label .slash{ color: var(--accent); font-size: 15px; }
+  .section-label span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .section h2{ font-family:'Fraunces', serif; font-weight: 400; font-size: 26px; margin: 0 0 18px; max-width: 22ch; line-height: 1.4; }
+  .section p{ font-size: 14.5px; color: var(--muted); line-height: 1.85; max-width: 62ch; margin: 0; }
+
+  /* ---------- 延伸內容區塊 ---------- */
+  .extras-intro p{ margin-bottom: 40px; }
+  .extra-block{ margin-bottom: 60px; }
+  .extra-block:last-child{ margin-bottom: 0; }
+  .extra-label{ font-family:'IBM Plex Mono', monospace; font-size: 15px; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 14px; }
+  .extra-placeholder{ display:flex; align-items:center; justify-content:center; width:100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.08em; }
+
+  .prev-next{ padding: 50px 0 90px; display:grid; grid-template-columns: 1fr 1fr; }
+  .prev-next a{ text-decoration:none; color: var(--ink); padding: 20px; }
+  .prev-next a:first-child{ text-align:left; border-right: 1px solid var(--line); }
+  .prev-next a:last-child{ text-align:right; }
+  .prev-next .dir{ font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); display:block; margin-bottom: 6px; }
+  .prev-next .name{ font-family:'Fraunces', serif; font-size: 18px; }
+  .prev-next a:hover .name{ color: var(--accent); }
+
+  footer{ border-top: 1px solid var(--line); padding: 26px 0 46px; display:flex; justify-content:space-between; color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12px; }
+
+  .back-to-top{ position: fixed; right: 32px; bottom: 32px; width: 48px; height: 48px; background: transparent; border: none; display:flex; align-items:center; justify-content:center; color: var(--accent); cursor: pointer; z-index: 40; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .35s ease, transform .35s ease, color .25s ease; }
+  .back-to-top.visible{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover{ color: var(--ink); }
+  .back-to-top svg{ width: 34.4px; height: 34.4px; }
+
+  @media (max-width: 860px){
+    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; }
+    .hero-overlay h1{ font-size: 28px; }
+    .info-strip{ flex-wrap:wrap; }
+    .prev-next{ grid-template-columns: 1fr; }
+    .prev-next a:first-child{ border-right:none; border-bottom: 1px solid var(--line); }
+    .extra-placeholder{ aspect-ratio: 4/3; max-height: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-fixed">
+  <nav>
+    <a class="logo" href="index.html">Chen Yu Juan <em>陳俞娟</em></a>
+    <div class="nav-links">
+      <a href="works.html" class="current">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+</div>
+
+<div class="wrap">
+  <div class="nav-spacer"></div>
+
+  <section class="case-hero chamfer-lg">
+    <div class="hero-overlay">
+      <p class="num">05 / 09</p>
+      <h1>Formosa</h1>
+    </div>
+  </section>
+
+  <div class="info-strip">
+    <div><strong>類型</strong>（待補）</div>
+    <div><strong>技能</strong>（待補）</div>
+  </div>
+
+  <section class="section">
+    <div class="section-label"><span class="slash">／</span><span>Context</span></div>
+    <h2>專案背景</h2>
+    <p>（待補）</p>
+  </section>
+
+  <section class="section extras-intro">
+    <div class="section-label"><span class="slash">／</span><span>Works</span></div>
+    <h2>作品</h2>
+
+    <div class="extra-block">
+      <div class="extra-label">01 · 待補標題</div>
+      <div class="extra-placeholder">請提供圖片資料夾與區塊標題</div>
+    </div>
+
+  </section>
+
+  <div class="prev-next">
+    <a href="project-detail-game.html"><span class="dir">← 上一個</span><span class="name">遊戲相關</span></a>
+    <a href="works.html"><span class="dir">下一個 →</span><span class="name">傳統宮廟</span></a>
+  </div>
+
+  <footer>
+    <span>© Chen Yu Juan Portfolio</span>
+    <span>Visual Design</span>
+  </footer>
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="回到頂部" title="回到頂部">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 19V6M12 6L6 12M12 6L18 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 480));
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>

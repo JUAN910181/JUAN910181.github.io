@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>藝術季專案 — Chen Yu Juan Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F3F4EF; --ink: #20241F; --muted: #6C7066;
+    --accent: #00723C; --accent-soft: #80B99E; --accent-wash: rgba(0,114,60,0.08);
+    --line: #D9D9CE;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{ margin:0; background: var(--paper); color: var(--ink); font-family: 'Work Sans', sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  .wrap{ max-width: 1160px; margin: 0 auto; padding: 0 40px; position: relative; }
+
+  .chamfer-lg{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 46px), calc(100% - 46px) 100%, 0 100%); }
+  .chamfer-md{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%); }
+  .chamfer-sm{ clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
+
+  .nav-fixed{ position: fixed; top:0; left:0; right:0; z-index:50; background: var(--paper); border-bottom: 1px solid var(--line); }
+  nav{ max-width: 1160px; margin: 0 auto; display:flex; align-items:center; justify-content: space-between; padding: 22px 40px; }
+  .logo{ font-family:'IBM Plex Mono', monospace; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; text-decoration:none; color: var(--ink); }
+  .logo em{ font-family:'Fraunces', serif; font-style: italic; color: var(--accent); margin-left: 6px; }
+  .nav-links{ display:flex; gap: 34px; }
+  .nav-links a{ font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  .nav-links a:hover{ color: var(--ink); }
+  .nav-links a.current{ color: var(--accent); }
+  .nav-spacer{ height: 78px; }
+
+  .case-hero{ position: relative; margin-top: 26px; aspect-ratio: 16/9;
+    background: linear-gradient(200deg, rgba(32,36,31,0.2), rgba(32,36,31,0.55)),
+                url('images/主視覺Banner.jpg');
+    background-size: cover; background-position: center;
+    display:flex; align-items:flex-end; overflow:hidden; }
+  .hero-overlay{ position: relative; z-index: 2; padding: 0 0 44px 8px; color: #F3F4EF; }
+  .hero-overlay .num{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; opacity: 0.85; margin: 0 0 12px; }
+  .hero-overlay h1{ font-family:'Fraunces', serif; font-weight: 400; font-size: 44px; margin: 0 0 14px; }
+  .hero-credit{ position: absolute; right: 60px; bottom: 20px; z-index: 2; font-family:'IBM Plex Mono', monospace; font-weight: 300; font-size: 9px; letter-spacing: 0.03em; color: rgba(243,244,239,0.45); }
+  .info-strip{ display:flex; gap: 26px; padding: 24px 0; border-bottom: 1px solid var(--line); font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
+  .info-strip strong{ color: var(--ink); display:block; font-size: 12.5px; margin-bottom: 4px; font-family:'Work Sans', sans-serif; }
+
+  .section{ padding: 70px 0; border-bottom: 1px solid var(--line); }
+  .section-label{ display:flex; align-items:center; gap: 12px; margin-bottom: 22px; }
+  .section-label .slash{ color: var(--accent); font-size: 15px; }
+  .section-label span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .section h2{ font-family:'Fraunces', serif; font-weight: 400; font-size: 26px; margin: 0 0 18px; max-width: 22ch; line-height: 1.4; }
+  .section p{ font-size: 14.5px; color: var(--muted); line-height: 1.85; max-width: 62ch; margin: 0; }
+
+  /* ---------- 延伸內容區塊 ---------- */
+  .extras-intro p{ margin-bottom: 40px; }
+  .extra-block{ margin-bottom: 60px; }
+  .extra-block:last-child{ margin-bottom: 0; }
+  .extra-label{ font-family:'IBM Plex Mono', monospace; font-size: 15px; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 14px; }
+  .extra-placeholder{ display:flex; align-items:center; justify-content:center; width:100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.08em; }
+
+  /* --- 三折頁 --- */
+  .leaflet-stage{ position: relative; width: 100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); overflow: hidden; display:flex; align-items:center; justify-content:center; }
+  .leaflet-media{ max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
+  .leaflet-dots{ display:flex; justify-content:center; gap: 10px; margin-top: 18px; }
+  .leaflet-dot{ width: 7px; height: 7px; clip-path: polygon(0 0, 100% 0, 100% 65%, 65% 100%, 0 100%); background: var(--line); border: none; padding: 0; cursor: pointer; transition: background .3s ease, transform .3s ease; }
+  .leaflet-dot.active{ background: var(--accent); transform: scale(1.25); }
+  .leaflet-dot:hover{ background: var(--muted); }
+
+  /* --- 龍年賀卡(無外框,單獨展示) --- */
+  .standalone-media{ display:flex; justify-content:center; }
+  .standalone-media img{ max-width: 50%; height: auto; display: block; }
+
+  /* --- 週邊設計(並排顯示) --- */
+  .peripheral-grid{ display:flex; gap: 16px; }
+  .peripheral-item{ flex: 1 1 0; width: 0; aspect-ratio: 3/4; background: var(--line); overflow: hidden; }
+  .peripheral-item img{ width: 100%; height: 100%; object-fit: contain; display: block; }
+
+  .banner-arrow{ position:absolute; top:50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid var(--accent); background: rgba(243,244,239,0.85); color: var(--accent); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index: 5; transition: background .3s ease, color .3s ease; }
+  .banner-arrow:hover{ background: var(--accent); color: var(--paper); }
+  .banner-arrow.prev{ left: 16px; }
+  .banner-arrow.next{ right: 16px; }
+  .banner-arrow svg{ width: 18px; height: 18px; }
+
+  .banner-counter{ position:absolute; bottom: 14px; right: 18px; font-family:'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--paper); background: rgba(32,36,31,0.55); padding: 4px 10px; z-index: 5; }
+
+  .banner-stage{ position: relative; width: 100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); overflow: hidden; }
+  .banner-track{ position: relative; width: 100%; height: 100%; display:flex; align-items:center; justify-content:center; }
+  .banner-slide-media{ height: 100%; max-width: 100%; width: auto; object-fit: contain; display: block; background: var(--line); }
+
+  .banner-thumbs{ display:flex; gap: 12px; margin-top: 16px; }
+  .banner-thumb{ flex: 1 1 0; width: 0; aspect-ratio: 16/9; background: var(--bg, #C9CDBE) center/cover no-repeat; border: 2px solid transparent; padding: 0; cursor: pointer; position: relative; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%); opacity: 0.5; transition: opacity .3s ease, border-color .3s ease, transform .3s ease; }
+  .banner-thumb.active{ opacity: 1; border-color: var(--accent); transform: scale(1.04); }
+  .banner-thumb:hover{ opacity: 0.85; }
+  .banner-thumb span{ position:absolute; bottom: 6px; left: 8px; font-family:'IBM Plex Mono', monospace; font-size: 11px; color: rgba(32,36,31,0.6); }
+
+  .prev-next{ padding: 50px 0 90px; display:grid; grid-template-columns: 1fr 1fr; }
+  .prev-next a{ text-decoration:none; color: var(--ink); padding: 20px; }
+  .prev-next a:first-child{ text-align:left; border-right: 1px solid var(--line); }
+  .prev-next a:last-child{ text-align:right; }
+  .prev-next .dir{ font-family:'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); display:block; margin-bottom: 6px; }
+  .prev-next .name{ font-family:'Fraunces', serif; font-size: 18px; }
+  .prev-next a:hover .name{ color: var(--accent); }
+
+  footer{ border-top: 1px solid var(--line); padding: 26px 0 46px; display:flex; justify-content:space-between; color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12px; }
+
+  .back-to-top{ position: fixed; right: 32px; bottom: 32px; width: 48px; height: 48px; background: transparent; border: none; display:flex; align-items:center; justify-content:center; color: var(--accent); cursor: pointer; z-index: 40; opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity .35s ease, transform .35s ease, color .25s ease; }
+  .back-to-top.visible{ opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .back-to-top:hover{ color: var(--ink); }
+  .back-to-top svg{ width: 34.4px; height: 34.4px; }
+
+  @media (max-width: 860px){
+    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; }
+    .hero-overlay h1{ font-size: 28px; }
+    .info-strip{ flex-wrap:wrap; }
+    .prev-next{ grid-template-columns: 1fr; }
+    .prev-next a:first-child{ border-right:none; border-bottom: 1px solid var(--line); }
+    .banner-arrow{ width: 38px; height: 38px; }
+    .banner-stage{ aspect-ratio: 4/3; max-height: none; }
+    .extra-placeholder{ aspect-ratio: 4/3; max-height: none; }
+    .leaflet-stage{ aspect-ratio: 4/3; max-height: none; }
+    .peripheral-grid{ overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    .peripheral-item{ flex: 0 0 100%; scroll-snap-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="nav-fixed">
+  <nav>
+    <a class="logo" href="index.html">Chen Yu Juan <em>陳俞娟</em></a>
+    <div class="nav-links">
+      <a href="works.html" class="current">Works</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </nav>
+</div>
+
+<div class="wrap">
+  <div class="nav-spacer"></div>
+
+  <section class="case-hero chamfer-lg">
+    <div class="hero-overlay">
+      <p class="num">03 / 07</p>
+      <h1>2023福爾摩沙北海岸藝術季</h1>
+    </div>
+    <span class="hero-credit">藝術季主視覺非本人製作</span>
+  </section>
+
+  <div class="info-strip">
+    <div><strong>類型</strong>大型專案協作 · 攝影活動主視覺</div>
+    <div><strong>技能</strong>設計 · 活動策劃 · 視覺延伸 · 各式印刷物製作</div>
+  </div>
+
+  <section class="section">
+    <div class="section-label"><span class="slash">／</span><span>Context</span></div>
+    <h2>專案背景</h2>
+    <p>2023「福爾摩沙北海岸藝術季」為結合在地地景、藝術創作與觀光體驗的大型藝術盛會。本專案在已定調的年度主視覺規範下,負責進行全方位的視覺延伸與多端實體/數位周邊落地執行。</p>
+  </section>
+
+  <section class="section extras-intro">
+    <div class="section-label"><span class="slash">／</span><span>Works</span></div>
+    <h2>作品</h2>
+
+    <div class="extra-block">
+      <div class="extra-label">01 · 前導攝影藝術展_主視覺製作</div>
+      <div class="leaflet-stage" id="leafletStage">
+        <button class="banner-arrow prev" id="leafletPrev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <img class="leaflet-media" id="leafletMedia" alt="">
+        <button class="banner-arrow next" id="leafletNext" aria-label="下一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="leaflet-dots" id="leafletDots">
+        <button class="leaflet-dot" data-idx="0" aria-label="第 1 張"></button>
+        <button class="leaflet-dot" data-idx="1" aria-label="第 2 張"></button>
+        <button class="leaflet-dot" data-idx="2" aria-label="第 3 張"></button>
+        <button class="leaflet-dot" data-idx="3" aria-label="第 4 張"></button>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">02 · 秋嵐邨音樂會</div>
+      <div class="leaflet-stage" id="concertStage">
+        <button class="banner-arrow prev" id="concertPrev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <img class="leaflet-media" id="concertMedia" alt="">
+        <button class="banner-arrow next" id="concertNext" aria-label="下一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="leaflet-dots" id="concertDots">
+        <button class="leaflet-dot" data-idx="0" aria-label="第 1 張"></button>
+        <button class="leaflet-dot" data-idx="1" aria-label="第 2 張"></button>
+        <button class="leaflet-dot" data-idx="2" aria-label="第 3 張"></button>
+        <button class="leaflet-dot" data-idx="3" aria-label="第 4 張"></button>
+        <button class="leaflet-dot" data-idx="4" aria-label="第 5 張"></button>
+        <button class="leaflet-dot" data-idx="5" aria-label="第 6 張"></button>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">03 · 論壇海報</div>
+      <div class="leaflet-stage" id="posterStage">
+        <button class="banner-arrow prev" id="posterPrev" aria-label="上一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <img class="leaflet-media" id="posterMedia" alt="">
+        <button class="banner-arrow next" id="posterNext" aria-label="下一張">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+      <div class="leaflet-dots" id="posterDots">
+        <button class="leaflet-dot" data-idx="0" aria-label="第 1 張"></button>
+        <button class="leaflet-dot" data-idx="1" aria-label="第 2 張"></button>
+        <button class="leaflet-dot" data-idx="2" aria-label="第 3 張"></button>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">04 · 週邊設計</div>
+      <div class="peripheral-grid">
+        <div class="peripheral-item"><img src="images/13/01.jpg" alt=""></div>
+        <div class="peripheral-item"><img src="images/13/02.jpg" alt=""></div>
+        <div class="peripheral-item"><img src="images/13/03.jpg" alt=""></div>
+      </div>
+    </div>
+
+    <div class="extra-block">
+      <div class="extra-label">05 · 龍年賀卡</div>
+      <div class="standalone-media">
+        <img src="images/14/龍年賀卡.gif" alt="">
+      </div>
+    </div>
+
+  </section>
+
+  <div class="prev-next">
+    <a href="project-detail-hotel.html"><span class="dir">← 上一個</span><span class="name">飯店旅遊相關</span></a>
+    <a href="project-detail-game.html"><span class="dir">下一個 →</span><span class="name">遊戲相關</span></a>
+  </div>
+
+  <footer>
+    <span>© Chen Yu Juan Portfolio</span>
+    <span>Visual Design</span>
+  </footer>
+</div>
+
+<button class="back-to-top" id="backToTop" type="button" aria-label="回到頂部" title="回到頂部">
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 19V6M12 6L6 12M12 6L18 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<script>
+  const backToTop = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => backToTop.classList.toggle('visible', window.scrollY > 480));
+  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  // ---------- 前導攝影藝術展_主視覺製作 ----------
+  const leafletImages = ['images/10/01.jpg', 'images/10/02.jpg', 'images/10/03.jpg', 'images/10/04.jpg'];
+  const leafletMedia = document.getElementById('leafletMedia');
+  const leafletDots = document.querySelectorAll('#leafletDots .leaflet-dot');
+  const leafletPrev = document.getElementById('leafletPrev');
+  const leafletNext = document.getElementById('leafletNext');
+  const leafletTotal = leafletImages.length;
+  let leafletIdx = 0;
+
+  function renderLeaflet(){
+    leafletMedia.src = leafletImages[leafletIdx];
+    leafletDots.forEach((el, i) => el.classList.toggle('active', i === leafletIdx));
+  }
+  leafletPrev.addEventListener('click', () => { leafletIdx = (leafletIdx - 1 + leafletTotal) % leafletTotal; renderLeaflet(); });
+  leafletNext.addEventListener('click', () => { leafletIdx = (leafletIdx + 1) % leafletTotal; renderLeaflet(); });
+  leafletDots.forEach((el) => el.addEventListener('click', () => { leafletIdx = Number(el.dataset.idx); renderLeaflet(); }));
+  renderLeaflet();
+
+  // ---------- 秋嵐邨音樂會 ----------
+  const concertImages = ['images/11/01.jpg', 'images/11/02.jpg', 'images/11/03.webp', 'images/11/04.jpg', 'images/11/05.jpg', 'images/11/06.jpg'];
+  const concertMedia = document.getElementById('concertMedia');
+  const concertDots = document.querySelectorAll('#concertDots .leaflet-dot');
+  const concertPrev = document.getElementById('concertPrev');
+  const concertNext = document.getElementById('concertNext');
+  const concertTotal = concertImages.length;
+  let concertIdx = 0;
+
+  function renderConcert(){
+    concertMedia.src = concertImages[concertIdx];
+    concertDots.forEach((el, i) => el.classList.toggle('active', i === concertIdx));
+  }
+  concertPrev.addEventListener('click', () => { concertIdx = (concertIdx - 1 + concertTotal) % concertTotal; renderConcert(); });
+  concertNext.addEventListener('click', () => { concertIdx = (concertIdx + 1) % concertTotal; renderConcert(); });
+  concertDots.forEach((el) => el.addEventListener('click', () => { concertIdx = Number(el.dataset.idx); renderConcert(); }));
+  renderConcert();
+
+  // ---------- 論壇海報 ----------
+  const posterImages = ['images/12/01.jpg', 'images/12/02.jpg', 'images/12/03.jpg'];
+  const posterMedia = document.getElementById('posterMedia');
+  const posterDots = document.querySelectorAll('#posterDots .leaflet-dot');
+  const posterPrev = document.getElementById('posterPrev');
+  const posterNext = document.getElementById('posterNext');
+  const posterTotal = posterImages.length;
+  let posterIdx = 0;
+
+  function renderPoster(){
+    posterMedia.src = posterImages[posterIdx];
+    posterDots.forEach((el, i) => el.classList.toggle('active', i === posterIdx));
+  }
+  posterPrev.addEventListener('click', () => { posterIdx = (posterIdx - 1 + posterTotal) % posterTotal; renderPoster(); });
+  posterNext.addEventListener('click', () => { posterIdx = (posterIdx + 1) % posterTotal; renderPoster(); });
+  posterDots.forEach((el) => el.addEventListener('click', () => { posterIdx = Number(el.dataset.idx); renderPoster(); }));
+  renderPoster();
+</script>
+</body>
+</html>
