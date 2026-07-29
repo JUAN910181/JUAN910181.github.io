@@ -40,6 +40,7 @@
   .hero-overlay .num{ font-family:'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.14em; opacity: 0.85; margin: 0 0 12px; }
   .hero-overlay h1{ font-family:'Fraunces', serif; font-weight: 400; font-size: 44px; margin: 0 0 14px; }
   .hero-credit{ position: absolute; right: 60px; bottom: 20px; z-index: 2; font-family:'IBM Plex Mono', monospace; font-weight: 300; font-size: 9px; letter-spacing: 0.03em; color: rgba(243,244,239,0.45); }
+  .title-break{ display: none; }
   .info-strip{ display:flex; gap: 26px; padding: 24px 0; border-bottom: 1px solid var(--line); font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); }
   .info-strip strong{ color: var(--ink); display:block; font-size: 12.5px; margin-bottom: 4px; font-family:'Work Sans', sans-serif; }
 
@@ -58,10 +59,10 @@
   .extra-placeholder{ display:flex; align-items:center; justify-content:center; width:100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.08em; }
 
   /* --- 三折頁 --- */
-  .leaflet-stage{ position: relative; width: 100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); overflow: hidden; display:flex; align-items:center; justify-content:center; }
+  .leaflet-stage{ position: relative; width: 100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); overflow: hidden; touch-action: manipulation; display:flex; align-items:center; justify-content:center; }
   .leaflet-media{ max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
   .leaflet-dots{ display:flex; justify-content:center; gap: 10px; margin-top: 18px; }
-  .leaflet-dot{ width: 7px; height: 7px; clip-path: polygon(0 0, 100% 0, 100% 65%, 65% 100%, 0 100%); background: var(--line); border: none; padding: 0; cursor: pointer; transition: background .3s ease, transform .3s ease; }
+  .leaflet-dot{ width: 7px; height: 7px; clip-path: polygon(0 0, 100% 0, 100% 65%, 65% 100%, 0 100%); background: var(--line); border: none; padding: 0; cursor: pointer; touch-action: manipulation; transition: background .3s ease, transform .3s ease; }
   .leaflet-dot.active{ background: var(--accent); transform: scale(1.25); }
   .leaflet-dot:hover{ background: var(--muted); }
 
@@ -74,7 +75,7 @@
   .peripheral-item{ flex: 1 1 0; width: 0; aspect-ratio: 3/4; background: var(--line); overflow: hidden; }
   .peripheral-item img{ width: 100%; height: 100%; object-fit: contain; display: block; }
 
-  .banner-arrow{ position:absolute; top:50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid var(--accent); background: rgba(243,244,239,0.85); color: var(--accent); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index: 5; transition: background .3s ease, color .3s ease; }
+  .banner-arrow{ position:absolute; top:50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid var(--accent); background: rgba(243,244,239,0.85); color: var(--accent); display:flex; align-items:center; justify-content:center; cursor:pointer; touch-action: manipulation; z-index: 5; transition: background .3s ease, color .3s ease; }
   .banner-arrow:hover{ background: var(--accent); color: var(--paper); }
   .banner-arrow.prev{ left: 16px; }
   .banner-arrow.next{ right: 16px; }
@@ -82,12 +83,12 @@
 
   .banner-counter{ position:absolute; bottom: 14px; right: 18px; font-family:'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--paper); background: rgba(32,36,31,0.55); padding: 4px 10px; z-index: 5; }
 
-  .banner-stage{ position: relative; width: 100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); overflow: hidden; }
+  .banner-stage{ position: relative; width: 100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); overflow: hidden; touch-action: manipulation; }
   .banner-track{ position: relative; width: 100%; height: 100%; display:flex; align-items:center; justify-content:center; }
   .banner-slide-media{ height: 100%; max-width: 100%; width: auto; object-fit: contain; display: block; background: var(--line); }
 
   .banner-thumbs{ display:flex; gap: 12px; margin-top: 16px; }
-  .banner-thumb{ flex: 1 1 0; width: 0; aspect-ratio: 16/9; background: var(--bg, #C9CDBE) center/cover no-repeat; border: 2px solid transparent; padding: 0; cursor: pointer; position: relative; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%); opacity: 0.5; transition: opacity .3s ease, border-color .3s ease, transform .3s ease; }
+  .banner-thumb{ flex: 1 1 0; width: 0; aspect-ratio: 16/9; background: var(--bg, #C9CDBE) center/cover no-repeat; border: 2px solid transparent; padding: 0; cursor: pointer; touch-action: manipulation; position: relative; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%); opacity: 0.5; transition: opacity .3s ease, border-color .3s ease, transform .3s ease; }
   .banner-thumb.active{ opacity: 1; border-color: var(--accent); transform: scale(1.04); }
   .banner-thumb:hover{ opacity: 0.85; }
   .banner-thumb span{ position:absolute; bottom: 6px; left: 8px; font-family:'IBM Plex Mono', monospace; font-size: 11px; color: rgba(32,36,31,0.6); }
@@ -108,8 +109,10 @@
   .back-to-top svg{ width: 34.4px; height: 34.4px; }
 
   @media (max-width: 860px){
-    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; }
+    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; flex-wrap: wrap; row-gap: 10px; } .logo{ flex: 0 0 100%; text-align: left; white-space: normal; }
     .hero-overlay h1{ font-size: 28px; }
+    .title-break{ display: block; }
+    .hero-credit{ top: 16px; right: 16px; bottom: auto; }
     .info-strip{ flex-wrap:wrap; }
     .prev-next{ grid-template-columns: 1fr; }
     .prev-next a:first-child{ border-right:none; border-bottom: 1px solid var(--line); }
@@ -117,8 +120,9 @@
     .banner-stage{ aspect-ratio: 4/3; max-height: none; }
     .extra-placeholder{ aspect-ratio: 4/3; max-height: none; }
     .leaflet-stage{ aspect-ratio: 4/3; max-height: none; }
-    .peripheral-grid{ overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
-    .peripheral-item{ flex: 0 0 100%; scroll-snap-align: center; }
+    #posterStage{ aspect-ratio: 3/4; max-height: none; }
+    .peripheral-grid{ flex-direction: column; }
+    .peripheral-item{ flex: 0 0 auto; width: 100%; aspect-ratio: 3/4; }
   }
 </style>
 </head>
@@ -141,7 +145,7 @@
   <section class="case-hero chamfer-lg">
     <div class="hero-overlay">
       <p class="num">03 / 07</p>
-      <h1>2023福爾摩沙北海岸藝術季</h1>
+      <h1>2023 福爾摩沙<br class="title-break">北海岸藝術季</h1>
     </div>
     <span class="hero-credit">藝術季主視覺非本人製作</span>
   </section>

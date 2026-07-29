@@ -78,15 +78,15 @@
   }
   .sq-text .label-row{
     position: absolute;
-    left: -2px;
+    left: -6px;
     top: 54%;
     transform: translateY(-50%);
     display:inline-flex;
     align-items:center;
     gap: 10px;
     background: var(--paper);
-    padding: 1px 7px 1px 0;
-    z-index: 1;
+    padding: 6px 10px 6px 8px;
+    z-index: 2;
   }
   .sq-text .slash{ color: var(--accent); font-size: 15px; display: inline; }
   .sq-text .label-row span{ font-family:'IBM Plex Mono', monospace; font-size: 12px; color: var(--muted); letter-spacing: 0.08em; }
@@ -132,7 +132,7 @@
   .back-to-top svg{ width: 34.4px; height: 34.4px; }
 
   @media (max-width: 960px){
-    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; }
+    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; flex-wrap: wrap; row-gap: 10px; } .logo{ flex: 0 0 100%; text-align: left; white-space: normal; }
     .page-head h1{ font-size: 30px; }
     .square-row, .square-row.mirror{ grid-template-columns: 1fr; gap: 30px; }
     .square-row.mirror .sq-frame{ order: 1; } .square-row.mirror .sq-text{ order: 2; }
@@ -220,11 +220,11 @@
         <div class="rest-meta"><h4>保養產品</h4><span>05</span></div>
       </a>
       <a class="rest-card" href="project-detail-event.html">
-        <div class="rest-frame chamfer-sm"><div class="rest-cover" style="background: url('images/15.png') center/cover;"></div></div>
+        <div class="rest-frame chamfer-sm"><div class="rest-cover" style="background: url('images/15.jpg') center/cover;"></div></div>
         <div class="rest-meta"><h4>活動策劃</h4><span>06</span></div>
       </a>
       <a class="rest-card" href="project-detail-freelance.html">
-        <div class="rest-frame chamfer-sm"><div class="rest-cover" style="background: url('images/16.png') center/cover;"></div></div>
+        <div class="rest-frame chamfer-sm"><div class="rest-cover" style="background: url('images/16.jpg') center/cover;"></div></div>
         <div class="rest-meta"><h4>個人接案</h4><span>07</span></div>
       </a>
     </div>

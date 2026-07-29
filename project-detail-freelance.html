@@ -58,7 +58,7 @@
   .extra-placeholder{ display:flex; align-items:center; justify-content:center; width:100%; aspect-ratio: 16/9; max-height: 620px; background: var(--line); color: var(--muted); font-family:'IBM Plex Mono', monospace; font-size: 12.5px; letter-spacing: 0.08em; }
 
   /* --- Banner 展示 --- */
-  .banner-arrow{ position:absolute; top:50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid var(--accent); background: rgba(243,244,239,0.85); color: var(--accent); display:flex; align-items:center; justify-content:center; cursor:pointer; z-index: 5; transition: background .3s ease, color .3s ease; }
+  .banner-arrow{ position:absolute; top:50%; transform: translateY(-50%); width: 48px; height: 48px; border: 1px solid var(--accent); background: rgba(243,244,239,0.85); color: var(--accent); display:flex; align-items:center; justify-content:center; cursor:pointer; touch-action: manipulation; z-index: 5; transition: background .3s ease, color .3s ease; }
   .banner-arrow:hover{ background: var(--accent); color: var(--paper); }
   .banner-arrow.prev{ left: 16px; }
   .banner-arrow.next{ right: 16px; }
@@ -66,21 +66,21 @@
 
   .banner-counter{ position:absolute; bottom: 14px; right: 18px; font-family:'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.08em; color: var(--paper); background: rgba(32,36,31,0.55); padding: 4px 10px; z-index: 5; }
 
-  .banner-stage{ position: relative; width: 100%; max-width: 860px; margin: 0 auto; aspect-ratio: 16/9; max-height: 480px; background: var(--line); overflow: hidden; }
+  .banner-stage{ position: relative; width: 100%; max-width: 860px; margin: 0 auto; aspect-ratio: 16/9; max-height: 480px; background: var(--line); overflow: hidden; touch-action: manipulation; }
   .banner-track{ position: relative; width: 100%; height: 100%; display:flex; align-items:center; justify-content:center; }
   .banner-slide-media{ height: 100%; max-width: 100%; width: auto; object-fit: contain; display: block; background: var(--line); }
 
   .banner-thumbs{ display:flex; gap: 12px; margin: 16px auto 0; max-width: 860px; }
-  .banner-thumb{ flex: 1 1 0; width: 0; aspect-ratio: 16/9; background: var(--bg, #C9CDBE) center/cover no-repeat; border: 2px solid transparent; padding: 0; cursor: pointer; position: relative; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%); opacity: 0.5; transition: opacity .3s ease, border-color .3s ease, transform .3s ease; }
+  .banner-thumb{ flex: 1 1 0; width: 0; aspect-ratio: 16/9; background: var(--bg, #C9CDBE) center/cover no-repeat; border: 2px solid transparent; padding: 0; cursor: pointer; touch-action: manipulation; position: relative; clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%); opacity: 0.5; transition: opacity .3s ease, border-color .3s ease, transform .3s ease; }
   .banner-thumb.active{ opacity: 1; border-color: var(--accent); transform: scale(1.04); }
   .banner-thumb:hover{ opacity: 0.85; }
   .banner-thumb span{ position:absolute; bottom: 6px; left: 8px; font-family:'IBM Plex Mono', monospace; font-size: 11px; color: rgba(32,36,31,0.6); }
 
   /* --- 點狀展示 --- */
-  .leaflet-stage{ position: relative; width: 100%; max-width: 860px; margin: 0 auto; aspect-ratio: 16/9; max-height: 480px; background: var(--line); overflow: hidden; display:flex; align-items:center; justify-content:center; }
+  .leaflet-stage{ position: relative; width: 100%; max-width: 860px; margin: 0 auto; aspect-ratio: 16/9; max-height: 480px; background: var(--line); overflow: hidden; touch-action: manipulation; display:flex; align-items:center; justify-content:center; }
   .leaflet-media{ max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; }
   .leaflet-dots{ display:flex; justify-content:center; gap: 10px; margin-top: 18px; }
-  .leaflet-dot{ width: 7px; height: 7px; clip-path: polygon(0 0, 100% 0, 100% 65%, 65% 100%, 0 100%); background: var(--line); border: none; padding: 0; cursor: pointer; transition: background .3s ease, transform .3s ease; }
+  .leaflet-dot{ width: 7px; height: 7px; clip-path: polygon(0 0, 100% 0, 100% 65%, 65% 100%, 0 100%); background: var(--line); border: none; padding: 0; cursor: pointer; touch-action: manipulation; transition: background .3s ease, transform .3s ease; }
   .leaflet-dot.active{ background: var(--accent); transform: scale(1.25); }
   .leaflet-dot:hover{ background: var(--muted); }
 
@@ -100,7 +100,7 @@
   .back-to-top svg{ width: 34.4px; height: 34.4px; }
 
   @media (max-width: 860px){
-    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; }
+    .wrap{ padding: 0 22px; } nav{ padding: 18px 22px; flex-wrap: wrap; row-gap: 10px; } .logo{ flex: 0 0 100%; text-align: left; white-space: normal; }
     .hero-overlay h1{ font-size: 28px; }
     .info-strip{ flex-wrap:wrap; }
     .prev-next{ grid-template-columns: 1fr; }
@@ -307,7 +307,7 @@
 
   // ---------- 01 · 福倫達相機DM ----------
   initLeaflet('freelance1', [
-    'images/28/01.png', 'images/28/02.png', 'images/28/03.png',
+    'images/28/01.jpg', 'images/28/02.jpg', 'images/28/03.jpg',
   ]);
 
   // ---------- 02 · 跳河大拍賣_海報.歌本 ----------
@@ -317,8 +317,8 @@
 
   // ---------- 03 · Mavi土耳其餐廳 ----------
   initLeaflet('freelance3', [
-    'images/30/01.png', 'images/30/02.png', 'images/30/03.png', 'images/30/04.png',
-    'images/30/05.png',
+    'images/30/01.jpg', 'images/30/02.jpg', 'images/30/03.jpg', 'images/30/04.jpg',
+    'images/30/05.jpg',
   ]);
 
   // ---------- 04 · 12節氣插畫 ----------
