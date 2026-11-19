@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>聯繫我 — Chen Yu Juan Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper: #F3F4EF; --ink: #20241F; --muted: #6C7066;
@@ -50,6 +50,7 @@
   .info-row .label{ width: 34px; flex-shrink:0; }
   .info-row .icon-label{ display:flex; align-items:center; color: var(--accent); }
   .info-row .icon-label svg{ width: 18px; height: 18px; }
+  .text-line{ display:inline-block; width: 18px; font-family:'Work Sans', sans-serif; font-weight: 800; font-size: 12px; letter-spacing: -0.01em; color: var(--accent); line-height: 1; transform: scaleX(0.72); transform-origin: left center; }
   .mark-104{ display:flex; align-items:center; justify-content:center; width: 18px; height: 18px; border: 1.3px solid var(--accent); border-radius: 3px; font-family:'IBM Plex Mono', monospace; font-weight: 600; font-size: 7px; letter-spacing: -0.03em; color: var(--accent); line-height: 1; }
   .info-row .value{ font-family:'IBM Plex Mono', monospace; font-size: 14px; color: var(--ink); flex: 1; user-select: all; }
   .info-row a.value{ text-decoration:none; }
@@ -111,8 +112,8 @@
           <span class="label icon-label" aria-label="Email">
             <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </span>
-          <span class="value" id="emailText">aa40332024@gmail.com</span>
-          <button class="copy-btn" data-copy="aa40332024@gmail.com" aria-label="複製 Email">
+          <span class="value" id="emailText">cyj910181@gmail.com</span>
+          <button class="copy-btn" data-copy="cyj910181@gmail.com" aria-label="複製 Email">
             <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="13" rx="1" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/></svg>
           </button>
         </div>
@@ -120,16 +121,19 @@
           <span class="label icon-label" aria-label="Phone">
             <svg viewBox="0 0 24 24" fill="none"><path d="M6 3h3l2 5-2.5 1.5a11 11 0 0 0 5 5L15 12l5 2v3a2 2 0 0 1-2 2C10.5 19 5 13.5 5 6a2 2 0 0 1 1-3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
           </span>
-          <span class="value">+886 970 701 233</span>
-          <button class="copy-btn" data-copy="+886970701233" aria-label="複製電話">
+          <span class="value">+886 905 544 695</span>
+          <button class="copy-btn" data-copy="+886905544695" aria-label="複製電話">
             <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="13" rx="1" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/></svg>
           </button>
         </div>
         <div class="info-row">
-          <span class="label icon-label" aria-label="104">
-            <span class="mark-104">104</span>
+          <span class="label icon-label" aria-label="LINE">
+            <span class="text-line">LINE</span>
           </span>
-          <a class="value" href="images/陳俞娟.pdf" download>陳俞娟的104履歷</a>
+          <span class="value">k_noir.psd</span>
+          <button class="copy-btn" data-copy="k_noir.psd" aria-label="複製 LINE ID">
+            <svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="13" rx="1" stroke="currentColor" stroke-width="1.6"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h2" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
         </div>
       </div>
     </div>
